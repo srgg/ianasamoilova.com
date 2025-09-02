@@ -4,9 +4,10 @@
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 # Website name
-title: Hugo Academic CV Theme
+title: Inspiring Every Learner – Iana Samoilova
+
 # Website URL
-baseURL: 'https://example.com/'
+baseURL: 'https://ianasamoilova.com/'
 
 ############################
 ## LANGUAGE
@@ -44,7 +45,7 @@ imaging:
   hint: picture
 timeout: 600000
 taxonomies:
-  author: authors
+#  author: authors
   tag: tags
   publication_type: publication_types
 markup:
