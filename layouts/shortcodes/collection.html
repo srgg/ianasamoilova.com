@@ -1,0 +1,48 @@
+{{/*
+  Custom collection shortcode - Hugo shortcode wrapper for HugoBlox collection block
+  
+  This shortcode provides a convenient way to use the HugoBlox collection block functionality
+  directly in markdown content files. It translates shortcode parameters into the block 
+  configuration format expected by the HugoBlox collection partial at layouts/partials/blox/collection.html.
+  
+  The underlying collection.html partial is a customized version of the original HugoBlox collection
+  block with enhanced subdirectory filtering and flexible title styling capabilities.
+  
+  Usage: {{< collection title="My Collection" view="check-list" subdirs="*" >}}
+*/}}
+
+{{ $title := .Get "title" | default "" }}
+{{ $text := .Get "text" | default "" }}
+{{ $view := .Get "view" | default "check-list" }}
+{{ $columns := .Get "columns" | default 3 }}
+{{ $fill_image := .Get "fill_image" | default false }}
+{{ $subdirs := .Get "subdirs" | default "*" }}
+{{ $page_type := .Get "page_type" | default "" }}
+{{ $folders := .Get "folders" | default "" }}
+{{ $style := .Get "style" | default "default" }}
+
+{{/* Create block configuration similar to HugoBlox */}}
+{{ $filters := dict "subdirs" $subdirs }}
+{{ if $page_type }}
+  {{ $filters = $filters | merge (dict "page_type" $page_type) }}
+{{ end }}
+{{ if $folders }}
+  {{ $filters = $filters | merge (dict "folders" (split $folders ",")) }}
+{{ end }}
+
+{{ $block := dict 
+  "content" (dict 
+    "title" $title
+    "text" $text
+    "filters" $filters
+    "style" $style
+  )
+  "design" (dict 
+    "view" $view
+    "columns" $columns
+    "fill_image" $fill_image
+  )
+}}
+
+{{/* Call the collection partial with the block configuration */}}
+{{ partial "blox/collection.html" (dict "wcPage" .Page "wcBlock" $block) }}

@@ -1,0 +1,4 @@
+/* Do not pad the top of the first section if it is the biography section */
+.page-body > section:first-of-type#section-resume-biography-3 {
+    padding-top: 0 !important;
+}

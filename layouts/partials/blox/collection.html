@@ -1,0 +1,236 @@
+{{/* 
+  Hugo Blox: Collection (Enhanced)
+  
+  This is an enhanced version of the original Hugo Blox Collection block with custom extensions:
+  
+  CUSTOM ENHANCEMENTS:
+  1. Subdirectory filtering - Filter content by subdirectory paths using regex patterns
+  2. Flexible title styling - Support for "block" set by default, and "plain" title styles
+  3. Page type filtering - Enhanced page type filtering capabilities
+  
+  The original Hugo Blox Collection block functionality is preserved while adding these
+  custom features for more granular content organization and presentation control.
+  
+  Original Documentation: https://hugoblox.com/blocks/
+  License: https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md
+*/}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $view := $block.design.view | default "card" }}
+
+{{ $items_offset := $block.content.offset | default 0 }}
+{{ $items_count := $block.content.count }}
+{{ if eq $items_count 0 }}
+    {{ $items_count = 65535 }}
+{{ else }}
+    {{ $items_count = $items_count | default 5 }}
+{{ end }}
+
+{{/* Query */}}
+{{ $query := site.Pages }}
+{{ $archive_page := "" }}
+
+{{/* Filters */}}
+
+{{/* Added page_type filter: */}}
+{{ $page_type := $block.content.page_type }}
+{{ if $block.content.filters.page_type }}
+    {{ $page_type = $block.content.filters.page_type }}
+{{ end }}
+{{ if $page_type }}
+    {{ $query = where $query "Type" $page_type }}
+    {{ $archive_page = site.GetPage "Section" $page_type }}
+{{ end }}
+{{ if $block.content.filters.folders }}
+    {{ $folders := $block.content.filters.folders }}
+    {{ $query = where $query "Section" "in" $folders }}
+    {{/* Init archive page to main folder */}}
+    {{ $main_folder := index $folders 0 }}
+    {{ $archive_page = site.GetPage "Section" $main_folder }}
+{{ end }}
+{{ if $block.content.filters.tag }}
+    {{ $archive_page = site.GetPage (printf "tags/%s" (urlize $block.content.filters.tag)) }}
+    {{ $query = $query | intersect $archive_page.Pages }}
+{{ end }}
+
+{{/* Added Sub-dirs filter:
+This filter allows filtering content by subdirectory path.
+
+Uses Hugo's "match" operator, which performs REGEX pattern matching against a File.Dir:
+- File.Dir contains the directory path relative to content/ (e.g., "articles/2022/")
+- "match" uses Go's regexp package, allowing powerful patterns:
+  * "articles/2022"       → matches exactly "articles/2022/"
+  * "articles/202.*"      → matches "articles/2022/", "articles/2023/", etc.
+  * "articles/(2022|2023)" → matches either "articles/2022/" or "articles/2023/"
+  * ".*blog.*"            → matches any path containing "blog"
+  * "^articles/[0-9]{4}"  → matches articles/ followed by exactly 4 digits
+
+Example usage: If you want to show only content from the "articles/2022/" subdirectory
+*/}}
+{{/* CUSTOM: Simple subdirs filter from current page dir */}}
+
+{{ if $block.content.filters.subdirs }}
+    {{ $user_pattern := $block.content.filters.subdirs }}
+    {{ $current_dir := $page.File.Dir }}
+    {{ $scoped_pattern := printf "%s%s" $current_dir $user_pattern }}
+
+    {{ $subdir_pages := slice }}
+    {{ range site.AllPages }}
+        {{/* Exclude current page itself from subdirs results */}}
+        {{ if and .File (hasPrefix .File.Dir $current_dir) (findRE $scoped_pattern .File.Dir) (ne .File.Path $page.File.Path) }}
+            {{ $subdir_pages = $subdir_pages | append . }}
+        {{ end }}
+    {{ end }}
+
+    {{ $query = $query | intersect $subdir_pages }}
+{{ end }}
+
+{{ if $block.content.filters.category }}
+    {{ $archive_page = site.GetPage (printf "categories/%s" (urlize $block.content.filters.category)) }}
+    {{ $query = $query | intersect $archive_page.Pages }}
+{{ end }}
+{{ if $block.content.filters.publication_type }}
+    {{ $archive_page = site.GetPage (printf "publication_types/%s" $block.content.filters.publication_type) }}
+    {{ $query = $query | intersect $archive_page.Pages }}
+{{ end }}
+{{ if $block.content.filters.exclude_publication_type }}
+    {{ $query = $query | complement (site.GetPage (printf "publication_types/%s" $block.content.filters.exclude_publication_type)).Pages }}
+{{ end }}
+{{ if $block.content.filters.author }}
+    {{ $archive_page = site.GetPage (printf "authors/%s" (urlize $block.content.filters.author)) }}
+    {{ $query = $query | intersect $archive_page.Pages }}
+{{ end }}
+{{ if $block.content.filters.featured_only }}
+    {{ $query = where $query "Params.featured" "==" true }}
+{{ end }}
+{{ if $block.content.filters.exclude_featured }}
+    {{ $query = where $query "Params.featured" "!=" true }}
+{{ end }}
+{{ if $block.content.filters.exclude_past }}
+    {{ $query = where $query "Date" ">=" now }}
+{{ end }}
+{{ if $block.content.filters.exclude_future }}
+    {{ $query = where $query "Date" "<" now }}
+{{ end }}
+
+{{/*<div style="background: red; color: white; padding: 10px;">*/}}
+{{/*    CURRENT: "{{ $page.File.Dir }}" | PATTERN: "{{ printf "%s%s" $page.File.Dir $block.content.filters.subdirs }}" | MATCHED: {{ range site.RegularPages }}{{ if and (hasPrefix .File.Dir $page.File.Dir) (findRE (printf "%s%s" $page.File.Dir $block.content.filters.subdirs) .File.Dir) }}"{{ .File.Dir }}" {{ end }}{{ end }}*/}}
+{{/*</div>*/}}
+{{/**/}}
+{{/*<div style="background: orange; color: black; padding: 10px; font-size: 10px;">*/}}
+{{/*    QUERY RESULTS: {{ range $query }}{{ if .File }}"{{ .File.Dir }}" {{ end }}{{ end }}*/}}
+{{/*</div>*/}}
+
+{{/*<div style="background: orange; color: black; padding: 10px; font-size: 10px;">*/}}
+{{/*    ALL PAGES INCLUDING DRAFTS: {{ range site.AllPages }}{{ if .File }}"{{ .File.Dir }}" {{ end }}{{ end }}*/}}
+{{/*</div>*/}}
+
+{{ $count := len $query }}
+
+{{/* Sort */}}
+{{ $sort_by := $block.content.sort_by | default "Date" }}
+{{ $sort_by = partial "functions/get_sort_by_parameter" $sort_by }}
+{{ $sort_ascending := $block.content.sort_ascending | default (eq $block.content.order "asc") | default false }}
+{{ $sort_order := cond $sort_ascending "asc" "desc" }}
+{{ $query = sort $query $sort_by $sort_order }}
+
+{{/* Offset and Limit */}}
+{{ if gt $items_offset 0 }}
+    {{ $query = first $items_count (after $items_offset $query) }}
+{{ else }}
+    {{ $query = first $items_count $query }}
+{{ end }}
+
+{{/* Check if any items have author_notes to enable Alpine.js */}}
+{{ range $query }}
+    {{ if isset .Params "author_notes" }}
+        {{ $page.Store.Set "has_alpine" true }}
+        <script>console.log('Author notes found in collection - Alpine.js enabled');</script>
+        {{ break }}
+    {{ end }}
+{{ end }}
+
+{{ $columns := $block.design.columns | default "2" }}
+
+{{/* CUSTOM: Title styling support
+This enhancement allows customizing the appearance of collection titles through a style parameter.
+*/}}
+{{ $style := $block.content.style | default "block" }}
+{{ if $block.content.title }}
+    {{ if eq $style "plain" }}
+        <p>
+            {{ $block.content.title | emojify | $page.RenderString }}
+        </p>
+        {{ with $block.content.text }}<p>{{ . | emojify | $page.RenderString }}</p>{{ end }}
+    {{ else }}
+        <div class="flex flex-col items-center max-w-prose mx-auto gap-3 justify-center px-6 md:px-0">
+            {{ if eq $style "block" }}
+                <div class="mb-6 text-2xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                    {{ $block.content.title | emojify | $page.RenderString }}
+                </div>
+            {{ else }}
+                <div class="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
+                    {{ $block.content.title | emojify | $page.RenderString }}
+                </div>
+            {{ end }}
+
+            {{ with $block.content.text }}<p>{{ . | emojify | $page.RenderString }}</p>{{ end }}
+        </div>
+    {{ end }}
+{{ end }}
+
+{{ if ne $style "plain" }}
+<div class="flex flex-col items-center px-6">
+{{ end }}
+
+    {{ $config := dict "columns" ($block.design.columns | default 2) "len" (len $query) "fill_image" ($block.design.fill_image | default true) }}
+    {{ partial "functions/render_view" (dict "fragment" "start" "page" $block "item" . "view" $view "config" $config) }}
+
+    {{ range $index, $item := $query }}
+        {{ partial "functions/render_view" (dict "page" $block "item" . "view" $view "index" $index "config" $config) }}
+    {{end}}
+
+    {{ partial "functions/render_view" (dict "fragment" "end" "page" $block "item" . "view" $view) }}
+
+{{ if ne $style "plain" }}
+</div>
+{{ end }}
+
+{{/* Archive link */}}
+{{ $show_archive_link := $block.content.archive.enable | default (gt $count $items_count) }}
+{{ if $show_archive_link | and $archive_page }}
+
+    {{ $archive_link := "" }}
+    {{ if $block.content.archive.link }}
+        {{ $archive_link = $block.content.archive.link | relLangURL }}
+    {{ else }}
+        {{ $archive_link = $archive_page.RelPermalink }}
+    {{ end }}
+
+    {{/* Localisation */}}
+    {{ $items_type := $archive_page.Type }}
+    {{ $i18n := "" }}
+    {{ if eq $items_type "blog" }}
+        {{ $i18n = "more_posts" }}
+    {{ else if eq $items_type "event" }}
+        {{ $i18n = "more_talks" }}
+    {{ else if eq $items_type "publication" }}
+        {{ $i18n = "more_publications" }}
+    {{ else }}
+        {{ $i18n = "more_pages" }}
+    {{ end }}
+
+    {{ $archive_text := $block.content.archive.text | default (i18n $i18n) | default "See all" }}
+    <div class="container mx-auto max-w-screen-lg px-8 xl:px-5 pb-5 lg:pb-8">
+        <div class="mt-10 flex justify-center">
+            <a
+                    class="relative inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-2 pl-4 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300"
+                    href="{{ $archive_link }}">
+                <span>{{ $archive_text | emojify }}</span>
+            </a>
+        </div>
+    </div>
+
+{{ end }}

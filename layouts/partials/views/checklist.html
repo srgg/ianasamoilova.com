@@ -1,0 +1,21 @@
+
+{{/*
+  Check-list view partial for HugoBlox collection block
+  
+  Renders collection items as a task list with checkboxes. Checkboxes are automatically
+  checked when the item has a date that is not in the future, providing a visual indication
+  of completed/past items.
+  
+  Logic: Items are marked as "checked" if they have a valid date (Date field) that is
+  not zero and is less than or equal to the current time.
+*/}}
+
+{{ $item := .item }}
+{{ $page := .page }}
+{{ $summary := $item.Params.summary | default $item.Params.description | default $item.Summary }}
+{{ $summary =  $summary | page.RenderString }}
+
+<li>
+    <input {{ if and .item.Date (not .item.Date.IsZero) (le .item.Date now) }}checked{{ end }} disabled="" type="checkbox">
+    <a href="{{$item.RelPermalink}}">{{$item.Title}}</a>
+</li>

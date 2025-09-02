@@ -1,13 +1,13 @@
 ---
 # Display name
-title: 吳健雄
+title: Iana Samoilova
 
 # Name pronunciation (optional)
-name_pronunciation: Chien Shiung Wu
+name_pronunciation: Yana Samoilova
 
 # Full name (for SEO)
-first_name: Shiung Wu
-last_name: Chien
+first_name: Iana
+last_name: Samoilova
 
 # Pronouns (optional)
 pronouns: she/her
@@ -23,12 +23,12 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Chief Scientist
+role: Paraeducator – SPED
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: OpenAI
-    url: https://openai.com/
+  - name: Chipeta Elementary School
+    url: https://chipeta.d11.org
 
 # Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
@@ -36,79 +36,87 @@ profiles:
   - icon: at-symbol
     url: 'mailto:your-email@example.com'
     label: E-mail Me
-  - icon: brands/x
-    url: https://twitter.com/GetResearchDev
-  - icon: brands/instagram
-    url: https://www.instagram.com/
-  - icon: brands/github
-    url: https://github.com/gcushen
+#  - icon: brands/x
+#    url: https://twitter.com/GetResearchDev
+#  - icon: brands/instagram
+#    url: https://www.instagram.com/
+#  - icon: brands/github
+#    url: https://github.com/gcushen
   - icon: brands/linkedin
     url: https://www.linkedin.com/
-  - icon: academicons/google-scholar
-    url: https://scholar.google.com/
-  - icon: academicons/orcid
-    url: https://orcid.org/
+#  - icon: academicons/google-scholar
+#    url: https://scholar.google.com/
+#  - icon: academicons/orcid
+#    url: https://orcid.org/
 
 interests:
   - Artificial Intelligence
   - Computational Linguistics
   - Information Retrieval
 
-education:
-  - area: PhD Artificial Intelligence
-    institution: Stanford University
-    date_start: 2016-01-01
-    date_end: 2020-12-31
-    summary: |
-      Thesis on _Why LLMs are awesome_. Supervised by [Prof Joe Smith](https://example.com). Presented papers at 5 IEEE conferences with the contributions being published in 2 Springer journals.
-    button:
-      text: 'Read Thesis'
-      url: 'https://example.com'
-  - area: MEng Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    date_start: 2016-01-01
-    date_end: 2020-12-31
-    summary: |
-      GPA: 3.8/4.0
 
-      Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - area: BSc Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    date_start: 2016-01-01
-    date_end: 2020-12-31
+education:
+  - area: Special Education Generalist
+    institution: University of Colorado Colorado Springs
+    date_start: 2025-08-25
+    date_end: ''
+    summary:
+    button:
+      text: "Visit University Website"
+      url: "https://www.uccs.edu"
+      
+  - area: BA/MA Ukrainian and Russian Language and Literature
+    institution: V.N. Karazin Kharkiv National University
+    date_start: 1996-09-01  # approximate start date
+    date_end: 2001-06-01    # graduation date
     summary: |
-      GPA: 3.4/4.0
+      GPA: 3.35/4.0
+
+      Specialist Diploma confirming the qualification of Philologist, Teacher of Russian Language and Literature.
+      
+      This credential prepares the holder to teach Russian language and literature in secondary school in the U.S.
       
       Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      - Psychology
+      - Logic
+      - Pedagogy & Methodology of Teaching
+      - General Linguistics
+      - Foundations of Stylistics & Culture of Speech
+      - Literary Theory
+    button:
+      text: "Visit University Website"
+      url: "https://karazin.ua/en/"
+
 work:
-  - position: Director of Cloud Infrastructure
-    company_name: GenCoin
+  - position: Paraeducator – SPED (Significant Support Needs)
+    company_name: Chipeta Elementary School, District 11
     company_url: ''
-    company_logo: ''
-    date_start: 2021-01-01
+    date_start: 2024-01-01
     date_end: ''
     summary: |2-
       Responsibilities include:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - position: Backend Software Engineer
-    company_name: X
+      - Provide direct support to students with autism and other significant special needs, assisting with academic tasks, social skills, and daily routines.
+      - Implement IEPs under the guidance of special education teachers and therapists.
+      - Assist non-verbal and high-support students with communication strategies, sensory regulation, and behavioral interventions.
+      - Create structured and supportive learning environments to enhance student engagement and success.
+      - Facilitate activities promoting fine and gross motor skills, cognitive development, and social interaction.
+      - Support smooth transitions between activities, maintaining consistency and adherence to schedules.
+      - Collaborate with teachers, therapists, ABAs, and parents to develop and reinforce effective teaching strategies.
+      - Maintain a safe and inclusive classroom environment, ensuring students’ emotional and physical well-being.
+
+  - position: Teacher Assistant
+    company_name: Chipeta Elementary School, District 11
     company_url: ''
-    company_logo: ''
-    date_start: 2016-01-01
-    date_end: 2020-12-31
-    summary: |
-      Responsibilities include:
-      - Migrated infrastructure to a new data center
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+    date_start: 2023-01-01
+    date_end: 2024-01-01
+    summary: |2-
+      Responsibilities included:
+      - Assisted the lead teacher in preparing and organizing classroom activities and materials to support lesson plans and instructional goals.
+      - Delivered handwriting lessons and creative craft activities.
+      - Helped create a positive and inclusive classroom environment, fostering social, emotional, and academic growth through interactive, age-appropriate activities.
+      - Provided individualized support to students needing additional help, ensuring attention to unique learning needs and challenges.
+      - Assisted in monitoring and managing student behavior, reinforcing classroom rules, and promoting positive behavior in a supportive manner.
+      
 
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
@@ -145,12 +153,12 @@ skills:
         icon: camera
 
 languages:
-  - name: English
+  - name: Ukrainian
     percent: 100
-  - name: Chinese
-    percent: 75
-  - name: Portuguese
-    percent: 25
+  - name: Russian
+    percent: 100 
+  - name: English
+    percent: 80
 
 # Awards.
 #   Add/remove as many awards below as you like.
@@ -186,4 +194,9 @@ awards:
 
 ## About Me
 
-Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Iana Samoilova is an educator, paraeducator in Special Education, and language specialist with a Master’s Degree, based in Colorado Springs. A native Ukrainian speaker fluent in Russian and English, she also teaches Ukrainian and is studying Spanish.
+
+Her strength lies in sensing the needs of children with special needs and carefully tracing cause-and-effect in their behavior, helping them feel safe, understood, and successful.
+
+Beyond academic pursuits, Iana is a professional pastry chef, a passionate quilter, an avid diver, a brown belt in Aikido, and a licensed PADI Advanced Open Water diver. 
+She brings creativity, balance, and cultural depth into everything she does — from the classroom to her personal projects.
