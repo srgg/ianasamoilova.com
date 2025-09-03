@@ -2,3 +2,14 @@
 .page-body > section:first-of-type#section-resume-biography-3 {
     padding-top: 0 !important;
 }
+
+/* Fix footer positioning - ensure it stays close to content */
+footer {
+    /* Fix footer positioning - ensure it stays close to content */
+    margin-top: 1rem !important;
+}
+
+/* Fix footer background */
+.page-footer {
+    background: white !important;
+}
