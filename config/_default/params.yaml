@@ -42,7 +42,7 @@ footer:
   copyright:
     notice: '© {year} Iana Samoilova. All rights reserved.'
     license:
-      enable: true
+      enable: false
       allow_derivatives: false
       share_alike: true
       allow_commercial: false

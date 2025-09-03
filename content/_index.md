@@ -7,6 +7,15 @@ type: landing
 design:
   # Default section spacing
   spacing: "6rem"
+  background:
+    color: black
+    image:
+        filename: stacked-peaks.svg
+        filters:
+            brightness: 1.0
+        size: cover
+        position: center
+        parallax: false
 
 sections:
   - block: resume-biography-3
@@ -24,16 +33,17 @@ sections:
       avatar:
         size: medium  # Options: small (150px), medium (200px, default), large (320px), xl (400px), xxl (500px)
         shape: circle # Options: circle (default), square, rounded
-      background:
-        color: black
-        image:
-          # Add your image background to `assets/media/`.
-          filename: stacked-peaks.svg
-          filters:
-            brightness: 1.0
-          size: cover
-          position: center
-          parallax: false
+#      background:
+#        color: black
+#        image:
+#          # Add your image background to `assets/media/`.
+#          filename: stacked-peaks.svg
+#          filters:
+#            brightness: 1.0
+#          size: cover
+#          position: center
+#          parallax: false          
+
 #  - block: markdown
 #    content:
 #      title: '📚 My Research'
