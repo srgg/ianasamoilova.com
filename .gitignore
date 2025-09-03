@@ -75,3 +75,8 @@ Desktop.ini
 
 *.log
 npm-debug.log*
+
+# Tina CMS
+node_modules
+tina/__generated__
+static/admin
