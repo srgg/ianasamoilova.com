@@ -6,11 +6,18 @@
   "description": "Academic CV starter template for Hugo Blox with Tailwind CSS v4",
   "scripts": {
     "dev": "hugo server --disableFastRender",
+    "tina": "npx tinacms dev --noTelemetry -c \"hugo server -D -p 1313\"",
+    "tina-audit": "npx tinacms audit",
     "build": "hugo --minify"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/typography": "^0.5.10",
-    "tailwindcss": "^4.1.12"
+    "tailwindcss": "^4.1.12",
+    "tinacms": "^2.8.2"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.10.2",
+    "@types/node": "^24.3.0"
   }
 }

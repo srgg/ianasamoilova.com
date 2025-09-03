@@ -59,7 +59,7 @@ education:
   - area: Special Education Generalist
     institution: University of Colorado Colorado Springs
     date_start: 2025-08-25
-    date_end: ''
+    date_end:
     summary:
     button:
       text: "Visit University Website"
@@ -92,7 +92,7 @@ work:
     company_name: Chipeta Elementary School, District 11
     company_url: ''
     date_start: 2024-01-01
-    date_end: ''
+    date_end:
     summary: |2-
       Responsibilities include:
       - Provide direct support to students with autism and other significant special needs, assisting with academic tasks, social skills, and daily routines.
