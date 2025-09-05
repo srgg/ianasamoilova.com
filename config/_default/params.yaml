@@ -8,17 +8,30 @@ appearance:
   mode: system
   color: emerald
 
-# SEO
+# SEO & MARKETING
 marketing:
   seo:
-    site_type: Person
-    local_business_type: ''
-    org_name: ''
-    description: 'The highly-customizable Hugo Academic theme powered by Hugo Blox Builder. Easily create your personal academic website.'
-#    twitter: 'GetResearchDev'
+    site_type: Person  # Schema.org type for individual portfolio sites
+    local_business_type: ''  # Leave empty for personal sites
+    # Organization name appears in search results and schema markup
+    org_name: 'Iana Samoilova - Special Education Specialist'
+    # Meta description (155 chars max) - appears in Google search snippets
+    # Optimized for: Special Education + Ukrainian + Colorado Springs + key skills
+    description: 'Iana Samoilova - Special Education Specialist & Russian/Ukrainian Teacher in Colorado Springs. Expert in autism support, IEPs, multilingual education. M.A. Literature.'
+
+##Stage 1: Temporary SPED Teacher License
+#    description: 'Iana Samoilova - Special Education Teacher & Russian/Ukrainian Instructor in Colorado Springs. Expert in autism support, IEPs, multilingual education. M.A. Literature.'
+    
+##Stage 2: Full SPED Teacher Endorsement
+#    description: 'Iana Samoilova - Licensed Special Education Teacher & Russian/Ukrainian Instructor in Colorado Springs. Expert in autism support, IEPs, multilingual education. M.A. Literature.'
+
+    # Social media handle (optional) - improves social sharing
+#    twitter: 'YourTwitterHandle'  # Uncomment when you create social accounts
   analytics:
+    # Google Tag Manager container for conversion tracking
     google_tag_manager: 'GTM-WP4B9N6J'
   verification:
+    # Google Search Console verification (add when you set it up)
     google: ''
 
 # Site header
@@ -52,4 +65,4 @@ features:
   math:
     enable: false
   privacy_pack:
-    enable: false
+    enable: true
