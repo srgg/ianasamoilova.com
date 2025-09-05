@@ -23,3 +23,8 @@ mounts:
     target: layouts
   - source: assets
     target: assets
+
+
+  # Map resume from uploads/ to root for cleaner URLs
+  - source: static/uploads/resume.pdf
+    target: static/resume.pdf     

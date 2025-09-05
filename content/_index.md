@@ -26,7 +26,7 @@ sections:
       # Show a call-to-action button under your biography? (optional)
       button:
         text: Download CV
-        url: uploads/resume.pdf
+        url: resume.pdf
     design:
       css_class: dark
       # Avatar customization

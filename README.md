@@ -115,6 +115,11 @@ Key configuration files:
 - `go.mod` - Hugo modules and theme
 - `package.json` - Node.js dependencies and scripts
 
+### Analytics & Tracking
+
+For a comprehensive website analytics setup with Google Tag Manager and Google Analytics 4:
+- **[GTM Setup Guide](docs/GTM_SETUP_GUIDE.md)** - Complete implementation guide for professional portfolio tracking
+
 ## 🚀 Deployment
 
 Automated deployment via GitHub Actions:
