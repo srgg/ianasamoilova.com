@@ -39,30 +39,30 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 
 2. **Install dependencies:**
    ```bash
-   pnpm install
+   npm install
    ```
 
 3. **Start development server:**
    ```bash
-   pnpm dev
+   npm run dev
    ```
    Site will be available at `http://localhost:1313`
 
 ### Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start Hugo development server |
-| `pnpm tina` | Start TinaCMS with Hugo (recommended for content editing) |
-| `pnpm tina-audit` | Validate TinaCMS schema and content |
-| `pnpm build` | Build production site |
+| Command              | Description |
+|----------------------|-------------|
+| `npm run dev`        | Start Hugo development server |
+| `npm run tina`       | Start TinaCMS with Hugo (recommended for content editing) |
+| `npm run tina-audit` | Validate TinaCMS schema and content |
+| `npm run build`      | Build production site |
 
 ### TinaCMS Development Mode
 
 For content editing with a visual interface:
 
 ```bash
-pnpm tina
+pnpm run npm tina
 ```
 
 This command:

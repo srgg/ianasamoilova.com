@@ -7,9 +7,15 @@ main:
   - name: Bio
     url: /
     weight: 10
+  - name: Technology Philosophy
+    url: technology-philosophy/
+    weight: 20
+  - name: Technology Tutorial and Lesson Plan Assignments
+    url: /
+    weight: 30
   - name: Experience
     url: experience/
-    weight: 20
-  - name: Projects
-    url: projects/
-    weight: 30
+    weight: 40
+#  - name: Projects
+#    url: projects/
+#    weight: 50

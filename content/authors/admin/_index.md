@@ -14,7 +14,7 @@ pronouns: she/her
 
 # Status emoji
 status:
-  icon: ☕️
+#  icon: ☕️
 
 # Is this the primary user of the site?
 superuser: true
@@ -50,9 +50,9 @@ profiles:
 #    url: https://orcid.org/
 
 interests:
-  - Artificial Intelligence
-  - Computational Linguistics
-  - Information Retrieval
+  - Psychology of Disability
+  - Technology for Inclusive Learning
+  - Collaboration & Equity
 
 
 education:
@@ -91,7 +91,7 @@ work:
   - position: Paraeducator – SPED (Significant Support Needs)
     company_name: Chipeta Elementary School, District 11
     company_url: ''
-    date_start: 2024-01-01
+    date_start: 2024-08-01
     date_end:
     summary: |2-
       Responsibilities include:
@@ -107,8 +107,8 @@ work:
   - position: Teacher Assistant
     company_name: Chipeta Elementary School, District 11
     company_url: ''
-    date_start: 2023-01-01
-    date_end: 2024-01-01
+    date_start: 2023-08-01
+    date_end: 2024-08-01
     summary: |2-
       Responsibilities included:
       - Assisted the lead teacher in preparing and organizing classroom activities and materials to support lesson plans and instructional goals.
@@ -116,38 +116,54 @@ work:
       - Helped create a positive and inclusive classroom environment, fostering social, emotional, and academic growth through interactive, age-appropriate activities.
       - Provided individualized support to students needing additional help, ensuring attention to unique learning needs and challenges.
       - Assisted in monitoring and managing student behavior, reinforcing classroom rules, and promoting positive behavior in a supportive manner.
-      
+
+  - position: ESL Teacher Assistant, Volunteer – ESL Summer Program, part-time
+    company_name: Adult and Family Education, District 11
+    company_url: ''
+    date_start: 2023-05-01
+    date_end: 2024-08-01
+    summary: |2-
+      Responsibilities included:
+      - Assisted the lead teacher in delivering English as a Second Language lessons to adult learners, focusing on speaking and listening skills.
+      - Supported students individually and in small groups to enhance their workplace communication skills and overall English proficiency.
+      - Helped facilitate conversational practice sessions, encouraging students to build confidence in spoken English.
+      - Provided guidance to students preparing for community involvement.
+      - Created a welcoming and inclusive environment, ensuring that all students felt supported. 
 
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
 skills:
-  - name: Technical Skills
+  - name: Skills
     items:
-      - name: Python
-        description: ''
+      - name: Special Education Expertise
+        description: 'Deep understanding of child psychology, autism spectrum disorder, and attachment theory'
         percent: 80
-        icon: code-bracket
-      - name: Data Science
-        description: ''
+        icon: fa-universal-access
+      - name: Instructional Technology  
+        description: 'Proficient in Microsoft Office, Google Workspace, iOS, cloud-based services, and assistive technology tools'
         percent: 100
-        icon: chart-bar
-      - name: SQL
-        description: ''
+        icon: laptop-code
+      - name: Creative Problem-Solving
+        description: 'Ability to think outside the box and offer fresh perspectives to foster inclusion and student success'
         percent: 40
         icon: circle-stack
   - name: Hobbies
     color: '#eeac02'
     color_border: '#f0bf23'
     items:
-      - name: Hiking
+      - name: Quilting
         description: ''
         percent: 60
         icon: person-simple-walk
-      - name: Cats
+      - name: Calligraphy
         description: ''
         percent: 100
         icon: cat
-      - name: Photography
+      - name: Cooking
+        description: 'https://yanasbakery.com'
+        percent: 80
+        icon: camera
+      - name: Beading
         description: ''
         percent: 80
         icon: camera
@@ -165,38 +181,35 @@ languages:
 #   Only `title`, `awarder`, and `date` are required.
 #   Begin multi-line `summary` with YAML's `|` or `|2-` multi-line prefix and indent 2 spaces below.
 awards:
-  - title: Neural Networks and Deep Learning
-    url: https://www.coursera.org/learn/neural-networks-deep-learning
-    date: '2023-11-25'
-    awarder: Coursera
-    icon: coursera
-    summary: |
-      I studied the foundational concept of neural networks and deep learning. By the end, I was familiar with the significant technological trends driving the rise of deep learning; build, train, and apply fully connected deep neural networks; implement efficient (vectorized) neural networks; identify key parameters in a neural network’s architecture; and apply deep learning to your own applications.
-  - title: Blockchain Fundamentals
-    url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
+  - title: Initial Teacher License, CO, Endorsed in Russian (Grades K-12)
+    url: https://www.cde.state.co.us/coworldlanguages
+    date: '2025-06-16'
+    awarder: CDE
+    icon: 
+    summary:  
+  - title: Nonviolent Crisis Intervention Training (CPI)
+    url: https://www.crisisprevention.com
     date: '2023-07-01'
-    awarder: edX
-    icon: edx
+    awarder: CPI
+    icon:
     summary: |
-      Learned:
-      - Synthesize your own blockchain solutions
-      - Gain an in-depth understanding of the specific mechanics of Bitcoin
-      - Understand Bitcoin’s real-life applications and learn how to attack and destroy Bitcoin, Ethereum, smart contracts and Dapps, and alternatives to Bitcoin’s Proof-of-Work consensus algorithm
-  - title: 'Object-Oriented Programming in R'
-    url: https://www.datacamp.com/courses/object-oriented-programming-with-s3-and-r6-in-r
-    certificate_url: https://www.datacamp.com
-    date: '2023-01-21'
-    awarder: datacamp
-    icon: datacamp
+  - title: 'Adult and Family Education, ESL Program Level 6, Outstanding Student'
+    url: https://adulted.d11.org/classes/english-as-a-second-language-esl
+    certificate_url:
+    date: '2023-06-21'
+    awarder: D11, Colorado
+    icon:
     summary: |
-      Object-oriented programming (OOP) lets you specify relationships between functions and the objects that they can act on, helping you manage complexity in your code. This is an intermediate level course, providing an introduction to OOP, using the S3 and R6 systems. S3 is a great day-to-day R programming tool that simplifies some of the functions that you write. R6 is especially useful for industry-specific analyses, working with web APIs, and building GUIs.
+      
 ---
 
 ## About Me
 
-Iana Samoilova is an educator, paraeducator in Special Education, and language specialist with a Master’s Degree, based in Colorado Springs. A native Ukrainian speaker fluent in Russian and English, she also teaches Ukrainian and is studying Spanish.
+Iana Samoilova is an educator, paraeducator in Special Education, and language specialist with a Master’s Degree, based in Colorado Springs.
 
-Her strength lies in sensing the needs of children with special needs and carefully tracing cause-and-effect in their behavior, helping them feel safe, understood, and successful.
+A native Ukrainian speaker fluent in Russian and English, she also teaches Ukrainian and is studying Spanish.
+Her strength lies in sensing the needs of children with disabilities and carefully tracing cause-and-effect in their behavior, helping them feel safe, understood, and successful. She is recognized for thinking outside the box and creating flexible solutions that empower students to succeed.
 
-Beyond academic pursuits, Iana is a professional pastry chef, a passionate quilter, an avid diver, a brown belt in Aikido, and a licensed PADI Advanced Open Water diver. 
-She brings creativity, balance, and cultural depth into everything she does — from the classroom to her personal projects.
+In addition to her work in education, Iana is a cynologist and breeder, a professional pastry chef, a passionate quilter, an avid diver, and a brown belt in Aikido, licensed PADI Advanced Open Water diver. 
+
+She brings creativity, discipline, and cultural depth into everything she does — from the classroom to her personal projects.

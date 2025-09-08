@@ -1,5 +1,5 @@
 ---
-title: "Week 1: Statement of the Technology in education"
+title: "My Vision for Technology Use"
 date: '2025-08-25T00:00:00Z'
 draft: false
 type: assignment
