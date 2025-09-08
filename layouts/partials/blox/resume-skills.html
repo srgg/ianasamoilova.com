@@ -1,6 +1,15 @@
-{{/* Hugo Blox: Skills */}}
-{{/* Documentation: https://hugoblox.com/blocks/ */}}
-{{/* License: https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md */}}
+{{/* 
+  Hugo Blox: Skills (Enhanced)
+  
+  This is an enhanced version of the original Hugo Blox Skills block with custom fixes:
+  
+  CUSTOM ENHANCEMENTS:
+  1. Fixed vertical alignment - Changed items-center to items-start to prevent shorter content from centering vertically
+  2. Ensures Skills and Hobbies categories align at same top level regardless of content height differences
+  
+  Original Documentation: https://hugoblox.com/blocks/
+  License: https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md
+*/}}
 
 {{/* Initialise */}}
 {{ $page := .wcPage }}
@@ -14,6 +23,8 @@
 {{end}}
 {{ $skills := $person_page.Params.skills }}
 {{ $show_show_skill_percentage := $block.design.show_skill_percentage | default true }}
+{{ $columns := $block.design.columns | default 2 }}
+<!-- DEBUG: Columns value = {{ $columns }} -->
 
 <div class="flex flex-col items-center max-w-prose mx-auto gap-3 justify-center">
 
@@ -24,12 +35,12 @@
     {{ with $block.content.text }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
 </div>
 
-<div class="flex flex-col lg:flex-row items-start max-w-prose mx-auto gap-3 px-6 md:px-0">
+<div class="grid grid-cols-1 lg:grid-cols-{{$columns}} items-start max-w-prose mx-auto gap-3 px-6 md:px-0">
 
     {{ range $skills }}
         {{ $color := .color | default "" }}
         {{ $color_border := .color_border | default "" }}
-        <div class="w-full lg:w-1/2">
+        <div class="w-full">
             <div class="mb-5 text-xl font-bold text-gray-900 dark:text-white">
                 {{ .name | markdownify | emojify }}
                 {{ with .description }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
