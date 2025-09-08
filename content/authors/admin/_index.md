@@ -138,15 +138,15 @@ skills:
       - name: Special Education Expertise
         description: 'Deep understanding of child psychology, autism spectrum disorder, and attachment theory'
         percent: 80
-        icon: fa-universal-access
+        icon: users
       - name: Instructional Technology  
         description: 'Proficient in Microsoft Office, Google Workspace, iOS, cloud-based services, and assistive technology tools'
         percent: 100
-        icon: laptop-code
+        icon: computer-desktop
       - name: Creative Problem-Solving
         description: 'Ability to think outside the box and offer fresh perspectives to foster inclusion and student success'
         percent: 40
-        icon: circle-stack
+        icon: light-bulb
   - name: Hobbies
     color: '#eeac02'
     color_border: '#f0bf23'
@@ -154,19 +154,19 @@ skills:
       - name: Quilting
         description: ''
         percent: 60
-        icon: person-simple-walk
+        icon: squares-2x2
       - name: Calligraphy
         description: ''
         percent: 100
-        icon: cat
-      - name: Cooking
+        icon: pencil
+      - name: '[Cooking](https://yanasbakery.com)'
         description: 'https://yanasbakery.com'
         percent: 80
-        icon: camera
+        icon: cake
       - name: Beading
         description: ''
         percent: 80
-        icon: camera
+        icon: sparkles
 
 languages:
   - name: Ukrainian
@@ -179,7 +179,7 @@ languages:
 # Awards.
 #   Add/remove as many awards below as you like.
 #   Only `title`, `awarder`, and `date` are required.
-#   Begin multi-line `summary` with YAML's `|` or `|2-` multi-line prefix and indent 2 spaces below.
+#   Begin a multi-line ` summary ` with YAML's `|` or `|2-` multi-line prefix and indent 2 spaces below.
 awards:
   - title: Initial Teacher License, CO, Endorsed in Russian (Grades K-12)
     url: https://www.cde.state.co.us/coworldlanguages
