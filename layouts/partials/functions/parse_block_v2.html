@@ -1,22 +1,34 @@
-{{/* Hugo Blox Parser v2 */}}
+{{/* Custom Hugo Blox Parser v2 - Enhanced for blox-tailwind v0.6.1 compatibility */}}
+{{/* 
+MODIFICATIONS MADE:
+1. Updated block resolution to use v0.6.1 hbx/resolve-block-param system
+2. Changed block path from blox/{type}.html to hbx/blocks/{type}/block.html  
+3. Enhanced spacing logic to handle multiple formats:
+   - String format: spacing: "2rem 0 0 0"
+   - Symmetric: spacing: "2rem" 
+   - Array format: spacing: { padding: ["2rem", "0", "0", "0"] }
+4. Fixed original Hugo Blox padding template errors
+5. Preserved backward compatibility with page-level spacing fallback
+
+UPGRADE CONTEXT: 
+- Adapted from original Hugo Blox parse_block_v2.html for v0.6.1 compatibility
+- Maintains custom spacing logic that was broken in original implementation
+- Works with both built-in blocks (resume-experience, markdown) and custom blocks (resume-biography-3)
+*/}}
 {{/* Documentation: https://hugoblox.com/blocks/ */}}
 {{/* License: https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md */}}
 
 {{ $page := .page }}
 {{ $block := .block }}
 
-{{ $block_type := lower ($block.blox | default $block.block) | default "markdown" }}
+{{- $block_type := partial "hbx/resolve-block-param" (dict "config" $block "context" "content section") | default "markdown" -}}
+{{ $block_type = lower $block_type }}
 {{ range $r := site.Data.blox_aliases.renames }}
   {{ $block_type = cond (eq $block_type $r.old) $r.new $block_type }}
 {{ end }}
-{{ $block_path := printf "blox/%s.html" $block_type }}
+{{ $block_path := printf "hbx/blocks/%s/block.html" $block_type }}
 {{ if not (templates.Exists (printf "_partials/%s" $block_path)) }}
-  {{ $block_path_community := printf "blox/community/%s.html" $block_type }}
-  {{ if not (templates.Exists (printf "_partials/%s" $block_path_community)) }}
-    {{ errorf "%s uses a `%s` blox but the `%s` blox was not found. Check the name of the blox and try again. For a custom or community blox, upload it first to `hugo-blox/blox/community/%s.html`. For an All Access blox, upload it first to `hugo-blox/blox/all-access/%s.html`" $page.File.Path $block_type $block_type $block_type $block_type }}
-  {{ else }}
-    {{ $block_path = $block_path_community }}
-  {{ end }}
+  {{ errorf "%s uses a `%s` block but the `%s` block was not found at `%s`. Check the name of the block and ensure it exists in the blox/%s/ directory." $page.File.Path $block_type $block_type $block_path $block_type }}
 {{ end }}
 
 {{/* Mermaid block: Workaround to make Hugo's .Page.Store.Set cascade up to the parent of headless pages */}}
@@ -105,9 +117,9 @@ Original broken structure:
      3. Fixed array processing to prevent malformed CSS generation
      4. Preserved fallback to page-level spacing for backward compatibility
 */}}
+
 {{/* Determine spacing source: block-level or fallback to page-level */}}
 {{ $block_spacing := or $block.design.spacing $page.Params.design.spacing }}
-
 {{ if $block_spacing }}
   {{/* Apply unified spacing logic to either block or page spacing */}}
   {{ if and (reflect.IsMap $block_spacing) (index $block_spacing "padding") }}
