@@ -1,0 +1,6 @@
+{{/* 
+    Fix mixed content warnings by upgrading all HTTP requests to HTTPS automatically
+    
+    Background images were loading over HTTP, causing browser security warnings. Changed URL generation to use relative paths that inherit the HTTPS protocol automatically, eliminating mixed content issues.
+ */}}
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
