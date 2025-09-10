@@ -120,6 +120,17 @@ Original broken structure:
 
 {{/* Determine spacing source: block-level or fallback to page-level */}}
 {{ $block_spacing := or $block.design.spacing $page.Params.design.spacing }}
+
+{{/* Determine spacing source: block-level or fallback to page-level */}}
+{{/* DEBUG: Check what values we're getting */}}
+{{/*<div style="background: red; color: white; padding: 5px; font-size: 12px;">*/}}
+{{/*DEBUG block.design.spacing = "{{ $block.design.spacing }}" | page.Params.design.spacing = "{{ $page.Params.design.spacing }}" | page.Params.design = {{ $page.Params.design }}*/}}
+{{/*</div>*/}}
+
+{{/*<div style="background: orange; color: black; padding: 5px; font-size: 12px;">*/}}
+{{/*DEBUG final block_spacing = "{{ $block_spacing }}"*/}}
+{{/*</div>*/}}
+
 {{ if $block_spacing }}
   {{/* Apply unified spacing logic to either block or page spacing */}}
   {{ if and (reflect.IsMap $block_spacing) (index $block_spacing "padding") }}
