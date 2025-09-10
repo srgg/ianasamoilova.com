@@ -74,7 +74,7 @@ UPGRADE CONTEXT:
     {{ if ne $bg_img.MediaType.SubType "svg" }}
       {{ $bg_img = $bg_img.Fit "1920x1920 webp" }}
     {{ end }}
-    {{ $style_bg = printf "%sbackground-image: url('%s');" $style_bg $bg_img.Permalink }}
+    {{ $style_bg = printf "%sbackground-image: url('%s');" $style_bg $bg_img.RelPermalink }}
   {{ else }}
     {{ errorf "Couldn't find `%s` in the `assets/media/` folder - please add it." $bg.image.filename }}
   {{ end }}
