@@ -44,6 +44,16 @@ profiles:
 #    url: https://github.com/gcushen
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/yanasamoylova/
+    label: Connect on LinkedIn
+#  - icon: brands/medium
+#    url: https://medium.com/@GetResearchDev
+#  - icon: brands/youtube
+#    url: https://www.youtube.com/c/GetResearchDev
+#  - icon: brands/facebook
+#    url: https://www.facebook.com/GetResearchDev
+#  - icon: brands/twitter
+#    url: https://twitter.com/GetResearchDev
+#  - icon: brands/stack-overflow
 #  - icon: academicons/google-scholar
 #    url: https://scholar.google.com/
 #  - icon: academicons/orcid
@@ -202,8 +212,6 @@ awards:
     summary: |
       
 ---
-
-## About Me
 
 Iana Samoilova is an educator, paraeducator in Special Education, and language specialist with a Master’s Degree, based in Colorado Springs.
 

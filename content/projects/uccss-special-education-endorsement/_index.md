@@ -29,7 +29,8 @@ sections:
                 columns=1
           >}}
       design:
-        columns: 2        
+        columns: 2
+#        spacing: "0 0 0 0"
 ---
 
 ## Assignments

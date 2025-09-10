@@ -6,6 +6,7 @@
   "description": "Academic CV starter template for Hugo Blox with Tailwind CSS v4",
   "scripts": {
     "dev": "hugo server --disableFastRender",
+    "prod": "hugo --gc --minify --logLevel debug --printI18nWarnings --printPathWarnings",
     "tina": "npx tinacms dev --noTelemetry -c \"hugo server -D -p 1313\"",
     "tina-audit": "npx tinacms audit",
     "build": "hugo --minify"

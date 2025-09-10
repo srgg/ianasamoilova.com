@@ -1,8 +1,12 @@
 ---
-title: "My Vision for Technology Use"
+title: "My Vision for Technology Use in Education"
 date: '2025-08-25T00:00:00Z'
 draft: false
-type: assignment
+type: post
+# See https://docs.hugoblox.com/reference/page-features
+#backlinks: false
+share: false
+pager: false
 ---
 I believe that technology in education should serve as a tool for empowerment, not a distraction or substitute for thinking. 
 

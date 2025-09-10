@@ -29,6 +29,7 @@
 {{ end }}
 
 {{/* Query */}}
+{{/* Query ALL pages, not just regular once*/}}
 {{ $query := site.Pages }}
 {{ $archive_page := "" }}
 
@@ -115,6 +116,7 @@ Example usage: If you want to show only content from the "articles/2022/" subdir
     {{ $query = where $query "Date" "<" now }}
 {{ end }}
 
+{{/*DEBUG OUTPUT  */}}
 {{/*<div style="background: red; color: white; padding: 10px;">*/}}
 {{/*    CURRENT: "{{ $page.File.Dir }}" | PATTERN: "{{ printf "%s%s" $page.File.Dir $block.content.filters.subdirs }}" | MATCHED: {{ range site.RegularPages }}{{ if and (hasPrefix .File.Dir $page.File.Dir) (findRE (printf "%s%s" $page.File.Dir $block.content.filters.subdirs) .File.Dir) }}"{{ .File.Dir }}" {{ end }}{{ end }}*/}}
 {{/*</div>*/}}
@@ -174,8 +176,8 @@ This enhancement allows customizing the appearance of collection titles through 
                 <div class="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
                     {{ $block.content.title | emojify | $page.RenderString }}
                 </div>
-            {{ end }}
-
+            {{ end}}
+            
             {{ with $block.content.text }}<p>{{ . | emojify | $page.RenderString }}</p>{{ end }}
         </div>
     {{ end }}
@@ -185,7 +187,14 @@ This enhancement allows customizing the appearance of collection titles through 
 <div class="flex flex-col items-center px-6">
 {{ end }}
 
-    {{ $config := dict "columns" ($block.design.columns | default 2) "len" (len $query) "fill_image" ($block.design.fill_image | default true) }}
+    {{ $config := dict
+            "columns" ($block.design.columns | default 2)
+            "len" (len $query)
+            "fill_image" ($block.design.fill_image | default true)
+            "show_date" ($block.design.show_date | default true)
+            "show_read_time" ($block.design.show_read_time | default true)
+            "show_read_more" ($block.design.show_read_more | default true)
+    }}
     {{ partial "functions/render_view" (dict "fragment" "start" "page" $block "item" . "view" $view "config" $config) }}
 
     {{ range $index, $item := $query }}
