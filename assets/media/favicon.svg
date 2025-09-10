@@ -1,0 +1,55 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sunflower with "IS" text moved right 10 pixels -->
+  <g transform="translate(256,256)">
+    <!-- 36 petals same as #5 and #7 -->
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(0)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(10)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(20)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(30)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(40)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(50)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(60)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(70)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(80)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(90)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(100)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(110)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(120)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(130)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(140)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(150)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(160)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(170)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(180)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(190)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(200)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(210)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(220)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(230)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(240)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(250)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(260)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(270)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(280)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(290)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(300)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(310)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(320)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(330)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(340)"/>
+    <ellipse cx="0" cy="-200" rx="15" ry="50" fill="#FFD700" transform="rotate(350)"/>
+    
+    <!-- Define clipping mask for center -->
+    <defs>
+      <clipPath id="centerClip">
+        <circle cx="0" cy="0" r="150"/>
+      </clipPath>
+    </defs>
+    
+    <!-- Uniform center using outer circle color -->
+    <circle cx="0" cy="0" r="150" fill="#8B4513"/>
+    
+    <!-- "IS" text moved right 10 pixels (from x="0" to x="10") -->
+    <text x="10" y="90" font-family="Arial, sans-serif" font-size="240" font-weight="bold" fill="#FFD700" text-anchor="middle" opacity="1.0" clip-path="url(#centerClip)">IS</text>
+  </g>
+</svg>
