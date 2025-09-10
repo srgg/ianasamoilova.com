@@ -4,9 +4,14 @@ title: ""
 date: '2022-10-24'
 type: landing
 
+cascade:
+  design:
+    spacing: "6rem 0 0 0"
+    
 design:
-  # Default section spacing
-  spacing: "3rem"
+  spacing: "6rem 0 0 0"
+
+  # Default section spacing    
   background:
     color: black
     image:
