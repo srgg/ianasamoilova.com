@@ -80,3 +80,7 @@ npm-debug.log*
 node_modules
 tina/__generated__
 static/admin
+
+
+# Serena MCP ignore
+.serena/cache/

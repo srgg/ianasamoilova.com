@@ -44,5 +44,7 @@
   )
 }}
 
-{{/* Call the collection partial with the block configuration */}}
-{{ partial "hbx/blocks/collection/block.html" (dict "wcPage" .Page "wcBlock" $block) }}
+{{/* Call the collection partial with the block configuration using Hugo Blox resolution */}}
+{{ $block_type := partial "hbx/resolve-block-param" (dict "config" $block "context" "shortcode") | default "collection" }}
+{{ $block_path := printf "hbx/blocks/%s/block.html" $block_type }}
+{{ partial $block_path (dict "wcPage" .Page "wcBlock" $block) }}
