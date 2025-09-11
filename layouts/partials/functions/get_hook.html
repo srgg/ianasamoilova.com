@@ -1,0 +1,41 @@
+{{/* Enhanced Hugo Blox Hook System - Fixed for both _partials and partials directories */}}
+{{/* 
+MODIFICATIONS MADE:
+1. Added support for both layouts/_partials/hooks/ and layouts/partials/hooks/ directories
+2. Fixed the original Hugo Blox limitation that only checked layouts/_partials/hooks/
+3. Now provides flexibility for users to place hooks in either location
+4. Maintains backward compatibility with existing hook locations
+
+TESTING:
+Test hooks are working with:
+curl -s http://localhost:1316/ | sed -n '/<head>/,/<\/head>/p' | grep "buttons\.github\.io" || echo "GitHub buttons script not in head"
+
+UPGRADE CONTEXT:
+- Enhanced from the original Hugo Blox get_hook function for better usability
+- Resolves hook placement confusion between _partials vs partials directories
+*/}}
+
+{{/* Function to inject custom code into layouts without overriding files. */}}
+{{/* Input: hook folder name (str) */}}
+{{/* Output: loaded (bool) */}}
+
+{{ $loaded := false }}
+{{ $partial_dir := printf "hooks/%s/" .hook }}
+{{ $context := .context }}
+
+{{/* Check both _partials and partials directories for hooks */}}
+{{ $hook_dirs := slice "layouts/_partials" "layouts/partials" }}
+{{ range $hook_dirs }}
+  {{ $hook_dir_path := path.Join . $partial_dir }}
+  {{ if fileExists $hook_dir_path }}
+    {{ range os.ReadDir $hook_dir_path }}
+      {{ if not .IsDir }}
+        {{ $partial_path := path.Join $partial_dir .Name }}
+        {{ partial $partial_path $context }}
+        {{ $loaded = true }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{/* The return statement below is for debug purposes only and prevents the above partial(s) being included in the page */}}
+{{/* return $loaded */}}
