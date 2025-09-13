@@ -42,11 +42,45 @@ Hugo Blox uses multiple icon systems:
 - Missing icons generate warnings but don't break the site
 - Icons should be in SVG format with `.svg` extension
 
-## Favicon
-- **Location**: `assetperfects/media/icon.png` (exact filename required)
-- **Size**: 512x512 PNG, transparent background
-- **Convert**: `magick favicon.svg -background transparent assets/media/icon.png`
-- **Note**: Hugo Blox auto-generates all other favicon sizes
+## Favicon & Site Icon
+- **Location**: `assets/media/icon.png` (exact filename required)
+- **Size**: 512x512 PNG, transparent background preferred
+- **Supported Formats**: **PNG ONLY** - WebP and SVG are NOT supported for favicons
+- **Technical Details**: Hugo Blox hardcodes `resources.GetMatch "media/icon.png"` in `get_site_icon.html`
+- **Note**: Hugo Blox auto-generates all other favicon sizes from this single PNG file
+
+### Logo Conversion Commands
+Convert logo from PNG to various formats:
+
+```bash
+# Convert PNG to 512x512 WebP with transparent background
+magick logo-concept.png -resize 512x512 \
+  \( +clone -colorspace HSL -channel L -threshold 95% -negate \) \
+  -alpha off -compose CopyOpacity -composite \
+  -format webp logo-concept-512.webp
+
+# Simple PNG to WebP conversion maintaining transparency
+magick logo-concept.png -resize 512x512 -background transparent \
+  -extent 512x512 -format webp logo-concept-512.webp
+
+# Convert logo PNG to favicon with selective transparency (background transparent, internal whites preserved)
+magick logo-concept.png -resize 512x512 \
+  \( +clone -colorspace HSL -channel L -threshold 95% -negate \) \
+  -alpha off -compose CopyOpacity -composite \
+  assets/media/icon.png
+
+# Convert SVG to PNG for favicon (if starting from SVG)
+magick logo-concept.svg -background transparent -resize 512x512 assets/media/icon.png
+
+#
+magick favicon-nobg.png -resize 512x512 -background none -gravity center -extent 512x512 icon.png
+```
+
+### Avatar Support
+- **WebP Avatars**: Fully supported - Hugo Blox includes `**/*.webp` in file mounts
+- **Detection**: Uses wildcard `*avatar*` matching any extension
+- **Location**: Place avatar files in author directories (e.g., `content/authors/admin/avatar.webp`)
+- **Processing**: Auto-generates multiple sizes optimized for different contexts
 
 ## Content Structure Patterns
 
