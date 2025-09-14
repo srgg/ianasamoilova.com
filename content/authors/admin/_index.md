@@ -23,7 +23,7 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Paraeducator – SPED
+role: '[Paraeducator – SPED](experience/#paraeducator-sped)'
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
@@ -67,6 +67,7 @@ interests:
 
 education:
   - area: Special Education Generalist
+    id: special-education-generalist
     institution: University of Colorado Colorado Springs
     date_start: 2025-08-25
     date_end:
@@ -76,6 +77,7 @@ education:
       url: "https://www.uccs.edu"
       
   - area: BA/MA Ukrainian and Russian Language and Literature
+    id: ma-degree-ukrainian-and-russian-language-and-literature
     institution: V.N. Karazin Kharkiv National University
     date_start: 1996-09-01  # approximate start date
     date_end: 2001-06-01    # graduation date
@@ -101,6 +103,7 @@ education:
 
 work:
   - position: Paraeducator – SPED (Significant Support Needs)
+    id: paraeducator-sped
     company_name: Chipeta Elementary School, District 11
     company_url: 'https://chipeta.d11.org'
     date_start: 2024-08-01
