@@ -24,6 +24,9 @@ design:
 
 sections:
   - block: resume-biography-3
+    # URL for cross-linking to a detailed experience page
+    experience_url: experience/
+    skills_url: skills
     content:
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: admin

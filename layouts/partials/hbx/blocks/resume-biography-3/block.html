@@ -207,7 +207,11 @@
                                             </div>
                                             <div class="flex-1 flex-grow">
                                                 <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                                                    {{ .area }}{{ with .year }}, {{ . }}{{ end }}
+                                                    {{ if and $block.experience_url .id }}
+                                                        <a href="{{ $block.experience_url }}#{{ .id }}" class="hover:underline">{{ .area }}</a>{{ with .year }}, {{ . }}{{ end }}
+                                                    {{ else }}
+                                                        {{ .area }}{{ with .year }}, {{ . }}{{ end }}
+                                                    {{ end }}
                                                 </p>
                                                 <p class="text-gray-600 dark:text-gray-400 font-medium mt-1">{{ .institution }}</p>
                                             </div>
