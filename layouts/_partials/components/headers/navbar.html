@@ -53,10 +53,11 @@
       class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-start
       {{ if in (slice "l" "left") $align_menu }}mr-auto ml-6{{ else if (in (slice "r" "right") $align_menu) }}ml-auto mr-6{{end}}">
       {{ $currentPage := . }}
+      {{ $pageURL := $currentPage.Permalink | absLangURL }}
       {{ range site.Menus.main }}
       {{ $menuURL := .URL | absLangURL }}
-      {{ $pageURL:= $currentPage.Permalink | absLangURL }}
-      {{ $active := eq $menuURL $pageURL }}
+      {{/* Active state: exact match OR prefix match (except for homepage which needs exact match) */}}
+      {{ $active := or (eq $menuURL $pageURL) (and (ne .URL "/") (hasPrefix $pageURL $menuURL)) }}
       {{ if .HasChildren }}
       <li class="nav-item nav-dropdown group relative">
             <span
@@ -64,11 +65,11 @@
               tabindex="0"
               aria-haspopup="true"
               aria-expanded="false"
-              class="nav-link cursor-pointer select-none {{ range .Children }}
+              class="nav-link cursor-pointer select-none {{ $hasActiveChild := false }}{{ range .Children }}
                 {{ $childURL := .URL | absLangURL }}
-                {{ $active := eq $childURL $pageURL }}
-                {{ if $active }}active{{ end }}
-              {{ end }} inline-flex items-center">
+                {{ $active := or (eq $childURL $pageURL) (and (ne .URL "/") (hasPrefix $pageURL $childURL)) }}
+                {{ if $active }}{{ $hasActiveChild = true }}{{ end }}
+              {{ end }}{{ if $hasActiveChild }}active{{ end }} inline-flex items-center">
               {{ .Name }}
               <svg class="h-4 w-4 fill-current inline-block" viewBox="0 0 20 20">
                 <path
@@ -79,7 +80,7 @@
           class="nav-dropdown-list lg:group-hover:visible lg:group-hover:opacity-100">
           {{ range .Children }}
           {{ $childURL := .URL | absLangURL }}
-          {{ $active := eq $childURL $pageURL }}
+          {{ $active := or (eq $childURL $pageURL) (hasPrefix $pageURL $childURL) }}
           {{ $url := "" }}
           {{- if findRE `^#` .URL -}}
             {{- if not $.IsHome -}}
