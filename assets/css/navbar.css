@@ -1,45 +1,35 @@
-/* === Active Navbar Item === */
-.nav-link.active {
-    color: var(--color-primary-800) !important; /* strong text color */
-    font-weight: 600 !important;
+/* Variables */
+:root {
+    --nav-inactive-weight: 500;
+    --nav-active-weight: 700;
+    --nav-inactive-color: #4B5563; /* gray-600 */
+    --nav-active-color: var(--color-primary-800);
+    --nav-hover-color: var(--color-primary-600);
+    --nav-hover-bg: rgb(249, 250, 251); /* gray-50 */
+    --nav-active-bg: rgb(243, 244, 246); /* gray-100 */
+    --nav-underline-color: var(--color-primary-700);
+    --nav-underline-inactive: rgb(209, 213, 219); /* gray-300 */
+    --nav-transition: all 0.25s ease;
+}
+
+/* Navigation Links */
+.nav-link {
     position: relative;
+    color: var(--nav-inactive-color);
+    font-weight: var(--nav-inactive-weight);
+    transition: var(--nav-transition);
+}
+
+.nav-link.active {
+    color: var(--nav-active-color) !important;
+    font-weight: var(--nav-active-weight) !important;
     cursor: default;
 }
 
-
-/* Underline hidden when mobile hamburger menu shown, visible when desktop nav shown */
-@media (min-width: theme('screens.lg')) { /* lg breakpoint (1024px) - matches navbar lg:flex */
-    /* Active underline (only show when desktop navbar is visible) */
-    .nav-link.active::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        border-radius: 2px;
-        background: var(--color-primary-700); /* slightly darker for contrast */
-    }
-
-    /* Inactive underline hover state (only show when desktop navbar is visible) */
-    .nav-link:not(.active):hover {
-        color: #1F2937; /* gray-900 */
-    }
-
-    .nav-link:not(.active):hover::after {
-        width: 100%; /* animate underline from center on hover */
-    }
+.nav-link:not(.active):hover {
+    color: var(--nav-hover-color);
 }
 
-/* === Inactive Items === */
-.nav-link:not(.active) {
-    color: #4B5563; /* gray-600 */
-    font-weight: 500;
-    position: relative;
-    transition: color 0.25s ease;
-}
-
-/* Inactive ::after underline (center animation) */
 .nav-link:not(.active)::after {
     content: '';
     position: absolute;
@@ -48,7 +38,51 @@
     width: 0;
     height: 2px;
     border-radius: 2px;
-    background: rgb(209, 213, 219); /* gray-300 */
+    background: var(--nav-underline-inactive);
     transform: translateX(-50%);
-    transition: width 0.25s ease;
+    transition: var(--nav-transition);
+}
+
+@media (min-width: theme('screens.lg')) {
+    .nav-link.active::after,
+    .nav-dropdown > span.nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--nav-underline-color);
+    }
+}
+
+/* Dropdown Menu */
+.nav-dropdown > span {
+    color: var(--nav-inactive-color);
+    font-weight: var(--nav-inactive-weight);
+    transition: var(--nav-transition);
+    position: relative;
+}
+
+.nav-dropdown > span.nav-link.active {
+    color: var(--nav-active-color) !important;
+    font-weight: var(--nav-active-weight) !important;
+}
+
+.nav-dropdown-link {
+    color: var(--nav-inactive-color) !important;
+    font-weight: var(--nav-inactive-weight) !important;
+    transition: var(--nav-transition) !important;
+}
+
+.nav-dropdown-link:hover {
+    color: var(--nav-hover-color) !important;
+    background-color: var(--nav-hover-bg) !important;
+}
+
+.nav-dropdown-link.active {
+    color: var(--nav-active-color) !important;
+    font-weight: var(--nav-active-weight) !important;
+    background-color: var(--nav-active-bg) !important;
 }
