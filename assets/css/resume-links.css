@@ -1,0 +1,39 @@
+
+/* === Resume Section Cross-linking Navigation === */
+/* Adds IDs to experience/education items and links them from the biography.
+   Smooth scrolling with header offset and highlight animation provides
+   clear, non-disorienting navigation between sections. */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Target highlighting using HugoBlox theme colors */
+:target {
+    animation: highlight-target 4s ease-in-out;
+}
+
+@keyframes highlight-target {
+    0% {
+        background-color: rgb(var(--hb-primary-100-rgb));
+        border-radius: 0.5rem;
+        box-shadow: 0 0 20px rgba(var(--hb-primary-400-rgb), 0.5);
+    }
+    50% {
+        background-color: rgba(var(--hb-primary-100-rgb), 0.4);
+        border-radius: 0.5rem;
+        box-shadow: 0 0 15px rgba(var(--hb-primary-400-rgb), 0.3);
+    }
+    100% {
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+/* Base margin + incremental offset to ensure 'Education' section header stays visible */
+.education-list :target:nth-child(1) { scroll-margin-top: calc(6rem + 0rem); }
+.education-list :target:nth-child(2) { scroll-margin-top: calc(6rem + 10rem); }
+
+/* Base margin + incremental offset to ensure 'Experience' section header stays visible */
+.experience-list :target:nth-child(1) { scroll-margin-top: calc(6rem + 0rem); }
