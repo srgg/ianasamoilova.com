@@ -24,12 +24,20 @@
     {{ range $hb_community_styles }}
       {{ $css_files = $css_files | append . }}
     {{ end }}
-  {{ end }}    
-    
-  {{/* 4. Custom CSS */}}
+  {{ end }}
+
+  {{/* 4. Custom CSS with Tailwind processing */}}
   {{ if fileExists "assets/css/custom.css" }}
     {{ $custom_css := resources.Get "css/custom.css" }}
-    {{ $css_files = $css_files | append $custom_css }}
+
+    {{/* The css.TailwindCSS pipeline supports @import, theme() resolution,
+        and all Tailwind directives. It is executed after main.css,
+        ensuring that custom styles can extend or override
+        the base Tailwind stylesheet. It allows direct use of
+        Tailwind utility classes without requiring additional imports. */}}
+    {{ with $custom_css | css.TailwindCSS $opts }}
+      {{ $css_files = $css_files | append . }}
+    {{ end }}
   {{ end }}
 
   {{/* Single unified CSS bundle with Tailwind JIT */}}

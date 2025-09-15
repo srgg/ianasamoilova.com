@@ -1,0 +1,54 @@
+/* === Active Navbar Item === */
+.nav-link.active {
+    color: var(--color-primary-800) !important; /* strong text color */
+    font-weight: 600 !important;
+    position: relative;
+    cursor: default;
+}
+
+
+/* Underline hidden when mobile hamburger menu shown, visible when desktop nav shown */
+@media (min-width: theme('screens.lg')) { /* lg breakpoint (1024px) - matches navbar lg:flex */
+    /* Active underline (only show when desktop navbar is visible) */
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--color-primary-700); /* slightly darker for contrast */
+    }
+
+    /* Inactive underline hover state (only show when desktop navbar is visible) */
+    .nav-link:not(.active):hover {
+        color: #1F2937; /* gray-900 */
+    }
+
+    .nav-link:not(.active):hover::after {
+        width: 100%; /* animate underline from center on hover */
+    }
+}
+
+/* === Inactive Items === */
+.nav-link:not(.active) {
+    color: #4B5563; /* gray-600 */
+    font-weight: 500;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+/* Inactive ::after underline (center animation) */
+.nav-link:not(.active)::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: rgb(209, 213, 219); /* gray-300 */
+    transform: translateX(-50%);
+    transition: width 0.25s ease;
+}
