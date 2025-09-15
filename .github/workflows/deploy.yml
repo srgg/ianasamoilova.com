@@ -19,7 +19,7 @@ permissions:
 
 concurrency:
   group: 'pages'
-  cancel-in-progress: false
+  cancel-in-progress: true # Cancel older jobs if a new push comes in
 
 jobs:
   # Build website
@@ -37,17 +37,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm' # Enable pnpm cache automatically
 
+      # Install pnpm if a pnpm lockfile exists
       - name: Setup pnpm
-        if: hashFiles('package.json') != ''
+        if: hashFiles('pnpm-lock.yaml') != ''
         uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         run: |
-          # Install Tailwind CLI if package.json exists
-          if [ -f "package.json" ]; then
-            echo "Installing Tailwind dependencies..."
-            pnpm install || npm install
+          if [ -f "pnpm-lock.yaml" ]; then
+            echo "Installing dependencies with pnpm..."
+            pnpm install --frozen-lockfile
+          elif [ -f "package.json" ]; then
+            echo "Installing dependencies with npm..."
+            npm ci
           fi
 
       - name: Setup Hugo
@@ -56,18 +60,7 @@ jobs:
           hugo-version: ${{ env.WC_HUGO_VERSION }}
           extended: true
 
-      # Cache dependencies (Go modules, node_modules) - stable, rarely changes
-      - uses: actions/cache@v4
-        with:
-          path: |
-            /tmp/hugo_cache_runner/
-            node_modules/
-            modules/*/node_modules/
-          key: ${{ runner.os }}-hugo-deps-${{ hashFiles('**/go.mod', '**/package-lock.json', '**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-hugo-deps-
-
-      # Cache Hugo resources (processed images, CSS) - invalidates only when assets/config change
+      # Cache Hugo resources (images, CSS, etc.)
       - uses: actions/cache@v4
         with:
           path: resources/
@@ -84,15 +77,17 @@ jobs:
           HUGO_ENVIRONMENT: production
         run: |
           echo "Hugo Cache Dir: $(hugo config | grep cachedir)"
-          hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+#          hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+          hugo --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Generate Pagefind search index (if applicable)
         run: |
-          # Check if site uses Pagefind search
-          if [ -f "package.json" ] && grep -q "pagefind" package.json; then
-            pnpm dlx pagefind --source "public" || npx pagefind --source "public"
+          if [ -f "pnpm-lock.yaml" ] && grep -q "pagefind" pnpm-lock.yaml; then
+            pnpm dlx pagefind --source "public"
+          elif [ -f "package.json" ] && grep -q "pagefind" package.json; then
+            npx pagefind --source "public"
           elif [ -f "netlify.toml" ] && grep -q "pagefind" netlify.toml; then
-            pnpm dlx pagefind --source "public" || npx pagefind --source "public"
+            npx pagefind --source "public"
           fi
 
       - name: Upload artifact
@@ -104,15 +99,14 @@ jobs:
   deploy:
     if: github.repository_owner != 'HugoBlox'
     needs: build
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write # to deploy to Pages
-      id-token: write # to verify the deployment originates from an appropriate source
-    # Deploy to the github-pages environment
+    runs-on: ubuntu-latest
+    # Deployment environment configuration
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
