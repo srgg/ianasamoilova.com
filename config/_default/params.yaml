@@ -39,11 +39,17 @@ header:
   navbar:
     enable: true
     blox: "navbar"
+    align: "center"
     fixed_to_top: true
     show_search: false
     show_theme_chooser: false
+    theme_day: minimal
+    theme_night: minimal
+    font: minimal
+#    show_logo: false
     logo:
       text: "Iana Samoilova"
+#      filename: 'favicon-nobg.png'
 
 # Site footer
 footer:

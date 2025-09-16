@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.14.0",
   "description": "Academic CV starter template for Hugo Blox with Tailwind CSS v4",
   "scripts": {
-    "dev": "hugo server --disableFastRender",
+    "dev": "hugo server --disableFastRender --buildDrafts",
     "prod": "rm -rf public resources .hugo_build.lock && HUGO_ENVIRONMENT=production hugo --minify && serve public -p 1313",
     "tina": "npx tinacms dev --noTelemetry -c \"hugo server -D -p 1313\"",
     "tina-audit": "npx tinacms audit",

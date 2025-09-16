@@ -1,6 +1,7 @@
 ---
 # Display name
 title: Iana Samoilova
+subtitle: '*I am passionate about reimagining education so that dis/ability becomes possibility. I guide students to grow with confidence, creativity, and resilience.*'
 
 # Name pronunciation (optional)
 name_pronunciation: Yana Samoilova
@@ -36,34 +37,14 @@ profiles:
   - icon: at-symbol
     url: 'mailto:contact@ianasamoilova.com'
     label: E-mail Me
-#  - icon: brands/x
-#    url: https://twitter.com/GetResearchDev
-#  - icon: brands/instagram
-#    url: https://www.instagram.com/
-#  - icon: brands/github
-#    url: https://github.com/gcushen
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/yanasamoylova/
     label: Connect on LinkedIn
-#  - icon: brands/medium
-#    url: https://medium.com/@GetResearchDev
-#  - icon: brands/youtube
-#    url: https://www.youtube.com/c/GetResearchDev
-#  - icon: brands/facebook
-#    url: https://www.facebook.com/GetResearchDev
-#  - icon: brands/twitter
-#    url: https://twitter.com/GetResearchDev
-#  - icon: brands/stack-overflow
-#  - icon: academicons/google-scholar
-#    url: https://scholar.google.com/
-#  - icon: academicons/orcid
-#    url: https://orcid.org/
 
 interests:
   - Psychology of Disability
-  - "[Technology for Inclusive Learning](balanced-approach-using-technology-in-education)"
+  - "[Technology for Inclusive Learning](blog/balanced-approach-using-technology-in-education/)"
   - Collaboration & Equity
-
 
 education:
   - area: Special Education Generalist
