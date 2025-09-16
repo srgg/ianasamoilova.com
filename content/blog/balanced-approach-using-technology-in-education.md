@@ -1,6 +1,7 @@
 ---
-
 title: "Technology for Inclusive Learning: My Balanced Philosophy"
+
+subtitle:
 summary: |
   Technology in education should empower students, not overwhelm them. A balanced approach means leveraging digital tools while preserving
   essential human practices like handwriting and face-to-face interaction.
@@ -11,11 +12,11 @@ share: false
 pager: false
 ------------
 
-## Balancing Challenge and Opportunity
+### Balancing Challenge and Opportunity
 
 Technology in education should empower students. It should not distract or replace thinking. Too often, tools become ends in themselves instead of serving learning. Our goal must be to keep students—not screens—at the center.
 
-## Why Handwriting Still Matters
+### Why Handwriting Still Matters
 {{% callout note %}}
 Handwriting engages the brain differently than typing, helping students make stronger connections with material.
 {{% /callout %}}
@@ -26,7 +27,7 @@ Other studies confirm the same: college students who took handwritten notes scor
 
 I see this daily in my classroom—students retain ideas more clearly when they write them down. Technology can complement this by helping organize and review notes, but it should never replace the value of pen and paper.
 
-## Turning Habits Into Advantages
+### Turning Habits Into Advantages
 
 Students are deeply attached to their devices. Instead of fighting this, we can guide them to use technology productively. For example, transforming their reliance on phones into skills for research, organization, and collaboration.
 
@@ -34,7 +35,7 @@ Students are deeply attached to their devices. Instead of fighting this, we can 
 
 This TED Talk captures how technology can both capture attention and encourage focus—depending on how it is used.
 
-## Tools That Empower Teachers
+### Tools That Empower Teachers
 
 Technology should also lighten the load for teachers. The right tools can:
 
@@ -45,7 +46,7 @@ Technology should also lighten the load for teachers. The right tools can:
 
 These tools save teachers’ time and give them insight, allowing more energy for direct instruction and connection with students.
 
-## Barriers and Advocacy
+### Barriers and Advocacy
 
 Despite the benefits, barriers remain. Cost, accessibility, and training often limit what schools can do. Advocacy is essential—teachers, families, and communities must push for equitable access to meaningful technology.
 
@@ -53,7 +54,7 @@ Despite the benefits, barriers remain. Cost, accessibility, and training often l
 
 For students, technology should open doors to independence and curiosity. For teachers, it should save time and offer clear insights. In both cases, technology should serve what matters most: teaching, connection, and student success.
 
-## THE Path to Balance
+### THE Path to Balance
 
 True educational technology integration isn't about choosing digital over traditional—it's about finding the right balance for each learning
 moment.

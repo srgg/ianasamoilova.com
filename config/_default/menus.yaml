@@ -7,15 +7,34 @@ main:
   - name: Bio
     url: /
     weight: 10
-  - name: Technology Philosophy
-    url: technology-philosophy/
-    weight: 20
-  - name: Technology Tutorial and Lesson Plan Assignments
-    url: /
-    weight: 30
+
   - name: Experience
     url: experience/
-    weight: 40
+    weight: 20
+    
+  - name: Posts
+    url: blog/
+    weight: 30
+    
+  - name: Technology Philosophy
+    identifier: technology-philosophy
+    weight: 100
+    
+  - name: My Vision for Technology
+    url: technology-philosophy/my-vision-for-technology-in-education
+    parent: technology-philosophy
+    weight: 1
+  
+  - name: Technology Tutorial
+    url: technology-philosophy/tutorial/
+    parent: technology-philosophy
+    weight: 2
+    
+  - name: Lesson Plan Assignments
+    url: technology-philosophy/assignments
+    parent: technology-philosophy
+    weight: 3
+
 #  - name: Projects
 #    url: projects/
 #    weight: 50
