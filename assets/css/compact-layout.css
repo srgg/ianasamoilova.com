@@ -1,0 +1,18 @@
+/**
+ * Compact Layout Adjustments
+ *
+ * Reduces spacing and margins in resume sections for a more
+ * compact, streamlined appearance.
+ */
+
+/* Compact experience, education, and skills sections */
+.experience-list .mb-10,
+.education-list .mb-10 {
+    margin-bottom: 1.5rem !important; /* Reduce from 2.5rem to 1.5rem */
+}
+
+.experience-list + * h3.mb-6,
+.education-list + * h3.mb-6,
+.blox-resume-skills .mb-6 {
+    margin-bottom: 1rem !important; /* Reduce section title margin */
+}

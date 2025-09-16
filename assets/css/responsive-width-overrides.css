@@ -1,0 +1,95 @@
+/**
+ * Responsive Width Overrides
+ *
+ * Expands content width constraints for better use of screen real estate
+ * on larger devices while maintaining readability on mobile.
+ *
+ * Width Strategy:
+ * - Mobile: Keep original constraints for readability
+ * - Tablet+: Progressively expand width using consistent scaling
+ * - Experience pages: Narrower, focused layout (50rem)
+ * - Blog content: Wider, immersive layout (up to 72rem)
+ *
+ * Target Elements:
+ * - .prose elements (blog post content)
+ * - .max-w-screen-xl (Hugo Blox page containers)
+ * - .max-w-3xl (blog list containers)
+ * - .blox-resume-* (experience page sections)
+ */
+
+/* Variables */
+:root {
+    /* Base widths (Tailwind defaults) */
+    --width-prose-mobile: 65ch;              /* ≈520-650px - readable text width */
+    --width-blog-list-mobile: 48rem;         /* 768px - blog list default */
+
+    /* Progressive width scaling for larger screens */
+    --width-md: 56rem;                       /* 896px - tablet+ comfortable reading */
+    --width-lg: 64rem;                       /* 1024px - desktop optimal */
+    --width-xl: 72rem;                       /* 1152px - large screen immersive */
+
+    /* Container overrides */
+    --width-container-xl: 87.5rem;           /* 1400px - extended from 1280px */
+    --width-container-2xl: 100rem;           /* 1600px - wide screen utilization */
+
+    /* Specialized layouts */
+    --width-experience-focused: 50rem;       /* 800px - experience page constraint */
+}
+
+/* Base Widths (Mobile-first) */
+article.prose,
+.prose,
+[class*="prose"] {
+    max-width: var(--width-prose-mobile);
+}
+
+.max-w-screen-xl {
+    max-width: var(--width-container-xl) !important;
+}
+
+.max-w-3xl {
+    max-width: var(--width-blog-list-mobile);
+}
+
+/* Focused Page Layouts */
+/* Experience pages - Always narrow for focused reading */
+.blox-resume-experience .max-w-prose,
+.blox-resume-skills .max-w-prose,
+.blox-resume-awards .max-w-prose,
+.blox-resume-languages .max-w-prose {
+    max-width: var(--width-experience-focused) !important;
+}
+
+/* Responsive Scaling */
+@media (min-width: theme('screens.md')) {
+    article.prose,
+    .prose,
+    [class*="prose"],
+    .max-w-3xl {
+        max-width: var(--width-md) !important;
+    }
+}
+
+@media (min-width: theme('screens.lg')) {
+    article.prose,
+    .prose,
+    [class*="prose"],
+    .max-w-3xl {
+        max-width: var(--width-lg) !important;
+    }
+}
+
+@media (min-width: theme('screens.xl')) {
+    article.prose,
+    .prose,
+    [class*="prose"],
+    .max-w-3xl {
+        max-width: var(--width-xl) !important;
+    }
+}
+
+@media (min-width: theme('screens.2xl')) {
+    .max-w-screen-xl {
+        max-width: var(--width-container-2xl) !important;
+    }
+}

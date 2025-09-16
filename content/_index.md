@@ -6,10 +6,10 @@ type: landing
 
 cascade:
   design:
-    spacing: "6rem 0 0 0"
+    spacing: "6rem 1.5rem 0 1.5rem"
     
 design:
-  spacing: "6rem 0 0 0"
+  spacing: "6rem 1.5rem 0 1.5rem"
 
   # Default section spacing    
   background:
