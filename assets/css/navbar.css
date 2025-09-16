@@ -1,3 +1,15 @@
+/**
+ * Navigation Bar Styles
+ *
+ * Provides visual styling for navigation links, active states, and dropdowns.
+ *
+ * Features:
+ * - Highlights active pages with bold text, primary colors, and underlines
+ * - Smooth hover transitions with background and color changes
+ * - Consistent dropdown menu styling that inherits active states
+ * - Responsive underline animations for larger screens
+ */
+
 /* Variables */
 :root {
     --nav-inactive-weight: 500;

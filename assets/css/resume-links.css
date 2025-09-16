@@ -1,8 +1,16 @@
 
-/* === Resume Section Cross-linking Navigation === */
-/* Adds IDs to experience/education items and links them from the biography.
-   Smooth scrolling with header offset and highlight animation provides
-   clear, non-disorienting navigation between sections. */
+/**
+ * Resume Section Cross-linking Navigation
+ *
+ * Enables smooth navigation between resume sections with visual feedback.
+ * Links experience/education items from biography section using IDs.
+ *
+ * Features:
+ * - Smooth scrolling with header offset to prevent sticky nav overlap
+ * - Target highlighting animation using HugoBlox theme colors
+ * - Progressive scroll margins to keep section headers visible
+ * - 4-second fade-out highlight effect for clear target identification
+ */
 
 html {
     scroll-behavior: smooth;
