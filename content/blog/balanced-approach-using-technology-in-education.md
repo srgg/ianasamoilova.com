@@ -8,8 +8,8 @@ summary: |
 date: 2025-08-25
 draft: false
 type: post
-share: false
-pager: false
+#share: false
+#pager: false
 ------------
 
 ### Balancing Challenge and Opportunity
@@ -26,6 +26,19 @@ Research shows that handwriting boosts comprehension and memory. Brain-imaging s
 Other studies confirm the same: college students who took handwritten notes scored better on conceptual understanding than those who typed [Mueller & Oppenheimer, 2014](https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2021.679191/full?utm_source=chatgpt.com). Handwriting slows the pace and forces students to paraphrase, which deepens learning.
 
 I see this daily in my classroom—students retain ideas more clearly when they write them down. Technology can complement this by helping organize and review notes, but it should never replace the value of pen and paper.
+
+### Why Reading Print Still Matters
+{{% callout note %}}
+Holding a real book and turning its pages provides a sensory and cognitive experience that screens cannot replicate.
+{{% /callout %}}
+
+Studies show that reading print materials supports deeper comprehension and focus because the physical structure of the book helps students build a mental “map” of the text. Unlike scrolling, which can fragment attention, physical books encourage immersion and sustained engagement [Oxford Learning, 2023](https://oxfordlearning.com/screen-vs-paper-which-one-boosts-reading-comprehension/?utm_source=chatgpt.com).
+
+A large-scale meta-analysis found that print reading correlates strongly with better comprehension, while digital reading shows weaker or no correlation [The Guardian, 2023](https://www.theguardian.com/books/2023/dec/15/reading-print-improves-comprehension-far-more-than-looking-at-digital-text-say-researchers?utm_source=chatgpt.com).
+
+### When Technology Takes the Lead
+Of course, there are moments when digital tools genuinely outperform traditional methods. For example, speech-to-text software can give a voice to nonverbal students in ways handwriting never could. Online collaboration platforms allow learners to work together across distance—something impossible with paper alone.
+In assessments, too, technology often speeds feedback and makes it more personalized. While reading a physical book deepens focus, an e-reader can instantly provide definitions, translations, or adjustable fonts for students with visual impairments or dyslexia. These are cases where technology doesn’t just replicate tradition—it expands what’s possible.
 
 ### Turning Habits Into Advantages
 
