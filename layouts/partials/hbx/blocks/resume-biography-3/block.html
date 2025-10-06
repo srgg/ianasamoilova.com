@@ -210,14 +210,19 @@
                                                 {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors'") }}
                                             </div>
                                             <div class="flex-1 flex-grow">
-                                                <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                                                    {{ if and $block.experience_url .id }}
-                                                        <a href="{{ $block.experience_url }}#{{ .id }}" class="hover:underline">{{ .area }}</a>{{ with .year }}, {{ . }}{{ end }}
-                                                    {{ else }}
+                                                {{ if and $block.experience_url .id }}
+                                                    <a href="{{ $block.experience_url }}#{{ .id }}" class="block group">
+                                                        <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline transition-colors">
+                                                            {{ .area }}{{ with .year }}, {{ . }}{{ end }}
+                                                        </p>
+                                                        <p class="text-gray-600 dark:text-gray-50 font-medium mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline transition-colors">{{ .institution }}</p>
+                                                    </a>
+                                                {{ else }}
+                                                    <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                                         {{ .area }}{{ with .year }}, {{ . }}{{ end }}
-                                                    {{ end }}
-                                                </p>
-                                                <p class="text-gray-600 dark:text-gray-50 font-medium mt-1">{{ .institution }}</p>
+                                                    </p>
+                                                    <p class="text-gray-600 dark:text-gray-50 font-medium mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ .institution }}</p>
+                                                {{ end }}
                                             </div>
                                         </div>
                                     </li>
@@ -241,7 +246,7 @@
                                             {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" "class='w-6 h-6 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors'") }}
                                         </div>
                                         <div class="flex-1 flex-grow">
-                                            <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                                            <p class="interest text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                                 {{ . | markdownify | emojify }}
                                             </p>
                                         </div>
