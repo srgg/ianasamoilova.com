@@ -8,7 +8,7 @@ type: post
 share: false
 pager: false
 ---
-I believe that technology in education should serve as a tool for empowerment, not a distraction or substitute for thinking. 
+I believe that technology in education should serve as a tool for empowerment, rather than a distraction or substitute for critical thinking. 
 
 {{% callout note %}}
 After watching the TED Talk, {{< youtube jsRnow7Dnlg >}} I agreed with the speaker’s main idea: _we should focus not on the process of using technology itself, but on the actual learning outcomes students achieve through it_. At the same time, I reflect on the reality that games and gadgets trigger dopamine release. Just as dopamine addiction can make students dependent on screens, it can also reshape their worldview, shorten attention spans, and affect motivation for traditional learning.
