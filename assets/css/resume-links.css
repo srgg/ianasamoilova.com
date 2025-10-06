@@ -40,8 +40,8 @@ html {
 }
 
 /* Base margin + incremental offset to ensure 'Education' section header stays visible */
-.education-list :target:nth-child(1) { scroll-margin-top: calc(6rem + 0rem); }
-.education-list :target:nth-child(2) { scroll-margin-top: calc(6rem + 10rem); }
+.education-list :target:nth-child(1) { scroll-margin-top: calc(5.4rem + 0rem); }
+.education-list :target:nth-child(2) { scroll-margin-top: calc(5.5rem + 9rem); }
 
 /* Base margin + incremental offset to ensure 'Experience' section header stays visible */
 .experience-list :target:nth-child(1) { scroll-margin-top: calc(6rem + 0rem); }
