@@ -13,3 +13,9 @@ footer {
 .page-footer {
     background: white !important;
 }
+
+/* Fix role links - ensure they match Education and Interest links style  */
+.dark .role a:hover {
+    color: var(--color-primary-400) !important;
+    text-decoration: underline;
+}
