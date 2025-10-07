@@ -13,3 +13,21 @@ footer {
 .page-footer {
     background: white !important;
 }
+
+/* Reduce spacing between section headers and content */
+.resume-biography h2 + div,
+.resume-biography h3 + ul {
+    margin-top: 0.5rem !important;
+}
+
+/* Reduce spacing above Education and Interests sections */
+.resume-biography .grid.md\:grid-cols-2 > div.mb-16 {
+    margin-top: -2rem !important;
+}
+
+/* Move left column down by 4em on desktop only */
+@media (min-width: theme('screens.md')) {
+    .resume-biography .left-col {
+        margin-top: 2em !important;
+    }
+}

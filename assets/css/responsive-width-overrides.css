@@ -60,6 +60,11 @@ article.prose,
     max-width: var(--width-experience-focused) !important;
 }
 
+/* Bio section - full width within prose container */
+.resume-biography .prose .bio-text {
+    max-width: 100% !important;
+}
+
 /* Responsive Scaling */
 @media (min-width: theme('screens.md')) {
     article.prose,

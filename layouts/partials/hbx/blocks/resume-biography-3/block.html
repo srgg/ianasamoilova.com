@@ -38,7 +38,7 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
 
             {{/* Left Column: Flexible span */}}
-            <div class="md:col-span-4 flex flex-col items-center text-center space-y-6 md:space-y-8">
+            <div class="left-col md:col-span-4 flex flex-col items-center text-center space-y-6 md:space-y-8">
 
                 {{/* Banner Image */}}
                 {{ $img := "" }}
@@ -177,7 +177,7 @@
                             {{ $about_heading := $block.content.headings.about | default $about_default }}
                             <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $about_heading }}</h2>
                         </div>
-                        <div class="prose prose-lg dark:prose-invert text-gray-800 dark:text-white text-base sm:text-lg leading-relaxed">
+                        <div class="prose prose-lg dark:prose-invert prose-p:!my-[0.6rem] text-gray-800 dark:text-white text-base sm:text-lg leading-relaxed">
                             <div class="bio-text" {{ with $block.design.biography.style }}{{ (printf "style=\"%s\"" .) | safe.HTMLAttr }}{{end}}>
                                 {{ . }}
                             </div>
@@ -185,12 +185,12 @@
                     </div>
                 {{ end }}
 
-{{/*                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">*/}}                 
+{{/*                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">*/}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">
                     {{/* Education Section */}}
                     {{ with $person.education }}
                         <div class="mb-16">
-                            <div class="flex items-center gap-4 mb-8">
+                            <div class="flex items-center gap-4 mb-4">
 {{/*                                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">*/}}
 {{/*                                    {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}*/}}
 {{/*                                </div>*/}}
@@ -234,7 +234,7 @@
                     {{/* Interests Section */}}
                     {{ with $person.interests }}
                         <div class="mb-16">
-                            <div class="flex items-center gap-4 mb-8">
+                            <div class="flex items-center gap-4 mb-4">
                                 {{ $interests_heading := $block.content.headings.interests | default (i18n "interests") }}
                                 <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $interests_heading | markdownify }}</h3>
                             </div>
