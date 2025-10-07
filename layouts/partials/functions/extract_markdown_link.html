@@ -1,0 +1,24 @@
+{{/*
+  Extract link from markdown format: [text](url)
+
+  Input: markdown string
+  Returns: dict with "text" and "url" keys
+
+  Example usage:
+  {{ $result := partial "functions/extract_markdown_link" $person.role }}
+  {{ $result.text }} - the display text
+  {{ $result.url }} - the URL (empty string if no link found)
+*/}}
+
+{{ $markdown := . }}
+{{ $text := $markdown }}
+{{ $url := "" }}
+
+{{/* Extract link from markdown if present: [text](url) */}}
+{{ if (findRE `\[([^\]]+)\]\(([^\)]+)\)` $markdown) }}
+    {{ $text = replaceRE `\[([^\]]+)\]\(([^\)]+)\)` "$1" $markdown }}
+    {{ $url = replaceRE `\[([^\]]+)\]\(([^\)]+)\)` "$2" $markdown }}
+{{ end }}
+
+{{/* Return as dict */}}
+{{ return (dict "text" $text "url" $url) }}

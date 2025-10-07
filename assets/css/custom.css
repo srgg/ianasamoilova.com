@@ -13,15 +13,3 @@ footer {
 .page-footer {
     background: white !important;
 }
-
-/* Fix role links - ensure they match Education links style  */
-.role a:hover {
-    color: var(--color-primary-400) !important;
-    text-decoration: underline;
-}
-
-/* Fix interest  links - ensure they match Education link style  */
-.interest a:hover {
-    color: var(--color-primary-400) !important;
-    text-decoration: underline;
-}
