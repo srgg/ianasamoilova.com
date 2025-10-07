@@ -14,6 +14,14 @@ footer {
     background: white !important;
 }
 
+/* Reduce spacing between paragraphs in About Me section
+   Note: Using CSS instead of Tailwind prose-p:!my-[0.6rem] because
+   Hugo Blox production build doesn't compile arbitrary Tailwind classes */
+.bio-text p {
+    margin-top: 0.6rem !important;
+    margin-bottom: 0.6rem !important;
+}
+
 /* Reduce spacing between section headers and content */
 .resume-biography h2 + div,
 .resume-biography h3 + ul {
