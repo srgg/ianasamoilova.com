@@ -38,7 +38,7 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
 
             {{/* Left Column: Flexible span */}}
-            <div class="md:col-span-4 flex flex-col items-center text-center space-y-6 md:space-y-8">
+            <div class="left-col md:col-span-4 flex flex-col items-center text-center space-y-6 md:space-y-8">
 
                 {{/* Banner Image */}}
                 {{ $img := "" }}
@@ -104,49 +104,60 @@
                         <p class="text-lg text-gray-600 dark:text-gray-200" style="margin-top: -0.5rem;">({{ . }})</p>
                     {{- end -}}
                     
-                    {{/*  No spacing in betwen role and organization: empty div neglated padding from opaqye 'space-y-3"' */}}
+                    {{/*  Role and Organization as unified link  */}}
                     <div>
                         {{ with $person.role }}
-{{/*                            <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors*/}}
-                            <p class="role text-2xl font-semibold text-primary-600 dark:text-white ">{{ . | markdownify | emojify }}</p>
-                        {{ end }}
-
-                        {{ range $person.organizations }}
-                            <p class="text-lg text-gray-700 dark:text-gray-200">
-                                {{ with .url }}<a href="{{ . }}" target="_blank" rel="noopener" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{{ end }}
-                                {{ .name }}
-                                {{ if .url }}</a>{{ end }}
-                            </p>
+                            {{ $roleData := partial "functions/extract_markdown_link" . }}
+                            {{ $org := index $person.organizations 0 }}
+                            {{- if $roleData.url -}}<a href="{{ $roleData.url | relURL }}" class="block group">{{- else -}}<div>{{- end -}}
+                                <p class="role text-2xl font-semibold text-primary-600 dark:text-white {{ if $roleData.url }}group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline{{ end }} transition-colors">{{ $roleData.text | emojify }}</p>
+                                {{ if $org }}
+                                    <p class="text-lg text-gray-700 dark:text-gray-200 {{ if $roleData.url }}group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline{{ end }} transition-colors">{{ $org.name }}</p>
+                                {{ end }}
+                            {{- if $roleData.url -}}</a>{{- else -}}</div>{{- end -}}
                         {{ end }}
                     </div>
                 </div>
 
-                {{/* Social Icons */}}
-                <div class="flex flex-wrap justify-center gap-4">
-                    {{ range $person.profiles }}
-                        {{ $pack := or .icon_pack "fas" }}
-                        {{ $pack_prefix := $pack }}
-                        {{ if in (slice "fab" "fas" "far" "fal") $pack }}
-                            {{ $pack_prefix = "fa" }}
-                        {{ end }}
-                        {{ $link := .url | default .link }}
-                        {{ $scheme := (urls.Parse $link).Scheme }}
-                        {{ $target := "" }}
-                        {{ if not $scheme }}
-                            {{ $link = (.url | default .link) | relLangURL }}
-                            {{ if eq (path.Ext $link) ".pdf" }}{{ $target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
-                        {{ else if in (slice "http" "https") $scheme }}
-                            {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
-                        {{ end }}
-                        <a href="{{ $link | safeURL }}" {{ $target | safeHTMLAttr }}
-                           aria-label="{{ .icon }}"
-                           {{ with .label }} title="{{.}}"{{ end }}
-                           class="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-200 
-                    shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-1 
-                    transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                            {{ partial "functions/get_icon" (dict "name" .icon "attributes" "class=\"w-8 h-8 font-black text-gray-900 dark:text-white leading-tight\"" )  }}
-                        </a>
+                {{/* CV Button and Social Icons */}}
+                <div class="space-y-4 -mt-5">
+                    {{/* CV Download Button */}}
+                    {{ with $block.content.button }}
+                        <div class="flex justify-center">
+                            <a href="{{.url}}" target="_blank"
+                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold rounded-xl shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-1 transition-all duration-300">
+                                {{ partial "functions/get_icon" (dict "name" "arrow-down-tray" "attributes" "class='w-5 h-5 mr-2'") }}
+                                {{.text}}
+                            </a>
+                        </div>
                     {{ end }}
+
+                    <div class="flex flex-wrap justify-center gap-4">
+                        {{ range $person.profiles }}
+                            {{ $pack := or .icon_pack "fas" }}
+                            {{ $pack_prefix := $pack }}
+                            {{ if in (slice "fab" "fas" "far" "fal") $pack }}
+                                {{ $pack_prefix = "fa" }}
+                            {{ end }}
+                            {{ $link := .url | default .link }}
+                            {{ $scheme := (urls.Parse $link).Scheme }}
+                            {{ $target := "" }}
+                            {{ if not $scheme }}
+                                {{ $link = (.url | default .link) | relLangURL }}
+                                {{ if eq (path.Ext $link) ".pdf" }}{{ $target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+                            {{ else if in (slice "http" "https") $scheme }}
+                                {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
+                            {{ end }}
+                            <a href="{{ $link | safeURL }}" {{ $target | safeHTMLAttr }}
+                               aria-label="{{ .icon }}"
+                               {{ with .label }} title="{{.}}"{{ end }}
+                               class="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-200
+                        shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-1
+                        transition-all duration-300 border border-gray-200 dark:border-gray-700">
+                                {{ partial "functions/get_icon" (dict "name" .icon "attributes" "class=\"w-8 h-8 font-black text-gray-900 dark:text-white leading-tight\"" )  }}
+                            </a>
+                        {{ end }}
+                    </div>
                 </div>
             </div>
 
@@ -166,7 +177,7 @@
                             {{ $about_heading := $block.content.headings.about | default $about_default }}
                             <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $about_heading }}</h2>
                         </div>
-                        <div class="prose prose-lg dark:prose-invert text-gray-800 dark:text-white text-base sm:text-lg leading-relaxed">
+                        <div class="prose prose-lg dark:prose-invert prose-p:!my-[0.6rem] text-gray-800 dark:text-white text-base sm:text-lg leading-relaxed">
                             <div class="bio-text" {{ with $block.design.biography.style }}{{ (printf "style=\"%s\"" .) | safe.HTMLAttr }}{{end}}>
                                 {{ . }}
                             </div>
@@ -174,23 +185,12 @@
                     </div>
                 {{ end }}
 
-                {{/* CV Download Button */}}
-                {{ with $block.content.button }}
-                    <div class="mb-16">
-                        <a href="{{.url}}" target="_blank"
-                           class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                            {{ partial "functions/get_icon" (dict "name" "document-arrow-down" "attributes" "class='w-5 h-5 mr-3'") }}
-                            {{.text}}
-                        </a>
-                    </div>
-                {{ end }}
-
-{{/*                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">*/}}                 
+{{/*                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">*/}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">
                     {{/* Education Section */}}
                     {{ with $person.education }}
                         <div class="mb-16">
-                            <div class="flex items-center gap-4 mb-8">
+                            <div class="flex items-center gap-4 mb-4">
 {{/*                                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">*/}}
 {{/*                                    {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}*/}}
 {{/*                                </div>*/}}
@@ -234,23 +234,24 @@
                     {{/* Interests Section */}}
                     {{ with $person.interests }}
                         <div class="mb-16">
-                            <div class="flex items-center gap-4 mb-8">
+                            <div class="flex items-center gap-4 mb-4">
                                 {{ $interests_heading := $block.content.headings.interests | default (i18n "interests") }}
                                 <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $interests_heading | markdownify }}</h3>
                             </div>
                             <ul class="list-disc list-inside pl-5">
                             {{ range . }}
-                                <li class="group h-full flex flex-col transition-all duration-300">    
-                                    <div class="flex gap-4">
+                                {{ $interestData := partial "functions/extract_markdown_link" . }}
+                                <li class="group h-full flex flex-col transition-all duration-300">
+                                    {{- if $interestData.url -}}<a href="{{ $interestData.url | relURL }}" class="flex gap-4">{{- else -}}<div class="flex gap-4">{{- end -}}
                                         <div class="flex-shrink-0 w-12 h-12 flex items-start justify-center pt-1">
-                                            {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" "class='w-6 h-6 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors'") }}
+                                            {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" (printf "class='w-6 h-6 text-gray-900 dark:text-white %s transition-colors'" (cond $interestData.url "group-hover:text-primary-600 dark:group-hover:text-primary-400" ""))) }}
                                         </div>
                                         <div class="flex-1 flex-grow">
-                                            <p class="interest text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                                                {{ . | markdownify | emojify }}
+                                            <p class="interest text-xl font-bold text-gray-900 dark:text-white {{ if $interestData.url }}group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline{{ end }} transition-colors">
+                                                {{ $interestData.text | emojify }}
                                             </p>
                                         </div>
-                                    </div>
+                                    {{- if $interestData.url -}}</a>{{- else -}}</div>{{- end -}}
                                 </li>
                             {{ end }}
                             </ul>    
