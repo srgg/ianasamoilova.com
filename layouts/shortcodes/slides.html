@@ -1,0 +1,310 @@
+{{/*
+  Slides shortcode - Embeds reveal-hugo slides directly on the page (no iframe)
+
+  Uses the actual reveal-hugo partials to render slides properly with full plugin support.
+  Reuses reveal-hugo's internal/plugins partial for future-proof plugin loading.
+
+  Parameters:
+    - src: (required) a path to the slide page, e.g., "slides/para-welcome-kit"
+    - height: (optional) Height of the slide container, defaults to "500px"
+    - overview: (optional) Enable overview mode (O key), defaults to "true"
+    - notes: (optional) Enable speaker notes (S key), defaults to "true"
+
+  Usage: {{< slides src="slides/para-welcome-kit" height="600px" overview="false" notes="false" >}}
+
+  Requires: github.com/joshed-io/reveal-hugo module
+*/}}
+
+{{/* Fail build if reveal-hugo module is not installed */}}
+{{- if not (templates.Exists "partials/reveal-hugo/slides.html") -}}
+  {{- errorf "slides shortcode requires reveal-hugo module. Add to hugo.yaml: module.imports: [{path: github.com/joshed-io/reveal-hugo}] then run: hugo mod get -u" -}}
+{{- end -}}
+
+{{- $src := .Get "src" | strings.TrimSuffix "/" -}}
+{{- $height := .Get "height" | default "500px" -}}
+{{- $overview := ne (.Get "overview") "false" -}}
+{{- $notes := ne (.Get "notes") "false" -}}
+{{- $id := printf "reveal-%s" (md5 $src) -}}
+
+{{/* Get the slides page */}}
+{{- $slidesPage := site.GetPage (printf "/%s" $src) -}}
+
+{{- if $slidesPage -}}
+
+{{/* Get reveal-hugo settings from the slides page - matching layout/theme.html logic */}}
+{{- $reveal_location := $slidesPage.Param "reveal_hugo.reveal_cdn" | default "reveal-js" -}}
+{{- $highlight_location := $slidesPage.Param "reveal_hugo.highlight_cdn" | default "highlight-js" -}}
+{{- $theme := $slidesPage.Param "reveal_hugo.theme" | default "black" -}}
+{{- $highlight_theme := $slidesPage.Param "reveal_hugo.highlight_theme" | default "monokai" -}}
+{{- $transition := $slidesPage.Param "reveal_hugo.transition" | default "slide" -}}
+{{- $custom_theme := $slidesPage.Param "reveal_hugo.custom_theme" -}}
+{{- $custom_css := $slidesPage.Param "reveal_hugo.custom_css" -}}
+
+{{/* Get plugins using reveal-hugo's internal partial - this keeps us in sync with updates */}}
+{{- $plugins := partial "internal/plugins" $slidesPage -}}
+{{/* Filter out notes plugin if notes are disabled */}}
+{{- if not $notes -}}
+  {{- $filteredPlugins := slice -}}
+  {{- range $plugins -}}
+    {{- if ne .name "RevealNotes" -}}
+      {{- $filteredPlugins = $filteredPlugins | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $plugins = $filteredPlugins -}}
+{{- end -}}
+
+<div class="slides-inline-container relative my-8">
+
+  <style>
+    /* Container styles */
+    #{{ $id }} {
+      height: {{ $height }};
+      border: 1px solid rgb(var(--color-neutral-200, 229 231 235));
+      border-radius: 0.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+    #{{ $id }} .reveal {
+      height: 100%;
+      width: 100%;
+    }
+    /* Disable reveal.js scroll view - prevents nested scrollbar */
+    #{{ $id }} .reveal {
+      scroll-snap-type: none !important;
+      overflow: hidden !important;
+    }
+    #{{ $id }}:fullscreen {
+      height: 100vh;
+      border: none;
+      border-radius: 0;
+    }
+    /* Fullscreen control button - matches reveal.js control styling */
+    /* Hidden for now - change display to flex to re-enable */
+    #{{ $id }} .fullscreen-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 30;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: none; /* was: flex */
+      align-items: center;
+      justify-content: center;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    #{{ $id }} .fullscreen-btn:hover {
+      opacity: 1;
+    }
+    #{{ $id }} .fullscreen-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+    }
+    #{{ $id }}:fullscreen .fullscreen-btn svg.expand { display: none; }
+    #{{ $id }}:not(:fullscreen) .fullscreen-btn svg.collapse { display: none; }
+  </style>
+
+  <!--
+    Reveal.js CSS - matching layout/theme.html logic but WITHOUT reset.css
+    (reset.css breaks page styles outside the slide container)
+  -->
+  <style>
+    @import url("{{ printf "%s/dist/reveal.css" $reveal_location | relURL }}");
+    {{- if $custom_theme }}
+    @import url("{{ $custom_theme | relURL }}");
+    {{- else }}
+    @import url("{{ printf "%s/dist/theme/%s.css" $reveal_location $theme | relURL }}");
+    {{- end }}
+    {{- if $slidesPage.Param "reveal_hugo.load_default_plugins" | default true }}
+    @import url("{{ printf "%s/%s.min.css" $highlight_location $highlight_theme | relURL }}");
+    {{- end }}
+    {{- if $custom_css }}
+    @import url("{{ $custom_css | relURL }}");
+    {{- end }}
+    {{- /* Load any plugin CSS from the plugins partial */ -}}
+    {{- range $plugins }}
+      {{- with .css }}
+    @import url("{{ . | relURL }}");
+      {{- end }}
+    {{- end }}
+  </style>
+
+  <!-- Prevent Reveal.js styles from leaking to elements outside the slides -->
+  <style>
+    .slides-inline-container > *:not(#{{ $id }}):not(style):not(.slides-legend) {
+      all: revert;
+    }
+  </style>
+
+  {{/* Render slides and fix relative image paths */}}
+  {{- $slidesContent := partial "reveal-hugo/slides" (slice $slidesPage) -}}
+  {{- $slidesContent = $slidesContent | replaceRE `data-background-image="([^/][^"]+)"` (printf `data-background-image="/%s/$1"` $src) -}}
+  {{- $resourcesContent := partial "reveal-hugo/slides" ($slidesPage.Resources.ByType "page") -}}
+  {{- $resourcesContent = $resourcesContent | replaceRE `data-background-image="([^/][^"]+)"` (printf `data-background-image="/%s/$1"` $src) -}}
+
+  <div id="{{ $id }}" tabindex="0">
+    <div class="reveal">
+      <div class="slides">
+        {{- $slidesContent | safeHTML -}}
+        {{- $resourcesContent | safeHTML -}}
+      </div>
+      {{/* Button inside .reveal to inherit theme colors */}}
+      <button class="fullscreen-btn" title="Toggle fullscreen">
+        <svg class="expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+        <svg class="collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <p class="slides-legend text-center text-neutral-500 mt-2">
+    <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="document.getElementById('{{ $id }}').revealdeck.prev()" title="Previous slide">←</kbd><kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="document.getElementById('{{ $id }}').revealdeck.next()" title="Next slide">→</kbd> navigate
+    · <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="(function(el){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.msRequestFullscreen)el.msRequestFullscreen();})(document.getElementById('{{ $id }}'))" title="Fullscreen">F</kbd> fullscreen
+    {{- if $overview }}
+    · <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="document.getElementById('{{ $id }}').revealdeck.toggleOverview()" title="Toggle overview">O</kbd> overview
+    {{- end }}
+    {{- if $notes }}
+    · <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="(function(d){var n=d.revealdeck.getPlugin('notes');if(n&&n.open)n.open();else console.warn('Notes plugin not available');})(document.getElementById('{{ $id }}'))" title="Speaker notes">S</kbd> speaker notes
+    {{- end }}
+  </p>
+
+  <!-- Reveal.js core -->
+  <script src="{{ printf "%s/dist/reveal.js" $reveal_location | relURL }}"></script>
+
+  <!-- Load plugins dynamically from reveal-hugo's internal/plugins partial -->
+  {{- range $plugins }}
+  <script src="{{ .source | relURL }}"></script>
+  {{- end }}
+
+  <script>
+    (function() {
+      var container = document.getElementById('{{ $id }}');
+      var revealEl = container.querySelector('.reveal');
+
+      var deck = new Reveal(revealEl, {
+        embedded: true,
+        center: {{ $slidesPage.Param "reveal_hugo.center" | default true }},
+        controls: {{ $slidesPage.Param "reveal_hugo.controls" | default true }},
+        progress: {{ $slidesPage.Param "reveal_hugo.progress" | default true }},
+        history: false,
+        transition: '{{ $transition }}',
+        keyboard: false,
+        {{- $pluginNames := slice -}}
+        {{- range $plugins -}}
+          {{- $pluginNames = $pluginNames | append .name -}}
+        {{- end }}
+        plugins: {{ printf "%s" (replace (jsonify $pluginNames) "\"" "") | safeJS }}
+      });
+      deck.initialize();
+
+      // Expose deck on a container element for onclick handlers
+      container.revealdeck = deck;
+
+      // Check if the slide container is visible in the viewport
+      function isInViewport(el) {
+        var rect = el.getBoundingClientRect();
+        var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        var visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+        return visibleHeight > rect.height * 0.2;
+      }
+
+      // Global keyboard handler
+      document.addEventListener('keydown', function(e) {
+        if (!isInViewport(container)) return;
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+
+        switch(e.key) {
+          case 'ArrowRight':
+            e.preventDefault();
+            deck.next();
+            break;
+          case 'ArrowLeft':
+            e.preventDefault();
+            deck.prev();
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            deck.up();
+            break;
+          case 'ArrowDown':
+            e.preventDefault();
+            deck.down();
+            break;
+          case 'f':
+          case 'F':
+            e.preventDefault();
+            if (container.requestFullscreen) container.requestFullscreen();
+            else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+            else if (container.msRequestFullscreen) container.msRequestFullscreen();
+            break;
+          {{- if $notes }}
+          case 's':
+          case 'S':
+            // Open speaker notes view
+            e.preventDefault();
+            var notesPlugin = deck.getPlugin('notes');
+            if (notesPlugin && notesPlugin.open) {
+              notesPlugin.open();
+            } else {
+              console.warn('Notes plugin not available');
+            }
+            break;
+          {{- end }}
+          {{- if $overview }}
+          case 'o':
+          case 'O':
+            // Toggle overview mode
+            e.preventDefault();
+            deck.toggleOverview();
+            break;
+          {{- end }}
+          case 'Escape':
+            if (document.fullscreenElement === container) {
+              document.exitFullscreen();
+            }
+            {{- if $overview }}
+            else if (deck.isOverview()) {
+              deck.toggleOverview();
+            }
+            {{- end }}
+            break;
+        }
+      });
+
+      container.addEventListener('click', function() {
+        this.focus();
+      });
+
+      // Hide fullscreen button if inside iframe (e.g., speaker notes view)
+      if (window.self !== window.top) {
+        var fsBtn = container.querySelector('.fullscreen-btn');
+        if (fsBtn) fsBtn.style.display = 'none';
+      }
+
+      // Fullscreen button handler
+      container.querySelector('.fullscreen-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (document.fullscreenElement === container) {
+          document.exitFullscreen();
+        } else {
+          if (container.requestFullscreen) container.requestFullscreen();
+          else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+          else if (container.msRequestFullscreen) container.msRequestFullscreen();
+        }
+      });
+    })();
+  </script>
+</div>
+
+{{- else -}}
+<div class="p-4 bg-red-100 text-red-700 rounded">
+  <p>Slides not found at: /{{ $src }}/</p>
+</div>
+{{- end -}}

@@ -50,12 +50,12 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 
 ### Development Commands
 
-| Command              | Description |
-|----------------------|-------------|
-| `npm run dev`        | Start Hugo development server |
-| `npm run tina`       | Start TinaCMS with Hugo (recommended for content editing) |
-| `npm run tina-audit` | Validate TinaCMS schema and content |
-| `npm run build`      | Build production site |
+| Command               | Description |
+|-----------------------|-------------|
+| `pnpm run dev`        | Start Hugo development server |
+| `pnpm run tina`       | Start TinaCMS with Hugo (recommended for content editing) |
+| `pnpm run tina-audit` | Validate TinaCMS schema and content |
+| `pnpm run build`      | Build production site |
 
 ### TinaCMS Development Mode
 
@@ -88,7 +88,16 @@ content/
             ├── week4-*/index.md
             └── week5-*/index.md
 ```
+## Convert pdf to slides
 
+```shell
+
+magick -density 150 ~/Downloads/"PARA Welcome Kit.pdf" -quality 85 content/slides/pera-playbook/page-%02d.webp && ls -la content/slides/pera-playbook/
+magick -density 150 ~/Downloads/"PARA Welcome Kit — Layout Skeleton (D11)-5.pdf" -background none -alpha set -quality 85
+  /Users/srg/src/iana-sites/ianasamoilova.com/content/slides/para-welcome-kit/page-%02d.webp
+
+
+```
 ## 📝 Content Management
 
 ### TinaCMS Collections

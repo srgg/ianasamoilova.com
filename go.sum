@@ -1,0 +1,14 @@
+github.com/HugoBlox/hugo-blox-builder/modules/blox-analytics v0.2.0 h1:eS05pTNTa9pYpRalBTBt7EgcB4XRPnkSyTFfOmB7/Aw=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-analytics v0.2.0/go.mod h1:0YQtVvRLCzZOpPmbVNk7WDx8t19/QfRTFO+pwyqQNk8=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-decap-cms v0.2.0 h1:CC5DY5yWvAyBjg7R0PCrLsKDSzdTVFZ8YHs7hR3OKSY=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-decap-cms v0.2.0/go.mod h1:Njlsj3S1Z833TdX1nacJZzsiwGGhOq4Nilzo2BH/wQ8=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify v1.1.2 h1:rgavbaIjA9ki73sJ9OkE/yIdUYF2AJALs6NzCg6kC60=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify v1.1.2/go.mod h1:C7jfxMLv1bEUqbM9XDSmEpfOpS8w06OgqNDEcbuRgL4=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.5.2 h1:vqXNdxb+5LxRupFjgfJgjsW7SvV0ui6PZwreQuE/jOM=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.5.2/go.mod h1:iiKLoehg9IqQd0R4jUfhl+wvJCiXPNgV88A/V8iKSLY=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.6.1 h1:4Wb3rFVSXtox50w1WHN7GV7In1iCApHBLoL8NlXJGLM=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.6.1/go.mod h1:iiKLoehg9IqQd0R4jUfhl+wvJCiXPNgV88A/V8iKSLY=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.7.0 h1:B5VfE7FurdZEn/q/obTruHfcULaYF9Teexprtt98ndE=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind v0.7.0/go.mod h1:iiKLoehg9IqQd0R4jUfhl+wvJCiXPNgV88A/V8iKSLY=
+github.com/joshed-io/reveal-hugo v0.0.0-20241030080325-e191f51d09be h1:v+kEI6Q/q2eGUkUq+ITGsWZ8rpfPvgjYepoQlkDq9b8=
+github.com/joshed-io/reveal-hugo v0.0.0-20241030080325-e191f51d09be/go.mod h1:aXqv6sUwk2OVl71kJjJAYl4mWhGNThGp1kJR9+VgPM4=
