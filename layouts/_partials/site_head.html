@@ -58,9 +58,11 @@ PERFORMANCE OPTIMIZATIONS IMPLEMENTED:
 
   {{ with $superuser_name }}<meta name="author" content="{{ . }}" />{{ end }}
 
-  {{/* Generate page description. */}}
+  {{/* Generate page description for SEO. Priority: description > summary > abstract > auto */}}
   {{ $desc := "" }}
-  {{ if .Params.summary }}
+  {{ if .Params.description }}
+    {{ $desc = .Params.description }}
+  {{ else if .Params.summary }}
     {{ $desc = .Params.summary }}
   {{ else if .Params.abstract }}
     {{ $desc = .Params.abstract }}

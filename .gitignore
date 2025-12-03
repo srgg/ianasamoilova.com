@@ -15,6 +15,9 @@ resources/
 # Hugo build lock
 .hugo_build.lock
 
+# Hugo vendored modules (regenerate with: hugo mod vendor)
+_vendor/
+
 # Hugo stats
 hugo_stats.json
 

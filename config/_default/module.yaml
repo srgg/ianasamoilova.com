@@ -7,6 +7,7 @@
 imports:
   - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
   - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind
+  - path: github.com/joshed-io/reveal-hugo
 
 # Install any Hugo Blox within the `hugo-blox/blox/` folder
 mounts:
@@ -21,6 +22,8 @@ mounts:
     includeFiles: '**.css'
   - source: layouts
     target: layouts
+  - source: layouts/shortcodes
+    target: layouts/shortcodes
   - source: assets
     target: assets
 

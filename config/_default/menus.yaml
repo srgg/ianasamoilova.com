@@ -35,6 +35,6 @@ main:
 #    parent: technology-philosophy
     weight: 300
 
-#  - name: Projects
-#    url: projects/
-#    weight: 50
+  - name: Projects  
+    url: projects/
+    weight: 50

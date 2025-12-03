@@ -98,3 +98,23 @@ article.prose,
         max-width: var(--width-container-2xl) !important;
     }
 }
+
+/* Project Grid Override
+ * Hugo Blox limits single-item grids to 500px (article-grid--start.html)
+ * Override with responsive scaling to match multi-item layout
+ */
+.blox-collection .max-w-\[500px\] {
+    max-width: 100% !important;  /* Mobile: full width */
+}
+
+@media (min-width: theme('screens.md')) {
+    .blox-collection .max-w-\[500px\] {
+        max-width: var(--width-md) !important;  /* 896px */
+    }
+}
+
+@media (min-width: theme('screens.lg')) {
+    .blox-collection .max-w-\[500px\] {
+        max-width: var(--width-lg) !important;  /* 1024px - matches demo */
+    }
+}
