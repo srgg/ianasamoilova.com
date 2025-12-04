@@ -1,10 +1,10 @@
 ---
-title: "PARA Welcome Kit"
+title: "PARA Welcome Book"
 summary: "A guide to surviving and thriving in Special Education"
 date: 2025-01-12
 outputs: ["Reveal"]
 # Path to generated slide images (relative to assets/)
-images_path: "generated/slides/para-welcome-kit"
+images_path: "generated/slides/para-welcome-book"
 reveal_hugo:
   load_default_plugins: false
   # Workaround: reveal-hugo bug crashes when load_default_plugins: false with no plugins

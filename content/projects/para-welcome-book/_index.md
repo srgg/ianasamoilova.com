@@ -1,25 +1,23 @@
 ---
-title: "PARA Welcome Kit"
+title: "PARA Welcome Book"
 subtitle: "A Practical Guide to Support New Paraeducators"
-summary: "Explore the PARA Welcome Kit, a warm, practical resource to help new paraeducators feel confident, supported, and valued from day one."
+summary: "Explore the PARA Welcome Book, a warm, practical resource to help new paraeducators feel confident, supported, and valued from day one."
 date: 2025-12-02
 type: post
 categories:
   - Paraeducator Resources
 tags:
   - PARA Welcome Kit
-  - Teacher Assistant Guidance
-  - Special Education
 ---
 
 Starting as a paraeducator opened my eyes to a world of small victories, big challenges, and lessons no one warns you about.  
-Here’s what I wish I had on day one — read more about my first months in the classroom in this [blog post about my early PARA experiences](/blog/para-welcome-kit-intro).
+Here’s what I wish I had on day one — read more about my first months in the classroom in this [blog post about my early PARA experiences](/blog/para-welcome-book).
 
-{{< spoiler text="Read more about the PARA Welcome Kit..." >}}
+{{< spoiler text="Read more about the PARA Welcome Book..." >}}
 
 PARAs are the quiet backbone of inclusive classrooms—present in every transition, every breakthrough, and every challenging moment. Yet most start without clear, practical guidance.
 
-This kit combines my hands-on experience as a District 11 SPED paraeducator with inclusive practices from my work and study. It's designed to be supportive, empowering, and deeply human—the resource I wish I had on day one.
+This book combines my hands-on experience as a District 11 SPED paraeducator with inclusive practices from my work and study. It's designed to be supportive, empowering, and deeply human—the resource I wish I had on day one.
 
 Inside, you'll find guidance on everyday realities:
 
@@ -37,13 +35,13 @@ This is not a rulebook—it's a companion. Paraeducators deserve to feel prepare
 Take a closer look inside the PARA Welcome Kit with the slides below.  
 Swipe through to see practical tools, tips, and guidance designed to support new paraeducators.
 
-{{< slides src="slides/para-welcome-kit" overview="false" notes="false" >}}
+{{< slides src="slides/para-welcome-book" overview="false" notes="false" >}}
 
 ---
 
-## I Need Your Feedback to Improve the PARA Welcome Kit
+## I Need Your Feedback to Improve the PARA Welcome Book
 
-This kit is my best effort to support new paraeducators, but it might not cover everything.  
+This book is my best effort to support new paraeducators, but it might not cover everything.  
 If you’re a paraeducator, teacher, or administrator, your experience can help make it better:
 
 * What parts were most helpful?
@@ -51,4 +49,4 @@ If you’re a paraeducator, teacher, or administrator, your experience can help 
 * How could it be more practical for real classroom challenges?
 
 Your feedback will guide future updates and ensure this resource truly meets the needs of those starting in Special Education.  
-[Share Your Feedback →](mailto:contact@ianasamoilova.com?subject=Feedback%3A%20PARA%20Welcome%20Kit)
+[Share Your Feedback →](mailto:contact@ianasamoilova.com?subject=Feedback%3A%20PARA%20Welcome%20Book)
