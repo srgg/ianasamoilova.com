@@ -73,6 +73,12 @@ article.prose,
     .max-w-3xl {
         max-width: var(--width-md) !important;
     }
+
+    /* Blog list date-title-summary: right-align date to sit closer to content */
+    article.md\:grid-cols-4.md\:items-baseline > time {
+        justify-self: end;
+        padding-right: 1.5rem;
+    }
 }
 
 @media (min-width: theme('screens.lg')) {
