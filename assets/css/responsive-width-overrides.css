@@ -134,3 +134,24 @@ article.prose,
         padding-right: 3rem !important;
     }
 }
+
+/* Project Cards: Remove compounding padding on mobile
+ * Hugo Blox nests multiple px-6/px-8 containers, eating ~200px on small screens.
+ * Since .page-body already has padding, remove inner padding on mobile.
+ */
+.blox-collection .container.px-8,
+.blox-collection > .flex.px-6 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+@media (min-width: theme('screens.md')) {
+    .blox-collection .container.px-8 {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+    .blox-collection > .flex.px-6 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
