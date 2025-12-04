@@ -7,7 +7,21 @@
 imports:
   - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-plugin-netlify
   - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind
+  # reveal-hugo: Custom mounts expose static/ CSS to assets/ for slides shortcode bundling
+  # (slides.html uses resources.Get which only reads from assets/)
+  # NOTE: Adding mounts disables Hugo defaults, so we must re-declare layouts/assets/static
   - path: github.com/joshed-io/reveal-hugo
+    mounts:
+      - source: layouts
+        target: layouts
+      - source: assets
+        target: assets
+      - source: static
+        target: static
+      - source: static/reveal-js
+        target: assets/reveal-js
+      - source: static/highlight-js
+        target: assets/highlight-js
 
 # Install any Hugo Blox within the `hugo-blox/blox/` folder
 mounts:

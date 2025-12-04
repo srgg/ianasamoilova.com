@@ -4,7 +4,13 @@ summary: "A guide to surviving and thriving in Special Education"
 date: 2025-01-12
 outputs: ["Reveal"]
 reveal_hugo:
-  theme: white
+  load_default_plugins: false
+  # Workaround: reveal-hugo bug crashes when load_default_plugins: false with no plugins
+  # (sort on nil sequence). RevealZoom is the smallest plugin to avoid this.
+  plugins:
+    - name: RevealZoom
+      source: plugin/zoom/zoom.js
+  #  theme: white
   transition: slide
   controls: true
   progress: true

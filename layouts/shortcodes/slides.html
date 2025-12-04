@@ -58,8 +58,17 @@
 {{- $minScale := $slidesPage.Param "reveal_hugo.min_scale" | default 0.2 -}}
 {{- $maxScale := $slidesPage.Param "reveal_hugo.max_scale" | default 2.0 -}}
 
-{{/* Get plugins using reveal-hugo's internal partial - this keeps us in sync with updates */}}
-{{- $plugins := partial "internal/plugins" $slidesPage -}}
+{{/* Get plugins - reveal-hugo's internal/plugins partial has a bug where it fails when
+     load_default_plugins: false and no custom plugins are defined (tries to sort empty sequence).
+     We skip calling it entirely when load_default_plugins is explicitly false. */}}
+{{- $plugins := slice -}}
+{{- $loadDefaultPlugins := $slidesPage.Param "reveal_hugo.load_default_plugins" -}}
+{{- if ne $loadDefaultPlugins false -}}
+  {{/* Only call reveal-hugo's partial when defaults are enabled or not specified */}}
+  {{- with partial "internal/plugins" $slidesPage -}}
+    {{- $plugins = . -}}
+  {{- end -}}
+{{- end -}}
 {{/* Filter out notes plugin if notes are disabled */}}
 {{- if not $notes -}}
   {{- $filteredPlugins := slice -}}
@@ -73,26 +82,57 @@
 
 <div class="slides-inline-container" style="--slide-width: {{ $width }}; --slide-height: {{ $slideHeight }};">
 
-  {{/* Reveal.js theme CSS - dynamic based on slide config */}}
-  <style>
-    @import url("{{ printf "%s/dist/reveal.css" $reveal_location | relURL }}");
-    {{- if $custom_theme }}
-    @import url("{{ $custom_theme | relURL }}");
-    {{- else }}
-    @import url("{{ printf "%s/dist/theme/%s.css" $reveal_location $theme | relURL }}");
-    {{- end }}
-    {{- if $slidesPage.Param "reveal_hugo.load_default_plugins" | default true }}
-    @import url("{{ printf "%s/%s.min.css" $highlight_location $highlight_theme | relURL }}");
-    {{- end }}
-    {{- if $custom_css }}
-    @import url("{{ $custom_css | relURL }}");
-    {{- end }}
-    {{- range $plugins }}
-      {{- with .css }}
-    @import url("{{ . | relURL }}");
-      {{- end }}
-    {{- end }}
-  </style>
+  {{/* Bundle reveal.js CSS - eliminates render-blocking @import waterfall */}}
+  {{- $cssContent := "" -}}
+  {{/* Note: We skip reveal.js theme fonts (Source Sans Pro) since site uses Inter font */}}
+  {{- with resources.Get (printf "%s/dist/reveal.css" $reveal_location) -}}
+    {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+  {{- end -}}
+  {{- if $custom_theme -}}
+    {{- with resources.Get $custom_theme -}}
+      {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+    {{- end -}}
+  {{- else -}}
+    {{- with resources.Get (printf "%s/dist/theme/%s.css" $reveal_location $theme) -}}
+      {{/* Strip @import for theme fonts - site uses Inter, not Source Sans Pro */}}
+      {{- $themeCSS := .Content | replaceRE `@import[^;]+;` "" -}}
+      {{- $cssContent = printf "%s%s" $cssContent $themeCSS -}}
+    {{- end -}}
+  {{- end -}}
+  {{/* Only load highlight.js CSS if RevealHighlight plugin is enabled */}}
+  {{- $hasHighlight := false -}}
+  {{- range $plugins -}}
+    {{- if eq .name "RevealHighlight" -}}
+      {{- $hasHighlight = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $hasHighlight -}}
+    {{- with resources.Get (printf "%s/%s.min.css" $highlight_location $highlight_theme) -}}
+      {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $custom_css -}}
+    {{- with resources.Get $custom_css -}}
+      {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+    {{- end -}}
+  {{- end -}}
+  {{- range $plugins -}}
+    {{- with .css -}}
+      {{- with resources.Get . -}}
+        {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $bundledCSS := $cssContent | resources.FromString (printf "css/reveal-%s.css" $id) -}}
+  {{- if not hugo.IsDevelopment -}}
+    {{- $bundledCSS = $bundledCSS | resources.Minify | resources.Fingerprint "sha256" -}}
+  {{- end -}}
+  {{/* External CSS with fingerprint in production for caching; inline in dev for speed */}}
+  {{- if hugo.IsDevelopment -}}
+    <style>{{ $bundledCSS.Content | safeCSS }}</style>
+  {{- else -}}
+    <link rel="stylesheet" href="{{ $bundledCSS.RelPermalink }}"{{ with $bundledCSS.Data.Integrity }} integrity="{{ . }}"{{ end }}>
+  {{- end -}}
 
   {{/* Render slides and fix relative image paths */}}
   {{- $slidesContent := partial "reveal-hugo/slides" (slice $slidesPage) -}}
@@ -128,13 +168,21 @@
     {{- end }}
   </p>
 
-  <!-- Reveal.js core -->
-  <script src="{{ printf "%s/dist/reveal.js" $reveal_location | relURL }}"></script>
-
-  <!-- Load plugins dynamically from reveal-hugo's internal/plugins partial -->
-  {{- range $plugins }}
-  <script src="{{ .source | relURL }}"></script>
-  {{- end }}
+  {{/* Bundle reveal.js core + plugins - reduces network requests from N to 1 */}}
+  {{- $jsContent := "" -}}
+  {{- with resources.Get (printf "%s/dist/reveal.js" $reveal_location) -}}
+    {{- $jsContent = .Content -}}
+  {{- end -}}
+  {{- range $plugins -}}
+    {{- with resources.Get .source -}}
+      {{- $jsContent = printf "%s\n%s" $jsContent .Content -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $bundledJS := $jsContent | resources.FromString (printf "js/reveal-%s.js" $id) -}}
+  {{- if not hugo.IsDevelopment -}}
+    {{- $bundledJS = $bundledJS | resources.Minify | resources.Fingerprint "sha256" -}}
+  {{- end -}}
+  <script src="{{ $bundledJS.RelPermalink }}"{{ with $bundledJS.Data.Integrity }} integrity="{{ . }}"{{ end }}></script>
 
   <script>
     (function() {
