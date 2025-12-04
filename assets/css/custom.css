@@ -51,3 +51,29 @@ footer {
 :root {
     --screen-sm: theme('screens.sm');
 }
+
+/* Project Cards: Make entire card clickable
+ * Uses ::after on title link to expand click area to full card.
+ * Tag badge stays separately clickable via z-index layering.
+ */
+[role="article"].group {
+    position: relative;
+}
+
+[role="article"].group h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+/* Keep tag badge clickable above the card overlay */
+[role="article"].group a:has(span) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Cursor pointer on entire card */
+[role="article"].group {
+    cursor: pointer;
+}
