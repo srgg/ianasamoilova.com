@@ -1,7 +1,13 @@
+/*
+ *   The main Hugo Blox css is in _vendor/github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind/assets/css/main.css
+ *   
+*/
+
 @import "responsive-width-overrides.css";
 @import "compact-layout.css";
 @import "resume-links.css";
 @import "navbar.css";
+@import "slides.css";
 
 /* Fix footer positioning - ensure it stays close to content */
 footer {
@@ -38,4 +44,36 @@ footer {
     .resume-biography .left-col {
         margin-top: 2em !important;
     }
+}
+
+/* Expose Tailwind breakpoints as CSS variables for JS access
+   Usage in JS: getComputedStyle(document.documentElement).getPropertyValue('--screen-sm') */
+:root {
+    --screen-sm: theme('screens.sm');
+}
+
+/* Project Cards: Make entire card clickable
+ * Uses ::after on title link to expand click area to full card.
+ * Tag badge stays separately clickable via z-index layering.
+ */
+[role="article"].group {
+    position: relative;
+}
+
+[role="article"].group h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+/* Keep tag badge clickable above the card overlay */
+[role="article"].group a:has(span) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Cursor pointer on entire card */
+[role="article"].group {
+    cursor: pointer;
 }

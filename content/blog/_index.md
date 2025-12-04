@@ -5,7 +5,8 @@ view: date-title-summary
 
 cascade:
     type: post
-    share: false
+    share: true
+    show_date_updated: false
     pager: true
 
 ---

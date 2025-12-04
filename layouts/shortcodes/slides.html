@@ -1,18 +1,35 @@
 {{/*
   Slides shortcode - Embeds reveal-hugo slides directly on the page (no iframe)
 
-  Uses the actual reveal-hugo partials to render slides properly with full plugin support.
-  Reuses reveal-hugo's internal/plugins partial for future-proof plugin loading.
+  Uses reveal-hugo partials with full plugin support. Responsive behavior via reveal.js 5.0:
+  - Mobile (<sm): Scroll view with swipe navigation
+  - Desktop (≥sm): Classic view with arrow controls + keyboard
 
-  Parameters:
-    - src: (required) a path to the slide page, e.g., "slides/para-welcome-kit"
-    - height: (optional) Height of the slide container, defaults to "500px"
-    - overview: (optional) Enable overview mode (O key), defaults to "true"
-    - notes: (optional) Enable speaker notes (S key), defaults to "true"
+  Shortcode Parameters:
+    src:      (required) path to slide page, e.g., "slides/para-welcome-kit"
+    height:   (optional) fixed container height, e.g., "600px"
+                         If omitted: responsive sizing using aspect-ratio + max-height per breakpoint
+                         If set: forces exact height (overrides responsive behavior)
+    overview: (optional) enable O key for overview mode, defaults to "true"
+    notes:    (optional) enable S key for speaker notes, defaults to "true"
 
-  Usage: {{< slides src="slides/para-welcome-kit" height="600px" overview="false" notes="false" >}}
+  Slide Page Settings (from front matter reveal_hugo.*):
+    reveal_cdn, highlight_cdn     - asset locations (default: reveal-js, highlight-js)
+    theme, highlight_theme        - visual themes (default: black, monokai)
+    custom_theme, custom_css      - custom theme/css paths
+    transition                    - slide transition (default: slide)
+    width, height                 - slide dimensions (default: 960x700)
+    margin, min_scale, max_scale  - sizing (default: 0.04, 0.2, 2.0)
+    center, controls, progress    - reveal.js options (default: true)
+    load_default_plugins          - load highlight.js (default: true)
+    images_path                   - path to images in assets/ (for Hugo Pipes)
+
+  Usage:
+    Responsive: {{< slides src="slides/para-welcome-kit" >}}
+    Fixed:      {{< slides src="slides/para-welcome-kit" height="700px" >}}
 
   Requires: github.com/joshed-io/reveal-hugo module
+  Styles:   assets/css/slides.css
 */}}
 
 {{/* Fail build if reveal-hugo module is not installed */}}
@@ -21,7 +38,7 @@
 {{- end -}}
 
 {{- $src := .Get "src" | strings.TrimSuffix "/" -}}
-{{- $height := .Get "height" | default "500px" -}}
+{{- $fixedHeight := .Get "height" -}} {{/* Optional: if set, forces fixed height; if not, uses responsive aspect-ratio */}}
 {{- $overview := ne (.Get "overview") "false" -}}
 {{- $notes := ne (.Get "notes") "false" -}}
 {{- $id := printf "reveal-%s" (md5 $src) -}}
@@ -39,9 +56,24 @@
 {{- $transition := $slidesPage.Param "reveal_hugo.transition" | default "slide" -}}
 {{- $custom_theme := $slidesPage.Param "reveal_hugo.custom_theme" -}}
 {{- $custom_css := $slidesPage.Param "reveal_hugo.custom_css" -}}
+{{/* Presentation sizing - https://revealjs.com/presentation-size/ */}}
+{{- $width := $slidesPage.Param "reveal_hugo.width" | default 960 -}}
+{{- $slideHeight := $slidesPage.Param "reveal_hugo.height" | default 700 -}}
+{{- $margin := $slidesPage.Param "reveal_hugo.margin" | default 0.04 -}}
+{{- $minScale := $slidesPage.Param "reveal_hugo.min_scale" | default 0.2 -}}
+{{- $maxScale := $slidesPage.Param "reveal_hugo.max_scale" | default 2.0 -}}
 
-{{/* Get plugins using reveal-hugo's internal partial - this keeps us in sync with updates */}}
-{{- $plugins := partial "internal/plugins" $slidesPage -}}
+{{/* Get plugins - reveal-hugo's internal/plugins partial has a bug where it fails when
+     load_default_plugins: false and no custom plugins are defined (tries to sort empty sequence).
+     We skip calling it entirely when load_default_plugins is explicitly false. */}}
+{{- $plugins := slice -}}
+{{- $loadDefaultPlugins := $slidesPage.Param "reveal_hugo.load_default_plugins" -}}
+{{- if ne $loadDefaultPlugins false -}}
+  {{/* Only call reveal-hugo's partial when defaults are enabled or not specified */}}
+  {{- with partial "internal/plugins" $slidesPage -}}
+    {{- $plugins = . -}}
+  {{- end -}}
+{{- end -}}
 {{/* Filter out notes plugin if notes are disabled */}}
 {{- if not $notes -}}
   {{- $filteredPlugins := slice -}}
@@ -53,106 +85,85 @@
   {{- $plugins = $filteredPlugins -}}
 {{- end -}}
 
-<div class="slides-inline-container relative my-8">
+<div class="slides-inline-container{{ if $fixedHeight }} slides-fixed-height{{ end }}" style="--slide-width: {{ $width }}; --slide-height: {{ $slideHeight }};{{ with $fixedHeight }} --fixed-height: {{ . }};{{ end }}">
 
-  <style>
-    /* Container styles */
-    #{{ $id }} {
-      height: {{ $height }};
-      border: 1px solid rgb(var(--color-neutral-200, 229 231 235));
-      border-radius: 0.5rem;
-      overflow: hidden;
-      position: relative;
-    }
-    #{{ $id }} .reveal {
-      height: 100%;
-      width: 100%;
-    }
-    /* Disable reveal.js scroll view - prevents nested scrollbar */
-    #{{ $id }} .reveal {
-      scroll-snap-type: none !important;
-      overflow: hidden !important;
-    }
-    #{{ $id }}:fullscreen {
-      height: 100vh;
-      border: none;
-      border-radius: 0;
-    }
-    /* Fullscreen control button - matches reveal.js control styling */
-    /* Hidden for now - change display to flex to re-enable */
-    #{{ $id }} .fullscreen-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      z-index: 30;
-      width: 36px;
-      height: 36px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      display: none; /* was: flex */
-      align-items: center;
-      justify-content: center;
-      opacity: 0.5;
-      transition: opacity 0.2s;
-    }
-    #{{ $id }} .fullscreen-btn:hover {
-      opacity: 1;
-    }
-    #{{ $id }} .fullscreen-btn svg {
-      width: 24px;
-      height: 24px;
-      stroke: currentColor;
-    }
-    #{{ $id }}:fullscreen .fullscreen-btn svg.expand { display: none; }
-    #{{ $id }}:not(:fullscreen) .fullscreen-btn svg.collapse { display: none; }
-  </style>
+  {{/* Bundle reveal.js CSS - eliminates render-blocking @import waterfall */}}
+  {{- $cssContent := "" -}}
+  {{/* Note: We skip reveal.js theme fonts (Source Sans Pro) since site uses Inter font */}}
+  {{- with resources.Get (printf "%s/dist/reveal.css" $reveal_location) -}}
+    {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+  {{- end -}}
+  {{- if $custom_theme -}}
+    {{- with resources.Get $custom_theme -}}
+      {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+    {{- end -}}
+  {{- else -}}
+    {{- with resources.Get (printf "%s/dist/theme/%s.css" $reveal_location $theme) -}}
+      {{/* Strip @import for theme fonts - site uses Inter, not Source Sans Pro */}}
+      {{- $themeCSS := .Content | replaceRE `@import[^;]+;` "" -}}
+      {{- $cssContent = printf "%s%s" $cssContent $themeCSS -}}
+    {{- end -}}
+  {{- end -}}
+  {{/* Only load highlight.js CSS if RevealHighlight plugin is enabled */}}
+  {{- $hasHighlight := false -}}
+  {{- range $plugins -}}
+    {{- if eq .name "RevealHighlight" -}}
+      {{- $hasHighlight = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $hasHighlight -}}
+    {{- with resources.Get (printf "%s/%s.min.css" $highlight_location $highlight_theme) -}}
+      {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $custom_css -}}
+    {{- with resources.Get $custom_css -}}
+      {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+    {{- end -}}
+  {{- end -}}
+  {{- range $plugins -}}
+    {{- with .css -}}
+      {{- with resources.Get . -}}
+        {{- $cssContent = printf "%s%s" $cssContent .Content -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $bundledCSS := $cssContent | resources.FromString (printf "css/reveal-%s.css" $id) -}}
+  {{- if not hugo.IsDevelopment -}}
+    {{- $bundledCSS = $bundledCSS | resources.Minify | resources.Fingerprint "sha256" -}}
+  {{- end -}}
+  {{/* External CSS with fingerprint in production for caching; inline in dev for speed */}}
+  {{- if hugo.IsDevelopment -}}
+    <style>{{ $bundledCSS.Content | safeCSS }}</style>
+  {{- else -}}
+    <link rel="stylesheet" href="{{ $bundledCSS.RelPermalink }}"{{ with $bundledCSS.Data.Integrity }} integrity="{{ . }}"{{ end }}>
+  {{- end -}}
 
-  <!--
-    Reveal.js CSS - matching layout/theme.html logic but WITHOUT reset.css
-    (reset.css breaks page styles outside the slide container)
-  -->
-  <style>
-    @import url("{{ printf "%s/dist/reveal.css" $reveal_location | relURL }}");
-    {{- if $custom_theme }}
-    @import url("{{ $custom_theme | relURL }}");
-    {{- else }}
-    @import url("{{ printf "%s/dist/theme/%s.css" $reveal_location $theme | relURL }}");
-    {{- end }}
-    {{- if $slidesPage.Param "reveal_hugo.load_default_plugins" | default true }}
-    @import url("{{ printf "%s/%s.min.css" $highlight_location $highlight_theme | relURL }}");
-    {{- end }}
-    {{- if $custom_css }}
-    @import url("{{ $custom_css | relURL }}");
-    {{- end }}
-    {{- /* Load any plugin CSS from the plugins partial */ -}}
-    {{- range $plugins }}
-      {{- with .css }}
-    @import url("{{ . | relURL }}");
-      {{- end }}
-    {{- end }}
-  </style>
-
-  <!-- Prevent Reveal.js styles from leaking to elements outside the slides -->
-  <style>
-    .slides-inline-container > *:not(#{{ $id }}):not(style):not(.slides-legend) {
-      all: revert;
-    }
-  </style>
-
-  {{/* Render slides and fix relative image paths */}}
+  {{/* Render slides and process images */}}
   {{- $slidesContent := partial "reveal-hugo/slides" (slice $slidesPage) -}}
-  {{- $slidesContent = $slidesContent | replaceRE `data-background-image="([^/][^"]+)"` (printf `data-background-image="/%s/$1"` $src) -}}
   {{- $resourcesContent := partial "reveal-hugo/slides" ($slidesPage.Resources.ByType "page") -}}
-  {{- $resourcesContent = $resourcesContent | replaceRE `data-background-image="([^/][^"]+)"` (printf `data-background-image="/%s/$1"` $src) -}}
 
-  <div id="{{ $id }}" tabindex="0">
+  {{/* Get images_path from front matter - if set, load via Hugo Pipes from assets/<images_path>/ */}}
+  {{- $imagesPath := $slidesPage.Param "images_path" -}}
+  {{- if $imagesPath -}}
+    {{- $images := resources.Match (printf "%s/*" $imagesPath) -}}
+    {{- range $images -}}
+      {{- $filename := path.Base .RelPermalink -}}
+      {{- $publishedURL := .RelPermalink -}}
+      {{- $pattern := printf `data-background-image="%s"` $filename -}}
+      {{- $replacement := printf `data-background-image="%s"` $publishedURL -}}
+      {{- $slidesContent = replace $slidesContent $pattern $replacement -}}
+      {{- $resourcesContent = replace $resourcesContent $pattern $replacement -}}
+    {{- end -}}
+  {{- end -}}
+  {{/* If no images_path, absolute paths in _index.md are used as-is */}}
+
+  <div id="{{ $id }}" class="slides-wrapper" tabindex="0">
     <div class="reveal">
       <div class="slides">
         {{- $slidesContent | safeHTML -}}
         {{- $resourcesContent | safeHTML -}}
       </div>
-      {{/* Button inside .reveal to inherit theme colors */}}
       <button class="fullscreen-btn" title="Toggle fullscreen">
         <svg class="expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
@@ -164,38 +175,67 @@
     </div>
   </div>
 
-  <p class="slides-legend text-center text-neutral-500 mt-2">
-    <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="document.getElementById('{{ $id }}').revealdeck.prev()" title="Previous slide">←</kbd><kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="document.getElementById('{{ $id }}').revealdeck.next()" title="Next slide">→</kbd> navigate
-    · <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="(function(el){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.msRequestFullscreen)el.msRequestFullscreen();})(document.getElementById('{{ $id }}'))" title="Fullscreen">F</kbd> fullscreen
+  <p class="slides-legend text-neutral-500">
+    <kbd onclick="document.getElementById('{{ $id }}').revealdeck.prev()" title="Previous slide">←</kbd><kbd onclick="document.getElementById('{{ $id }}').revealdeck.next()" title="Next slide">→</kbd> navigate
+    · <kbd onclick="(function(el){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.msRequestFullscreen)el.msRequestFullscreen();})(document.getElementById('{{ $id }}'))" title="Fullscreen">F</kbd> fullscreen
     {{- if $overview }}
-    · <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="document.getElementById('{{ $id }}').revealdeck.toggleOverview()" title="Toggle overview">O</kbd> overview
+    · <kbd onclick="document.getElementById('{{ $id }}').revealdeck.toggleOverview()" title="Toggle overview">O</kbd> overview
     {{- end }}
     {{- if $notes }}
-    · <kbd class="bg-neutral-200 px-2 py-1 rounded hover:bg-neutral-300 cursor-pointer" onclick="(function(d){var n=d.revealdeck.getPlugin('notes');if(n&&n.open)n.open();else console.warn('Notes plugin not available');})(document.getElementById('{{ $id }}'))" title="Speaker notes">S</kbd> speaker notes
+    · <kbd onclick="(function(d){var n=d.revealdeck.getPlugin('notes');if(n&&n.open)n.open();else console.warn('Notes plugin not available');})(document.getElementById('{{ $id }}'))" title="Speaker notes">S</kbd> speaker notes
     {{- end }}
   </p>
 
-  <!-- Reveal.js core -->
-  <script src="{{ printf "%s/dist/reveal.js" $reveal_location | relURL }}"></script>
-
-  <!-- Load plugins dynamically from reveal-hugo's internal/plugins partial -->
-  {{- range $plugins }}
-  <script src="{{ .source | relURL }}"></script>
-  {{- end }}
+  {{/* Bundle reveal.js core + plugins - reduces network requests from N to 1 */}}
+  {{- $jsContent := "" -}}
+  {{- with resources.Get (printf "%s/dist/reveal.js" $reveal_location) -}}
+    {{- $jsContent = .Content -}}
+  {{- end -}}
+  {{- range $plugins -}}
+    {{- with resources.Get .source -}}
+      {{- $jsContent = printf "%s\n%s" $jsContent .Content -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $bundledJS := $jsContent | resources.FromString (printf "js/reveal-%s.js" $id) -}}
+  {{- if not hugo.IsDevelopment -}}
+    {{- $bundledJS = $bundledJS | resources.Minify | resources.Fingerprint "sha256" -}}
+  {{- end -}}
+  <script src="{{ $bundledJS.RelPermalink }}"{{ with $bundledJS.Data.Integrity }} integrity="{{ . }}"{{ end }}></script>
 
   <script>
     (function() {
       var container = document.getElementById('{{ $id }}');
       var revealEl = container.querySelector('.reveal');
 
+      // Read Tailwind sm breakpoint from CSS variable (defined in custom.css)
+      // Let browser convert any CSS unit (rem/em/px/etc) to pixels via temp element
+      var temp = document.createElement('div');
+      temp.style.width = 'var(--screen-sm)';
+      temp.style.position = 'absolute';
+      temp.style.visibility = 'hidden';
+      document.body.appendChild(temp);
+      var screenSm = temp.offsetWidth || 640;
+      document.body.removeChild(temp);
+
+      // https://revealjs.com/presentation-size/#embedded
       var deck = new Reveal(revealEl, {
         embedded: true,
+        touch: true,
+        width: {{ $width }},
+        height: {{ $slideHeight }},
+        margin: {{ $margin }},
+        minScale: {{ $minScale }},
+        maxScale: {{ $maxScale }},
+        // Auto scroll view on mobile (<sm), classic on desktop: https://revealjs.com/scroll-view/
+        scrollActivationWidth: screenSm,
+        scrollLayout: 'compact',
         center: {{ $slidesPage.Param "reveal_hugo.center" | default true }},
         controls: {{ $slidesPage.Param "reveal_hugo.controls" | default true }},
         progress: {{ $slidesPage.Param "reveal_hugo.progress" | default true }},
         history: false,
         transition: '{{ $transition }}',
         keyboard: false,
+        jumpToSlide: false,
         {{- $pluginNames := slice -}}
         {{- range $plugins -}}
           {{- $pluginNames = $pluginNames | append .name -}}
@@ -204,7 +244,14 @@
       });
       deck.initialize();
 
-      // Expose deck on a container element for onclick handlers
+      // Recalculate layout on fullscreen change
+      document.addEventListener('fullscreenchange', function() {
+        if (document.fullscreenElement === container || !document.fullscreenElement) {
+          deck.layout();
+        }
+      });
+
+      // Expose deck on container element for onclick handlers
       container.revealdeck = deck;
 
       // Check if the slide container is visible in the viewport
@@ -247,7 +294,6 @@
           {{- if $notes }}
           case 's':
           case 'S':
-            // Open speaker notes view
             e.preventDefault();
             var notesPlugin = deck.getPlugin('notes');
             if (notesPlugin && notesPlugin.open) {
@@ -260,7 +306,6 @@
           {{- if $overview }}
           case 'o':
           case 'O':
-            // Toggle overview mode
             e.preventDefault();
             deck.toggleOverview();
             break;

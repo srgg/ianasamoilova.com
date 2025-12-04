@@ -52,6 +52,9 @@ node_modules/
 # Generated Content
 # ============================================================================
 
+# Generated slide images from PDF (npm run slides)
+assets/generated/
+
 # Pagefind search index
 pagefind/
 static/pagefind/

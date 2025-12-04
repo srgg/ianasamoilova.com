@@ -73,6 +73,12 @@ article.prose,
     .max-w-3xl {
         max-width: var(--width-md) !important;
     }
+
+    /* Blog list date-title-summary: right-align date to sit closer to content */
+    article.md\:grid-cols-4.md\:items-baseline > time {
+        justify-self: end;
+        padding-right: 1.5rem;
+    }
 }
 
 @media (min-width: theme('screens.lg')) {
@@ -116,5 +122,42 @@ article.prose,
 @media (min-width: theme('screens.lg')) {
     .blox-collection .max-w-\[500px\] {
         max-width: var(--width-lg) !important;  /* 1024px - matches demo */
+    }
+}
+
+/* List/Section Pages: Add horizontal padding to match single.html layout
+ * Hugo Blox single.html has px-6/md:px-12, but list.html lacks it.
+ * .page-body wraps content on all list-based pages (blog, projects, etc.)
+ */
+.page-body {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+@media (min-width: theme('screens.md')) {
+    .page-body {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
+}
+
+/* Project Cards: Remove compounding padding on mobile
+ * Hugo Blox nests multiple px-6/px-8 containers, eating ~200px on small screens.
+ * Since .page-body already has padding, remove inner padding on mobile.
+ */
+.blox-collection .container.px-8,
+.blox-collection > .flex.px-6 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+@media (min-width: theme('screens.md')) {
+    .blox-collection .container.px-8 {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+    .blox-collection > .flex.px-6 {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
     }
 }
