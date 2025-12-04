@@ -118,3 +118,19 @@ article.prose,
         max-width: var(--width-lg) !important;  /* 1024px - matches demo */
     }
 }
+
+/* List/Section Pages: Add horizontal padding to match single.html layout
+ * Hugo Blox single.html has px-6/md:px-12, but list.html lacks it.
+ * .page-body wraps content on all list-based pages (blog, projects, etc.)
+ */
+.page-body {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+@media (min-width: theme('screens.md')) {
+    .page-body {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
+}
