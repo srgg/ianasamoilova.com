@@ -3,6 +3,8 @@ title: "PARA Welcome Kit"
 summary: "A guide to surviving and thriving in Special Education"
 date: 2025-01-12
 outputs: ["Reveal"]
+# Path to generated slide images (relative to assets/)
+images_path: "generated/slides/para-welcome-kit"
 reveal_hugo:
   load_default_plugins: false
   # Workaround: reveal-hugo bug crashes when load_default_plugins: false with no plugins
@@ -10,25 +12,25 @@ reveal_hugo:
   plugins:
     - name: RevealZoom
       source: plugin/zoom/zoom.js
-  #  theme: white
+  theme: white
   transition: slide
   controls: true
   progress: true
   history: true
   center: true
   
-  # Match image aspect ratio (1275:1650)
-  width: 1275
-  height: 1650
+  # Match A5 page at 200 DPI (5.83" × 8.27")
+  width: 1700
+  height: 2200
   # Zero margin for edge-to-edge slides in scroll view: https://revealjs.com/presentation-size/
   margin: 0
 ---
 
-{{< slide background-image="page-00.webp" background-size="cover" background-color="#f0f0f0" >}}
+{{< slide background-image="page-01.webp" background-size="cover" background-color="#f0f0f0" >}}
 
 ---
 
-{{< slide background-image="page-02.webp" background-size="cover" background-color="#f0f0f0" >}}
+{{< slide background-image="page-02.webp" background-size="cover" background-color="#f0f0f0" visibility="hidden" >}}
 
 ---
 
@@ -97,3 +99,7 @@ reveal_hugo:
 ---
 
 {{< slide background-image="page-19.webp" background-size="cover" background-color="#f0f0f0" >}}
+
+---
+
+{{< slide background-image="page-20.webp" background-size="cover" background-color="#f0f0f0" >}}

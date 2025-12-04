@@ -37,7 +37,7 @@ This is not a rulebook—it's a companion. Paraeducators deserve to feel prepare
 Take a closer look inside the PARA Welcome Kit with the slides below.  
 Swipe through to see practical tools, tips, and guidance designed to support new paraeducators.
 
-{{< slides src="slides/para-welcome-kit" height="660px" overview="false" notes="false" >}}
+{{< slides src="slides/para-welcome-kit" overview="false" notes="false" >}}
 
 ---
 

@@ -7,7 +7,9 @@
 
   Shortcode Parameters:
     src:      (required) path to slide page, e.g., "slides/para-welcome-kit"
-    height:   (optional) container height, defaults to "500px"
+    height:   (optional) fixed container height, e.g., "600px"
+                         If omitted: responsive sizing using aspect-ratio + max-height per breakpoint
+                         If set: forces exact height (overrides responsive behavior)
     overview: (optional) enable O key for overview mode, defaults to "true"
     notes:    (optional) enable S key for speaker notes, defaults to "true"
 
@@ -20,8 +22,11 @@
     margin, min_scale, max_scale  - sizing (default: 0.04, 0.2, 2.0)
     center, controls, progress    - reveal.js options (default: true)
     load_default_plugins          - load highlight.js (default: true)
+    images_path                   - path to images in assets/ (for Hugo Pipes)
 
-  Usage: {{< slides src="slides/para-welcome-kit" height="600px" >}}
+  Usage:
+    Responsive: {{< slides src="slides/para-welcome-kit" >}}
+    Fixed:      {{< slides src="slides/para-welcome-kit" height="700px" >}}
 
   Requires: github.com/joshed-io/reveal-hugo module
   Styles:   assets/css/slides.css
@@ -33,7 +38,7 @@
 {{- end -}}
 
 {{- $src := .Get "src" | strings.TrimSuffix "/" -}}
-{{- $height := .Get "height" | default "500px" -}}
+{{- $fixedHeight := .Get "height" -}} {{/* Optional: if set, forces fixed height; if not, uses responsive aspect-ratio */}}
 {{- $overview := ne (.Get "overview") "false" -}}
 {{- $notes := ne (.Get "notes") "false" -}}
 {{- $id := printf "reveal-%s" (md5 $src) -}}
@@ -80,7 +85,7 @@
   {{- $plugins = $filteredPlugins -}}
 {{- end -}}
 
-<div class="slides-inline-container" style="--slide-width: {{ $width }}; --slide-height: {{ $slideHeight }};">
+<div class="slides-inline-container{{ if $fixedHeight }} slides-fixed-height{{ end }}" style="--slide-width: {{ $width }}; --slide-height: {{ $slideHeight }};{{ with $fixedHeight }} --fixed-height: {{ . }};{{ end }}">
 
   {{/* Bundle reveal.js CSS - eliminates render-blocking @import waterfall */}}
   {{- $cssContent := "" -}}
@@ -134,11 +139,24 @@
     <link rel="stylesheet" href="{{ $bundledCSS.RelPermalink }}"{{ with $bundledCSS.Data.Integrity }} integrity="{{ . }}"{{ end }}>
   {{- end -}}
 
-  {{/* Render slides and fix relative image paths */}}
+  {{/* Render slides and process images */}}
   {{- $slidesContent := partial "reveal-hugo/slides" (slice $slidesPage) -}}
-  {{- $slidesContent = $slidesContent | replaceRE `data-background-image="([^/][^"]+)"` (printf `data-background-image="/%s/$1"` $src) -}}
   {{- $resourcesContent := partial "reveal-hugo/slides" ($slidesPage.Resources.ByType "page") -}}
-  {{- $resourcesContent = $resourcesContent | replaceRE `data-background-image="([^/][^"]+)"` (printf `data-background-image="/%s/$1"` $src) -}}
+
+  {{/* Get images_path from front matter - if set, load via Hugo Pipes from assets/<images_path>/ */}}
+  {{- $imagesPath := $slidesPage.Param "images_path" -}}
+  {{- if $imagesPath -}}
+    {{- $images := resources.Match (printf "%s/*" $imagesPath) -}}
+    {{- range $images -}}
+      {{- $filename := path.Base .RelPermalink -}}
+      {{- $publishedURL := .RelPermalink -}}
+      {{- $pattern := printf `data-background-image="%s"` $filename -}}
+      {{- $replacement := printf `data-background-image="%s"` $publishedURL -}}
+      {{- $slidesContent = replace $slidesContent $pattern $replacement -}}
+      {{- $resourcesContent = replace $resourcesContent $pattern $replacement -}}
+    {{- end -}}
+  {{- end -}}
+  {{/* If no images_path, absolute paths in _index.md are used as-is */}}
 
   <div id="{{ $id }}" class="slides-wrapper" tabindex="0">
     <div class="reveal">
@@ -217,6 +235,7 @@
         history: false,
         transition: '{{ $transition }}',
         keyboard: false,
+        jumpToSlide: false,
         {{- $pluginNames := slice -}}
         {{- range $plugins -}}
           {{- $pluginNames = $pluginNames | append .name -}}
