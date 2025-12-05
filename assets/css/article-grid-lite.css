@@ -1,0 +1,29 @@
+/* Article Grid Lite
+ * Lightweight version of article-grid view - clean, modern cards without images.
+ *
+ * Template files:
+ *   - layouts/partials/views/article-grid-lite.html (main card template)
+ *   - layouts/partials/views/article-grid-lite--start.html (grid wrapper start)
+ *   - layouts/partials/views/article-grid-lite--end.html (grid wrapper end)
+ *
+ * Usage: In collection block, set design.view: article-grid-lite
+ */
+
+/* Constrain width for single-column layout */
+.article-grid-lite {
+    width: 100%;
+}
+
+@media (min-width: theme('screens.md')) {
+    .article-grid-lite {
+        max-width: 32rem; /* 512px */
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: theme('screens.lg')) {
+    .article-grid-lite {
+        max-width: 36rem; /* 576px */
+    }
+}
