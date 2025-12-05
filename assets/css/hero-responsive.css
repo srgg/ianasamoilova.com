@@ -1,0 +1,135 @@
+/**
+ * Hero Responsive Background Images
+ *
+ * CURRENT APPROACH: CSS-based responsive backgrounds
+ * Uses media queries to serve appropriately sized hero background images.
+ * Requires Hugo-side partial to generate image variants and inject CSS.
+ *
+ * ============================================================================
+ * FUTURE IMPROVEMENT (Option B): Override parse_block_v2.html
+ * ============================================================================
+ *
+ * For full control and art direction, override Hugo Blox's parse_block_v2.html
+ * to generate a <picture> element instead of CSS background-image.
+ *
+ * Benefits of Option B:
+ * - Native browser responsive image handling with srcset/sizes
+ * - Art direction: serve different crops per breakpoint (portrait mobile, landscape desktop)
+ * - Better lazy loading support via loading="lazy"
+ * - Accessibility: can include alt text
+ * - Format negotiation: browser picks best format (webp, avif, jpg)
+ *
+ * Implementation outline for Option B:
+ * 1. Copy _vendor/.../layouts/_partials/functions/parse_block_v2.html to layouts/_partials/functions/
+ * 2. Replace lines 53-73 (background image handling) with <picture> element generation
+ * 3. Use process_responsive_image.html partial for srcset generation
+ * 4. Position <picture> absolutely behind content with CSS (object-fit: cover)
+ * 5. Support art direction via optional mobile/tablet/desktop image variants in frontmatter
+ *
+ * Example frontmatter for Option B art direction:
+ *   design:
+ *     background:
+ *       image:
+ *         filename: hero-desktop.jpg      # Default/desktop (16:9)
+ *         mobile: hero-mobile.jpg         # Portrait crop (3:4 or 9:16)
+ *         tablet: hero-tablet.jpg         # Optional middle ground (4:3)
+ *
+ * ============================================================================
+ *
+ * Tailwind Breakpoints (Hugo Blox defaults):
+ *   sm:  640px
+ *   md:  768px
+ *   lg:  1024px
+ *   xl:  1280px
+ *   2xl: 1536px
+ *
+ * Recommended Hero Image Sizes (width x height):
+ *
+ *   Breakpoint    1x Size      2x Retina    Aspect Ratio
+ *   ─────────────────────────────────────────────────────
+ *   Mobile        640x360      1280x720     16:9
+ *   sm            768x432      1536x864     16:9
+ *   md            1024x576     2048x1152    16:9
+ *   lg            1280x720     2560x1440    16:9
+ *   xl            1536x864     3072x1728    16:9
+ *   2xl           1920x1080    3840x2160    16:9
+ *
+ * Note: All sizes use consistent 16:9 aspect ratio. CSS background-size: cover
+ * handles cropping to fit container dimensions. For art direction (different
+ * crops per breakpoint), use Option B with <picture> element.
+ */
+
+/*
+ * Hero background responsive styles
+ * These selectors target Hugo Blox hero sections with background images.
+ * The actual image URLs must be injected via Hugo partial or inline styles.
+ */
+
+.hbb-section .home-section-bg.bg-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/*
+ * Resolution-based image switching using image-set()
+ * Note: This requires Hugo to generate CSS custom properties with image URLs.
+ *
+ * Example Hugo partial would set:
+ *   --hero-bg-sm: url('/images/hero-640.webp');
+ *   --hero-bg-md: url('/images/hero-1024.webp');
+ *   --hero-bg-lg: url('/images/hero-1920.webp');
+ *   --hero-bg-2x: url('/images/hero-3840.webp');
+ */
+
+/* Mobile-first: smallest image by default */
+@media (max-width: 639px) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo injects: background-image: var(--hero-bg-mobile, var(--hero-bg-fallback)); */
+    }
+}
+
+/* sm breakpoint: 640px+ */
+@media (min-width: 640px) and (max-width: 767px) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo injects: background-image: var(--hero-bg-sm, var(--hero-bg-fallback)); */
+    }
+}
+
+/* md breakpoint: 768px+ */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo injects: background-image: var(--hero-bg-md, var(--hero-bg-fallback)); */
+    }
+}
+
+/* lg breakpoint: 1024px+ */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo injects: background-image: var(--hero-bg-lg, var(--hero-bg-fallback)); */
+    }
+}
+
+/* xl breakpoint: 1280px+ */
+@media (min-width: 1280px) and (max-width: 1535px) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo injects: background-image: var(--hero-bg-xl, var(--hero-bg-fallback)); */
+    }
+}
+
+/* 2xl breakpoint: 1536px+ */
+@media (min-width: 1536px) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo injects: background-image: var(--hero-bg-2xl, var(--hero-bg-fallback)); */
+    }
+}
+
+/*
+ * Retina/HiDPI support
+ * Serve 2x images on high-density displays
+ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hbb-section .home-section-bg.bg-image {
+        /* Hugo would serve 2x variants here */
+    }
+}

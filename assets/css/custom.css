@@ -8,6 +8,9 @@
 @import "resume-links.css";
 @import "navbar.css";
 @import "slides.css";
+@import "hero-responsive.css";
+@import "cta-with-divider.css";
+@import "article-grid-lite.css";
 
 /* Fix footer positioning - ensure it stays close to content */
 footer {
