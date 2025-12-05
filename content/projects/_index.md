@@ -6,8 +6,8 @@ _build:
   list: never
 
 #draft: true  
-#cascade:
-#  draft: true
+cascade:
+  show_subtitle: true
   
 #design:
   # Section spacing
@@ -19,7 +19,9 @@ sections:
     content:
       title: Projects
 #      text: I enjoy making things. Here is a selection of projects that I have worked on over the years.
-      filters: 
+      sort_by: 'Weight'
+      sort_ascending: true
+      filters:
 #        subdirs: '*'
 #        page_type: landing
         folders:

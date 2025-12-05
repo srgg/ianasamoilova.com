@@ -1,0 +1,114 @@
+{{/*
+  Video with Table of Contents shortcode
+
+  Displays video with a chapter navigation panel on the right (desktop) or below (mobile).
+  Chapters defined in front matter with hierarchy support.
+
+  Front matter format:
+    video_chapters:
+      - title: "Getting Started"
+        time: 0
+        children:
+          - title: "Introduction"
+            time: 0
+          - title: "Registration"
+            time: 30
+      - title: "Creating Content"
+        time: 90
+
+  Parameters:
+    src:      (required) video filename
+    poster:   (optional) thumbnail image
+    id:       (optional) video element id, defaults to "chapter-video"
+
+  Usage:
+    video-with-toc src="tutorial.mp4"
+*/}}
+
+{{- $src := .Get "src" -}}
+{{- $poster := .Get "poster" -}}
+{{- $id := .Get "id" | default "chapter-video" -}}
+{{- $chapters := .Page.Params.video_chapters -}}
+
+{{/* Resolve video source */}}
+{{- $video_ext := path.Ext $src -}}
+{{- $video_type := strings.TrimPrefix "." $video_ext -}}
+{{- $asset := (.Page.Resources.ByType "video").GetMatch $src -}}
+{{- if not $asset -}}
+  {{- $asset = resources.Get (path.Join "media" $src) -}}
+{{- end -}}
+{{- $videoURL := $src -}}
+{{- if $asset -}}
+  {{- $videoURL = $asset.RelPermalink -}}
+{{- end -}}
+
+{{/* Resolve poster */}}
+{{- $posterURL := "" -}}
+{{- if $poster -}}
+  {{- $posterAsset := (.Page.Resources.ByType "image").GetMatch $poster -}}
+  {{- if not $posterAsset -}}
+    {{- $posterAsset = resources.Get (path.Join "media" $poster) -}}
+  {{- end -}}
+  {{- if $posterAsset -}}
+    {{- $posterURL = $posterAsset.RelPermalink -}}
+  {{- else -}}
+    {{- $posterURL = $poster -}}
+  {{- end -}}
+{{- end -}}
+
+<div class="video-toc-container flex flex-col lg:flex-row gap-6 my-6">
+  {{/* Video */}}
+  <div class="video-wrapper flex-1 min-w-0">
+    <video id="{{ $id }}" controls class="w-full rounded-lg shadow-lg"{{ with $posterURL }} poster="{{ . }}"{{ end }}>
+      <source src="{{ $videoURL }}" type="video/{{ $video_type }}">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  {{/* Chapter TOC */}}
+  {{- with $chapters -}}
+  <nav class="video-toc w-full lg:w-64 shrink-0" aria-label="video chapters">
+    <div class="bg-gray-50 dark:bg-neutral-800 rounded-lg p-4 lg:sticky lg:top-20">
+      <p class="mb-4 font-semibold tracking-tight text-gray-900 dark:text-gray-100">Chapters</p>
+      <ul class="space-y-1 text-sm">
+        {{- range . -}}
+          {{- template "video-chapter" (dict "chapter" . "level" 0 "videoId" $id) -}}
+        {{- end -}}
+      </ul>
+    </div>
+  </nav>
+  {{- end -}}
+</div>
+
+{{/* Chapter item template */}}
+{{- define "video-chapter" -}}
+  {{- $chapter := .chapter -}}
+  {{- $level := .level -}}
+  {{- $videoId := .videoId -}}
+  {{- $padding := mul $level 16 -}}
+
+  <li class="scroll-my-6" style="{{ if gt $level 0 }}padding-left: {{ $padding }}px;{{ end }}">
+    <a href="#"
+       onclick="document.getElementById('{{ $videoId }}').currentTime={{ $chapter.time }}; document.getElementById('{{ $videoId }}').play(); return false;"
+       class="video-chapter-link flex items-center gap-2 py-1.5 px-2 -mx-2 rounded transition-colors
+              text-gray-600 hover:text-gray-900 hover:bg-gray-100
+              dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-neutral-700
+              {{ if eq $level 0 }}font-medium{{ end }}"
+       data-time="{{ $chapter.time }}">
+      <span class="chapter-time text-xs text-gray-400 dark:text-gray-500 tabular-nums w-10">
+        {{- $minutes := div $chapter.time 60 -}}
+        {{- $seconds := mod $chapter.time 60 -}}
+        {{- printf "%d:%02d" $minutes $seconds -}}
+      </span>
+      <span class="chapter-title">{{ $chapter.title }}</span>
+    </a>
+
+    {{- with $chapter.children -}}
+      <ul class="mt-1 space-y-1">
+        {{- range . -}}
+          {{- template "video-chapter" (dict "chapter" . "level" (add $level 1) "videoId" $videoId) -}}
+        {{- end -}}
+      </ul>
+    {{- end -}}
+  </li>
+{{- end -}}
