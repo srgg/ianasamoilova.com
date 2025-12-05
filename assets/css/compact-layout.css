@@ -16,3 +16,17 @@
 .blox-resume-skills .mb-6 {
     margin-bottom: 1rem !important; /* Reduce section title margin */
 }
+
+/* Related Posts: Reduce title-to-content spacing */
+.related-posts .flex.flex-col.items-center.max-w-prose {
+    gap: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.related-posts .mb-6 {
+    margin-bottom: 0.25rem !important;
+}
+
+.related-posts .mt-16 {
+    margin-top: 0.5rem !important;
+}

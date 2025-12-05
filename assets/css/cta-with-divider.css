@@ -1,0 +1,52 @@
+/* CTA with Divider
+ * Styling for Hugo Blox cta-image-paragraph block.
+ *
+ * Why this exists:
+ *   Hugo Blox cta-image-paragraph alternates image position and does not
+ *   provide an option to force the image on the left side.
+ *
+ * Features:
+ *   - Forces image to left side
+ *   - Adds gradient vertical divider between image and text
+ *   - Adjusts padding for tighter layout
+ *
+ * Usage: In cta-image-paragraph block, set design.css_class: cta-with-divider
+ */
+.cta-with-divider img {
+    order: 0 !important;
+    max-width: 320px !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.cta-with-divider .py-8,
+.cta-with-divider .sm\:py-16 {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+}
+
+@media (min-width: theme('screens.md')) {
+    .cta-with-divider .md\:grid-cols-2 {
+        position: relative;
+        grid-template-columns: auto 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    .cta-with-divider .md\:grid-cols-2 > div {
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+    /* Gradient vertical divider */
+    .cta-with-divider .md\:grid-cols-2 > div::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 45%;
+        width: 3px;
+        background: linear-gradient(180deg, #3b82f6, #06b6d4);
+        border-radius: 2px;
+    }
+}
