@@ -27,7 +27,7 @@ A warm, practical guide to help new paraeducators feel supported, confident,
 and valued as they begin this challenging, meaningful work.
 
 
-**[Explore the PARA Welcome Kit Project →](/projects/para-welcome-book)**
+**[Explore the PARA Welcome Book →](/projects/para-welcome-book)**
 
 
 [//]: # ({{< slides src="slides/para-welcome-kit" height="660px" overview="false" notes="false">}})

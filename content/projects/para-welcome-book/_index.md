@@ -2,47 +2,45 @@
 title: "PARA Welcome Book"
 subtitle: "A Practical Guide to Support New Paraeducators"
 summary: "Explore the PARA Welcome Book, a warm, practical resource to help new paraeducators feel confident, supported, and valued from day one."
+description: "A practical, step-by-step guide for new paraeducators, combining hands-on experience and inclusive practices to support confidence, skills, and student success from day one."
 date: 2025-12-02
 type: post
+weight: 10
 categories:
   - Paraeducator Resources
 tags:
   - PARA Welcome Kit
 ---
 
-Starting as a paraeducator opened my eyes to a world of small victories, big challenges, and lessons no one warns you about.  
-Here’s what I wish I had on day one — read more about my first months in the classroom in this [blog post about my early PARA experiences](/blog/para-welcome-book).
-
-{{< spoiler text="Read more about the PARA Welcome Book..." >}}
-
-PARAs are the quiet backbone of inclusive classrooms—present in every transition, every breakthrough, and every challenging moment. Yet most start without clear, practical guidance.
-
-This book combines my hands-on experience as a District 11 SPED paraeducator with inclusive practices from my work and study. It's designed to be supportive, empowering, and deeply human—the resource I wish I had on day one.
-
-Inside, you'll find guidance on everyday realities:
-
-* Building trust with students
-* Recognizing early signs of dysregulation
-* Communicating with dignity
-* Working as a team
-* Practicing inclusive thinking
-* Caring for yourself while supporting others
-
-This is not a rulebook—it's a companion. Paraeducators deserve to feel prepared, valued, and respected. Whether you're a PARA, educator, or administrator, this kit celebrates and illuminates the essential work you do every day.
-
-{{< /spoiler >}}
-
-Take a closer look inside the PARA Welcome Kit with the slides below.  
-Swipe through to see practical tools, tips, and guidance designed to support new paraeducators.
+Start with the slides below — they give a clear, practical look at the PARA Welcome Book, showcasing strategies, tools, and tips to help new paraeducators feel supported and confident from day one.
 
 {{< slides src="slides/para-welcome-book" overview="false" notes="false" >}}
 
 ---
 
-## I Need Your Feedback to Improve the PARA Welcome Book
+### What the PARA Welcome Book Offers
 
-This book is my best effort to support new paraeducators, but it might not cover everything.  
-If you’re a paraeducator, teacher, or administrator, your experience can help make it better:
+Starting as a paraeducator opened my eyes to a world of small victories, big challenges, and lessons no one warns you about.  
+Here’s what I wish I had on day one — read more about my first months in the classroom in this [blog post about my early PARA experiences](/blog/para-welcome-book).
+
+This book combines my hands-on experience as a District 11 SPED paraeducator with inclusive practices from my work and study. It’s designed to be supportive, empowering, and deeply human — a companion rather than a rulebook.
+
+The PARA Welcome Book highlights practical approaches for everyday classroom realities:
+
+* **Building trust with students** — strategies to create safe, supportive relationships
+* **Recognizing early signs of dysregulation** — responding before situations escalate
+* **Communicating with dignity** — fostering respect and understanding
+* **Working effectively as part of a team** — collaborating with teachers and staff
+* **Practicing inclusive, anti-ableist thinking** — supporting every learner equitably
+* **Caring for yourself while supporting others** — sustaining energy and focus
+
+Each section is crafted to help new paraeducators feel prepared, valued, and respected. Whether you’re a PARA, educator, or administrator, this book celebrates the essential work you do every day and shows why it matters.
+
+---
+
+## I Need Your Help to Improve the PARA Welcome Book
+
+This book is my best effort to support new paraeducators, but it might not cover everything. Your experience can make it even better:
 
 * What parts were most helpful?
 * What’s missing or unclear?
