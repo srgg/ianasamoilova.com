@@ -90,3 +90,5 @@ static/admin
 
 # Serena MCP ignore
 .serena/cache/
+# MCP tool artifacts
+.playwright-mcp/
