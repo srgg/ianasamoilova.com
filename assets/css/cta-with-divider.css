@@ -9,13 +9,30 @@
  *   - Forces image to left side
  *   - Adds gradient vertical divider between image and text
  *   - Adjusts padding for tighter layout
+ *   - Constrains width to match site's max-w-7xl (1280px)
+ *
+ * Related files:
+ *   - layouts/partials/hbx/blocks/cta-image-paragraph/block.html (template override)
+ *   - layouts/_partials/functions/process_responsive_image.html (SVG support)
  *
  * Usage: In cta-image-paragraph block, set design.css_class: cta-with-divider
  */
+
+/* Override max-w-screen-xl (1600px) to match site's max-w-7xl (1280px) */
+.cta-with-divider .max-w-screen-xl {
+    max-width: 1280px !important;
+}
+
 .cta-with-divider img {
     order: 0 !important;
-    max-width: 320px !important;
+    max-width: 1000px !important;
     width: auto !important;
+    height: auto !important;
+}
+
+/* SVG images need explicit width since they don't have intrinsic raster dimensions */
+.cta-with-divider img[src$=".svg"] {
+    width: 320px !important;
     height: auto !important;
 }
 
@@ -28,13 +45,15 @@
 @media (min-width: theme('screens.md')) {
     .cta-with-divider .md\:grid-cols-2 {
         position: relative;
-        grid-template-columns: auto 1fr !important;
+        grid-template-columns: auto auto !important;
         gap: 1.5rem !important;
+        justify-content: start !important;
     }
 
     .cta-with-divider .md\:grid-cols-2 > div {
         position: relative;
         padding-left: 1.5rem;
+        text-align: left;
     }
 
     /* Gradient vertical divider */

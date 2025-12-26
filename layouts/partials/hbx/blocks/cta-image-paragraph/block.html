@@ -1,4 +1,5 @@
 {{/* Hugo Blox: CTA Image Paragraph */}}
+{{/* OVERRIDE: Added SVG support - SVGs render without width/height attributes */}}
 {{/* Documentation: https://hugoblox.com/blocks/ */}}
 {{/* License: https://github.com/HugoBlox/hugo-blox-builder/blob/main/LICENSE.md */}}
 
@@ -15,21 +16,32 @@
   {{ with $image }}
   <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
     {{ if ne $image.MediaType.SubType "gif" }}
-      {{ $responsive := partial "functions/process_responsive_image.html" (dict 
-          "image" $image 
+      {{ $responsive := partial "functions/process_responsive_image.html" (dict
+          "image" $image
           "mode" "fit"
           "sizes" (slice 400 600 800 1200)
       ) }}
-      <img class="w-full" 
+      {{/* Check if this is an SVG - SVGs should not have width/height attributes */}}
+      {{ $is_svg := false }}
+      {{ if $responsive.fallback.IsSVG }}
+        {{ $is_svg = true }}
+      {{ end }}
+      {{ if $is_svg }}
+      <img class="w-full"
+           src="{{ $responsive.fallback.RelPermalink }}"
+           alt="{{$title | plainify}}" {{ if (modBool $idx 2)}}style="order: 1"{{end}}>
+      {{ else }}
+      <img class="w-full"
            srcset="{{ $responsive.srcset }}"
            sizes="(max-width: 768px) 100vw, 50vw"
-           src="{{ $responsive.fallback.RelPermalink }}" 
+           src="{{ $responsive.fallback.RelPermalink }}"
            width="{{ $responsive.fallback.Width }}"
            height="{{ $responsive.fallback.Height }}"
            alt="{{$title | plainify}}" {{ if (modBool $idx 2)}}style="order: 1"{{end}}>
+      {{ end }}
     {{ else }}
-      <img class="w-full" 
-           src="{{$image.RelPermalink}}" 
+      <img class="w-full"
+           src="{{$image.RelPermalink}}"
            width="{{$image.Width}}"
            height="{{$image.Height}}"
            alt="{{$title | plainify}}" {{ if (modBool $idx 2)}}style="order: 1"{{end}}>
