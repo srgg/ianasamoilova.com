@@ -14,7 +14,7 @@ sections:
       items:
         - title:
           text: "Practical PARA Welcome Kit resources, guides, and tools to help new paraeducators feel confident, prepared, and supported in Special Education."
-          image: para-welcome-kit-hero-compact.webp
+          image: logo-para-welcome-kit.svg
     design:
       css_class: cta-with-divider
       spacing:

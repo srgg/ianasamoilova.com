@@ -1,1 +1,12 @@
-<div class="grid gap-6 {{ if eq .config.columns 1 }}article-grid-lite{{ else }}md:grid-cols-{{ .config.columns | default 2 }}{{ end }}">
+{{/*
+  Article Grid Lite: Grid wrapper start
+
+  Based on Hugo Blox article-grid--start.html pattern.
+  Uses same container/max-width approach for consistent page widths.
+
+  See: layouts/partials/views/article-grid-lite.html (main template)
+*/}}
+{{ $columns := .config.columns | default 2 }}
+{{ $len := .config.len | default 2 }}
+<div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 {{ if eq $len 1 }}max-w-[500px] justify-center{{ else }}max-w-screen-lg{{ end }}">
+  <div class="grid gap-6 {{ if eq $columns 1 }}article-grid-lite{{ else }}md:grid-cols-{{ $columns }}{{ end }}">
