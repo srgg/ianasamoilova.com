@@ -56,10 +56,10 @@
   {{- end -}}
 {{- end -}}
 
-<div class="video-toc-container flex flex-col lg:flex-row gap-6 my-6">
+<div class="video-toc-container flex flex-col lg:flex-row gap-2 lg:gap-6 my-6">
   {{/* Video */}}
   <div class="video-wrapper flex-1 min-w-0">
-    <video id="{{ $id }}" controls class="w-full rounded-lg shadow-lg"{{ with $posterURL }} poster="{{ . }}"{{ end }}>
+    <video id="{{ $id }}" controls class="w-full rounded-lg shadow-lg" style="margin: 0;"{{ with $posterURL }} poster="{{ . }}"{{ end }}>
       <source src="{{ $videoURL }}" type="video/{{ $video_type }}">
       Your browser does not support the video tag.
     </video>
@@ -67,10 +67,10 @@
 
   {{/* Chapter TOC */}}
   {{- with $chapters -}}
-  <nav class="video-toc w-full lg:w-64 shrink-0" aria-label="video chapters">
-    <div class="bg-gray-50 dark:bg-neutral-800 rounded-lg p-4 lg:sticky lg:top-20">
-      <p class="mb-4 font-semibold tracking-tight text-gray-900 dark:text-gray-100">Chapters</p>
-      <ul class="space-y-1 text-sm">
+  <nav class="video-toc w-full lg:w-64 shrink-0 flex flex-col" aria-label="video chapters">
+    <div class="bg-gray-50 dark:bg-neutral-800 rounded-lg px-4 pb-4 pt-2 flex-1">
+      <p class="font-semibold tracking-tight text-gray-900 dark:text-gray-100" style="margin-top: 0; margin-bottom: 16px;">Chapters</p>
+      <ul class="space-y-1 text-sm" style="margin-top: 0; margin-bottom: 0;">
         {{- range . -}}
           {{- template "video-chapter" (dict "chapter" . "level" 0 "videoId" $id) -}}
         {{- end -}}
@@ -87,13 +87,14 @@
   {{- $videoId := .videoId -}}
   {{- $padding := mul $level 16 -}}
 
-  <li class="scroll-my-6" style="{{ if gt $level 0 }}padding-left: {{ $padding }}px;{{ end }}">
+  <li class="scroll-my-6" style="line-height: 1; margin-top: 0; margin-bottom: 0;{{ if gt $level 0 }} padding-left: {{ $padding }}px;{{ end }}">
     <a href="#"
        onclick="document.getElementById('{{ $videoId }}').currentTime={{ $chapter.time }}; document.getElementById('{{ $videoId }}').play(); return false;"
-       class="video-chapter-link flex items-center gap-2 py-1.5 px-2 -mx-2 rounded transition-colors
+       class="video-chapter-link flex items-center gap-2 px-2 -mx-2 rounded transition-colors
               text-gray-600 hover:text-gray-900 hover:bg-gray-100
               dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-neutral-700
               {{ if eq $level 0 }}font-medium{{ end }}"
+       style="padding-bottom: 6px;"
        data-time="{{ $chapter.time }}">
       <span class="chapter-time text-xs text-gray-400 dark:text-gray-500 tabular-nums w-10">
         {{- $minutes := div $chapter.time 60 -}}
@@ -104,7 +105,7 @@
     </a>
 
     {{- with $chapter.children -}}
-      <ul class="mt-1 space-y-1">
+      <ul class="mt-1 space-y-1" style="margin-top: 0; margin-bottom: 0;">
         {{- range . -}}
           {{- template "video-chapter" (dict "chapter" . "level" (add $level 1) "videoId" $videoId) -}}
         {{- end -}}
