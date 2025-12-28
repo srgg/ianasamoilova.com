@@ -29,6 +29,11 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 - [Node.js](https://nodejs.org/) v18+
 - [pnpm](https://pnpm.io/) (recommended) or npm
 
+#### Upgrading Hugo
+
+To upgrade Hugo on OS X, follow these steps:
+`brew upgrade hugo`
+
 ### Quick Start
 
 1. **Clone the repository:**
@@ -39,12 +44,12 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 
 2. **Install dependencies:**
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Start development server:**
    ```bash
-   npm run dev
+   pnpm run dev
    ```
    Site will be available at `http://localhost:1313`
 

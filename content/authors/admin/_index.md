@@ -91,14 +91,16 @@ work:
     date_end:
     summary: |2-
       {{< spoiler text="View key responsibilities..." >}}
-        - Provide direct support to students with autism and other significant special needs, assisting with academic tasks, social skills, and daily routines.
-        - Implement IEPs under the guidance of special education teachers and therapists.
-        - Assist non-verbal and high-support students with communication strategies, sensory regulation, and behavioral interventions.
-        - Create structured and supportive learning environments to enhance student engagement and success.
-        - Facilitate activities promoting fine and gross motor skills, cognitive development, and social interaction.
-        - Support smooth transitions between activities, maintaining consistency and adherence to schedules.
-        - Collaborate with teachers, therapists, ABAs, and parents to develop and reinforce effective teaching strategies.
-        - Maintain a safe and inclusive classroom environment, ensuring students’ emotional and physical well-being.
+        - Provided direct support to students with autism and other special needs, assisting with academic tasks, communication, social skills, and daily routines in both structured and inclusive settings.
+        - Supported the implementation of IEP goals by delivering accommodations, collecting progress monitoring data, and providing instructional and behavioral support under teacher and therapist guidance.
+        - Assisted non-verbal and high-support students using AAC, PECS, visual supports, and proactive behavior strategies, including sensory regulation and safety practices.
+        - Contributed to the adaptation of instructional materials and classroom routines by sharing observations, data trends, and student response patterns with the SPED team.
+        - Participated in the implementation of behavior intervention plans (BIPs) by tracking antecedents, modeling replacement behaviors, and reinforcing individualized strategies.
+        - Provided input for ABLLS activities and skill acquisition plans by documenting student performance and collaborating with teachers and behavior specialists.
+        - Helped maintain a highly structured, supportive learning environment that increased engagement, reduced problem behaviors, and promoted independence.
+        - Supported students through transitions using visual schedules, first–then boards, and consistent routines to reduce anxiety and increase predictability.
+        - Collaborated closely with teachers, therapists, ABAs, and families to ensure consistency across settings and to align supports with student needs.
+        - Maintained a safe, inclusive, and emotionally supportive classroom environment, promoting student well-being and positive relationships.
       {{< /spoiler >}}
   - position: Teacher Assistant
     company_name: Chipeta Elementary School, District 11
@@ -206,6 +208,6 @@ Iana Samoilova is an educator, paraeducator in Special Education, and language s
 A native Ukrainian speaker fluent in Russian and English, she also teaches Ukrainian and is studying Spanish.
 Her strength lies in sensing the needs of children with disabilities and carefully tracing cause-and-effect in their behavior, helping them feel safe, understood, and successful. She is recognized for thinking outside the box and creating flexible solutions that empower students to succeed.
 
-In addition to her work in education, Iana is a cynologist and breeder, a professional pastry chef, a passionate quilter, an avid diver, and a brown belt in Aikido, licensed PADI Advanced Open Water diver. 
+In addition to her work in education, Iana is a cynologist and breeder, a professional pastry chef, a passionate quilter, an avid driver, and a brown belt in Aikido, licensed PADI Advanced Open Water diver. 
 
 She brings creativity, discipline, and cultural depth into everything she does — from the classroom to her personal projects.

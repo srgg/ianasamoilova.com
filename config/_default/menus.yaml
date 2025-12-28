@@ -20,20 +20,20 @@ main:
 #    identifier: technology-philosophy
 #    weight: 100
     
-  - name: My Vision for Technology
-    url: technology-philosophy/my-vision-for-technology-in-education
+#  - name: My Vision for Technology in Education
+#    url: technology-philosophy/my-vision-for-technology-in-education
 #    parent: technology-philosophy
-    weight: 100
-  
-  - name: Technology Tutorial
-    url: technology-philosophy/tutorial/
+#    weight: 100
+
+#  - name: Technology Tutorial
+#    url: technology-philosophy/tutorial/
 #    parent: technology-philosophy
-    weight: 200
+#   weight: 200
     
-  - name: Lesson Plan Assignments
-    url: technology-philosophy/assignments
+#  - name: Lesson Plan Assignments
+#    url: technology-philosophy/assignments
 #    parent: technology-philosophy
-    weight: 300
+#    weight: 300
 
   - name: Projects  
     url: projects/
