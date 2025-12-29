@@ -54,6 +54,12 @@ video_chapters:
 New to Canva Education, or looking to use it more intentionally in inclusive or special education classrooms?
 
 Start with the short video tutorial (about 10 minutes) to see practical ways Canva Education can be used to create organized, accessible materials that support **routines, independence, and diverse learning needs**, and can be reused again and again.
+
+{{% callout note %}}The entire tutorial, including the animated introduction, **was created entirely in Canva Education**, using only the tools available for free to educators.
+I am not a professional designer. I am a full-time educator. Everything you see here was created quickly and practically.
+***If I can create this using Canva Education, you can too.***
+{{% /callout %}}
+
 &nbsp;
 
 &nbsp;
@@ -116,3 +122,4 @@ If this tutorial provides even one reusable resource or helps simplify one part 
 
 If you would like to see future tutorials focused on specific SPED tools, visual supports, or inclusive classroom systems, I would be glad to continue building resources in this area.
 
+[Share Your Thoughts and Feedback →](mailto:contact@ianasamoilova.com?subject=Feedback%3A%20Canva%20Tutorial)

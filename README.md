@@ -28,6 +28,11 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 - [Hugo Extended](https://gohugo.io/installation/) v0.149.0+
 - [Node.js](https://nodejs.org/) v18+
 - [pnpm](https://pnpm.io/) (recommended) or npm
+- **For slide generation:** [Poppler](https://poppler.freedesktop.org/) and [libwebp](https://developers.google.com/speed/webp/docs/cwebp)
+  ```bash
+  # macOS
+  brew install poppler webp
+  ```
 
 #### Upgrading Hugo
 

@@ -5,7 +5,7 @@ summary: |
     When I look back at the path that led me into special education, 
     I see more than a career choice — I see a story of compassion, resilience, and purpose. 
     My journey began far from Colorado Springs, USA, in the place where I was born: Ukraine.
-date: 2025-07-12
+date: 2025-09-10
 ---
 
 ### A First Encounter That Changed Everything

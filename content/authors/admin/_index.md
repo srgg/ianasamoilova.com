@@ -186,10 +186,16 @@ awards:
     date: '2025-06-16'
     awarder: CDE
     icon: 
-    summary:  
+    summary:
+  - title: Google Prompting Essentials Certificate (Coursera, authorized by Google)
+    url: https://coursera.org/verify/P3YKLK1C6LPI
+    date: '2025-11-20'
+    awarder: Coursera-Google
+    icon:
+    summary:     
   - title: Nonviolent Crisis Intervention Training (CPI)
     url: https://www.crisisprevention.com
-    date: '2023-07-01'
+    date: '2025-10-01'
     awarder: CPI
     icon:
     summary: 

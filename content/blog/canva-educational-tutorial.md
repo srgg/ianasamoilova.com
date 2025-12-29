@@ -4,7 +4,7 @@ subtitle: "Designing inclusive classrooms with Canva Education through clarity, 
 summary:
   A step-by-step tutorial for educators to use Canva for Education to create accessible, creative, and time-saving classroom materials that foster inclusive, organized learning for every student."
 description: "A reflective look at how thoughtful design and simple tools like Canva Education can support inclusive, calmer classrooms, through a short, practical tutorial focused on the essentials teachers need to create meaningful classroom designs."
-date: 2025-12-26
+date: 2025-11-05
 toc: false
 tags:
   - Canva Education Tutorial
