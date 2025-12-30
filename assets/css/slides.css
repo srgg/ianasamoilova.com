@@ -2,30 +2,40 @@
  * Embedded Slides Styles
  *
  * Mobile-first responsive styles for reveal.js presentations embedded via shortcode.
- * Uses CSS custom properties for dynamic slide dimensions.
+ *
+ * Height Calculation (critical for scroll-view alignment):
+ *   Container and Reveal.js must compute identical heights to prevent visible gaps.
+ *   Formula: height = width × (slideHeight / slideWidth)
+ *   - CSS: aspect-ratio property handles this automatically
+ *   - Reveal.js: pageHeight = slideHeight × scale, where scale = width / slideWidth
+ *   - Requires margin: 0 in slide config for exact match
  *
  * Sizing Modes:
- * - Default (no height param): Responsive aspect-ratio with max-height per breakpoint
- * - Fixed (height param set): Uses --fixed-height, ignores aspect-ratio
+ *   - Default: aspect-ratio with max-height cap (70vh desktop, 90vh mobile)
+ *   - Fixed (height param): explicit height, ignores aspect-ratio
+ *   - Scroll (view: scroll): aspect-ratio without cap for perfect page alignment
  *
- * Responsive Behavior:
- * - Mobile (<sm): Scroll view with swipe navigation, edge-to-edge
- * - Desktop (≥sm): Classic view with controls, bordered container
- *
- * Required CSS Variables (set inline by shortcode):
- * - --slide-width: Slide width from reveal_hugo config
- * - --slide-height: Slide height from reveal_hugo config
- * - --fixed-height: (optional) Forces fixed height when set
+ * CSS Variables (set by shortcode):
+ *   --slide-width, --slide-height: from reveal_hugo config
+ *   --fixed-height: (optional) forces exact height
+ *   --reveal-bg: viewport background color
  */
 
-/* Container - Mobile (base) */
+/* Outer container: provides margins and enables container queries.
+   container-type: inline-size allows 100cqi unit for width-based calculations. */
+.slides-outer-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    container-type: inline-size;
+}
+
+/* Container base: aspect-ratio ensures height matches Reveal.js page-height. */
 .slides-inline-container {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    height: auto; /* Fluid height for scroll view */
+    aspect-ratio: var(--slide-width) / var(--slide-height);
+    max-height: 90vh;
     overflow-x: hidden;
 }
 
@@ -34,17 +44,16 @@
     min-height: 0;
     overflow: hidden;
     position: relative;
-    border: none; /* Edge-to-edge on mobile */
+    border: none;
     border-radius: 0;
     max-width: 100vw;
 }
 
-/* Container - Desktop (sm+): Responsive aspect-ratio mode (default) */
+/* Desktop: tighter 70vh cap, bordered container. */
 @media (min-width: theme('screens.sm')) {
     .slides-inline-container {
         width: 100%;
-        aspect-ratio: var(--slide-width) / var(--slide-height);
-        max-height: 500px; /* sm: compact */
+        max-height: min(calc(100cqi * var(--slide-height) / var(--slide-width)), 70vh);
     }
 
     .slides-inline-container .slides-wrapper {
@@ -54,41 +63,31 @@
     }
 }
 
-@media (min-width: theme('screens.md')) {
-    .slides-inline-container {
-        max-height: 600px; /* md: medium */
-    }
-}
-
-@media (min-width: theme('screens.lg')) {
-    .slides-inline-container {
-        max-height: 700px; /* lg: comfortable */
-    }
-}
-
-@media (min-width: theme('screens.xl')) {
-    .slides-inline-container {
-        max-height: 800px; /* xl: spacious */
-    }
-}
-
-@media (min-width: theme('screens.2xl')) {
-    .slides-inline-container {
-        max-height: 900px; /* 2xl: large */
-    }
-}
-
-/* Fixed height mode: overrides aspect-ratio behavior */
+/* Fixed height mode: explicit height overrides aspect-ratio. */
 .slides-inline-container.slides-fixed-height {
     aspect-ratio: unset;
     height: var(--fixed-height);
     max-height: none;
 }
 
-/* Reveal.js Overrides */
+/* Scroll view mode (desktop): remove cap for exact page alignment.
+   Mobile keeps 90vh cap since pages are smaller and scrollable. */
+@media (min-width: theme('screens.sm')) {
+    .slides-inline-container.slides-scroll-view {
+        max-height: none;
+    }
+}
+
+/* Reveal.js container fill */
 .slides-inline-container .reveal {
     height: 100%;
     width: 100%;
+}
+
+/* Viewport background */
+.slides-inline-container .reveal,
+.slides-inline-container .reveal-viewport {
+    background: var(--reveal-bg) !important;
 }
 
 /* Prevent cropping: contain instead of cover for background images */
@@ -179,5 +178,15 @@
 @media (min-width: theme('screens.sm')) {
     .slides-legend {
         display: block;
+    }
+}
+
+/* Print styles - hide interactive elements when printing */
+@media print {
+    .slides-legend,
+    .fullscreen-btn,
+    .slides-inline-container .reveal .controls,
+    .slides-inline-container .reveal .progress {
+        display: none !important;
     }
 }
