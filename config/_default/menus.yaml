@@ -39,6 +39,6 @@ main:
     url: projects/
     weight: 40
 
-  - name: "Parents: Start Here"
-    url: parents-start-here/
-    weight: 50
+#  - name: "Parents: Start Here"
+#    url: parents-start-here/
+#    weight: 50

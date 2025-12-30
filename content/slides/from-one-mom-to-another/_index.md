@@ -2,6 +2,7 @@
 title: "From One Mom to Another"
 summary: "Supportive reading for parents of children with autism. No checklists. No pressure."
 date: 2025-01-12
+draft: true
 outputs: ["Reveal"]
 # Path to generated slide images (relative to assets/)
 images_path: "generated/slides/from-one-mom-to-another"
