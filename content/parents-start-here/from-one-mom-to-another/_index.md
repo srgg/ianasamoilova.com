@@ -28,7 +28,7 @@ If you are an educator, this is a window into how family-facing communication ca
 Take your time. Start anywhere.
 
 
-{{< slides src="slides/para-welcome-book" overview="false" notes="false" >}}
+{{< slides src="slides/from-one-mom-to-another" overview="false" notes="false" legend="false" >}}
 
 ---
 
