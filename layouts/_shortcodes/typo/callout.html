@@ -1,0 +1,23 @@
+{{/*
+  typo/callout: Highlighted box drawing attention (journalism/design term)
+
+  A "callout" is a visually distinct box or panel that pulls key information
+  out of the main text flow. Newspapers use them for statistics, quotes,
+  or crucial facts readers shouldn't miss.
+
+  Common names: highlight box, feature box, inset, breakout box, fact box
+
+  Visually: subtle background with border, slightly larger text,
+  standing apart from body copy to catch the eye.
+
+  Usage:
+    {{< typo/callout >}}
+    **Key finding:** 73% of students showed improvement
+    after the intervention was implemented.
+    {{< /typo/callout >}}
+
+  Note: Markdown formatting (bold, italic, links) works inside.
+
+  Styles: assets/css/typography.css (.callout class)
+*/}}
+<div class="callout">{{ .Inner | markdownify }}</div>

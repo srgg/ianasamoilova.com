@@ -1,0 +1,13 @@
+{{/*
+  typo/pull-quote: Prominent standalone quote (journalism term)
+
+  A "pull quote" is text pulled from the body and displayed
+  prominently to catch the reader's eye and break up the page.
+  Common in magazines and newspapers.
+
+  Usage:
+    {{< typo/pull-quote >}}What mattered most wasn't the final poster.{{< /typo/pull-quote >}}
+
+  Styles: assets/css/typography.css (.pull-quote class)
+*/}}
+<p class="pull-quote">{{ .Inner | markdownify }}</p>

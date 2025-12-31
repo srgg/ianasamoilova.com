@@ -1,0 +1,286 @@
+/* Typography Enhancement Classes
+ * World-class typography for emphasis and visual hierarchy
+ */
+
+:root {
+    --typo-line-height: 1.5;
+}
+
+/* Pull Quote - for impactful standalone statements */
+.pull-quote {
+    font-size: 1.25em;
+    font-weight: 300;
+    line-height: calc(var(--typo-line-height) - 0.05);
+    color: #2c3e50;
+    margin: 1.75em auto;
+    font-style: italic;
+    max-width: 32em;
+    text-align: center;
+    clear: both;
+}
+
+.pull-quote strong {
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Callout - highlighted box drawing attention */
+.callout {
+    background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+    border-radius: 8px;
+    padding: 1.25em 1.5em;
+    margin: 1.5em 0;
+    border: 1px solid #e9ecef;
+    font-size: 1.05em;
+    line-height: calc(var(--typo-line-height) + 0.1);
+}
+
+.callout strong {
+    color: #2c3e50;
+}
+
+/* Lede - opening paragraph emphasis */
+.lede {
+    font-size: 1.15em;
+    line-height: calc(var(--typo-line-height) + 0.15);
+    color: #3a4a5a;
+    margin-bottom: 1.25em;
+}
+
+/* Sign-off - elegant closing statement */
+.sign-off {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #4a5a6a;
+    text-align: center;
+    margin-top: 2em;
+    padding-top: 1.5em;
+    border-top: 1px solid #e0e4e8;
+    letter-spacing: 0.02em;
+}
+
+/* Slug - short identifier or label in small caps */
+.slug {
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+/* Verse - for poetic/lyrical content */
+.verse {
+    font-style: italic;
+    color: #4a5568;
+    line-height: var(--typo-line-height);
+    margin: 0.2em 0 0.75em 1.5em;
+    padding-left: 1em;
+    border-left: 2px solid #cbd5e0;
+    white-space: pre-line;
+}
+
+.verse br {
+    margin-bottom: 0.3em;
+}
+
+/* Kicker - short intro line that sets up what follows */
+.kicker {
+    font-size: 1.15em;
+    font-weight: 500;
+    color: #2d3748;
+    display: block;
+    margin-bottom: 0;
+}
+
+/* Nutgraf - the "so what" paragraph explaining significance */
+.nutgraf {
+    font-size: 1.1em;
+    color: #3d4852;
+    padding: 0.5em 0;
+    line-height: calc(var(--typo-line-height) + 0.1);
+}
+
+/* Accent - subtle inline emphasis */
+.accent {
+    color: #4a5568;
+    font-weight: 500;
+}
+
+/* Aside - reflective digression from main narrative */
+.aside {
+    margin: 1.25em 0;
+    color: #3d4852;
+}
+
+.aside strong {
+    font-weight: 600;
+}
+
+/* Runaround - image + text block with responsive stacking (journalism term) */
+.runaround-left,
+.runaround-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1em 0;
+}
+
+.runaround-left > img,
+.runaround-right > img,
+.runaround-left > figure,
+.runaround-right > figure {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 8px;
+    align-self: center;
+    float: none;
+    margin: 0;
+}
+
+.runaround-left > div,
+.runaround-right > div {
+    width: 100%;
+}
+
+.runaround-left > div > *:first-child,
+.runaround-right > div > *:first-child {
+    margin-top: 0;
+}
+
+.runaround-left > div > *:last-child,
+.runaround-right > div > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Right variant: image after text on mobile */
+.runaround-right > img {
+    order: 1;
+}
+
+.runaround-right > div {
+    order: 0;
+}
+
+@media (min-width: 640px) {
+    .runaround-left {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.2rem;
+    }
+
+    .runaround-right {
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 1.2rem;
+    }
+
+    .runaround-left > img,
+    .runaround-right > img,
+    .runaround-left > figure,
+    .runaround-right > figure {
+        width: 180px;
+        flex-shrink: 0;
+        order: unset;
+    }
+
+    .runaround-right > div {
+        order: unset;
+    }
+}
+
+@media (min-width: 1024px) {
+    .runaround-left > img,
+    .runaround-right > img,
+    .runaround-left > figure,
+    .runaround-right > figure {
+        width: 240px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .runaround-left > img,
+    .runaround-right > img,
+    .runaround-left > figure,
+    .runaround-right > figure {
+        width: 300px;
+    }
+}
+
+/* Runaround Wrap - float-based text wrapping around image
+ * Mobile-first: stacked layout on small screens, float on larger
+ */
+.runaround-wrap-left,
+.runaround-wrap-right {
+    margin: 1em 0;
+}
+
+.runaround-wrap-left::after,
+.runaround-wrap-right::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Mobile: stacked, centered image */
+.runaround-wrap-left > img,
+.runaround-wrap-left > figure,
+.runaround-wrap-right > img,
+.runaround-wrap-right > figure {
+    display: block;
+    max-width: 280px;
+    margin: 0 auto 1rem auto;
+    border-radius: 8px;
+}
+
+.runaround-wrap-left > div,
+.runaround-wrap-right > div {
+    width: 100%;
+}
+
+.runaround-wrap-left > div > *:first-child,
+.runaround-wrap-right > div > *:first-child {
+    margin-top: 0;
+}
+
+/* Tablet+: float layout with text wrap */
+@media (min-width: 640px) {
+    .runaround-wrap-left > img,
+    .runaround-wrap-left > figure {
+        float: left;
+        max-width: 180px;
+        margin: 0 1.2rem 0.75rem 0;
+    }
+
+    .runaround-wrap-right > img,
+    .runaround-wrap-right > figure {
+        float: right;
+        max-width: 180px;
+        margin: 0 0 0.75rem 1.2rem;
+    }
+
+    .runaround-wrap-left > div,
+    .runaround-wrap-right > div {
+        display: inline;
+    }
+}
+
+@media (min-width: 1024px) {
+    .runaround-wrap-left > img,
+    .runaround-wrap-left > figure,
+    .runaround-wrap-right > img,
+    .runaround-wrap-right > figure {
+        max-width: 240px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .runaround-wrap-left > img,
+    .runaround-wrap-left > figure,
+    .runaround-wrap-right > img,
+    .runaround-wrap-right > figure {
+        max-width: 300px;
+    }
+}
+
+/* Beat - pause in narrative rhythm */
+.beat {
+    margin: 2.5em 0;
+}

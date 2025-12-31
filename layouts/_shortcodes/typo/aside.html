@@ -1,0 +1,24 @@
+{{/*
+  typo/aside: Reflective digression from the main narrative (journalism term)
+
+  An "aside" is a moment where the author steps back from the story
+  to offer a personal reflection, context, or parenthetical thought.
+  It's related to the main content but stands slightly apart.
+
+  Common names: side note, parenthetical, reflection, commentary
+
+  Visually: subtle styling that signals "this is the author thinking aloud"
+  without breaking the flow. Often used for personal insights or meta-commentary.
+
+  Usage:
+    {{< typo/aside >}}
+    **That is how I understand special education:** not as a system
+    that tries to make everyone the same, but as a space where
+    differences are recognized—and allowed to belong.
+    {{< /typo/aside >}}
+
+  Note: Markdown formatting (bold, italic) works inside.
+
+  Styles: assets/css/typography.css (.aside class)
+*/}}
+<p class="aside">{{ .Inner | markdownify }}</p>

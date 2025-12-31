@@ -1,0 +1,22 @@
+{{/*
+  typo/nutgraf: The "so what" paragraph explaining significance (journalism term)
+
+  The "nut graf" (or "nut graph") is journalism's answer to "why should I care?"
+  It's the paragraph that explains the story's broader meaning or relevance.
+  Named because it contains the "nut" (core) of the story in a "graf" (paragraph).
+
+  Common names: takeaway, significance paragraph, the point, thesis statement
+
+  Visually: slightly emphasized block that stands out as the key insight
+  or reflection the reader should take away. Often philosophical or summary-like.
+
+  Usage:
+    {{< typo/nutgraf >}}
+    I'm sharing this project as part of my professional reflection
+    as a future SPED teacher. Not because it was extraordinary,
+    but because it was ordinary—and still so often withheld.
+    {{< /typo/nutgraf >}}
+
+  Styles: assets/css/typography.css (.nutgraf class)
+*/}}
+<p class="nutgraf">{{ .Inner | markdownify }}</p>

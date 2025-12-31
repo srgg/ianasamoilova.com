@@ -1,0 +1,19 @@
+{{/*
+  typo/accent: Subtle inline emphasis (typography term)
+
+  An "accent" in typography is a gentle stress on particular words—
+  not as loud as bold or italic, but enough to guide the reader's eye.
+  Think of it as a whisper of emphasis rather than a shout.
+
+  Common names: highlight, soft emphasis, stress, quiet emphasis
+
+  Visually: slightly different color and weight, used mid-sentence
+  to draw attention without disrupting flow.
+
+  Usage:
+    {{< typo/accent >}}Inclusion doesn't always look big.{{< /typo/accent >}}
+    Sometimes it's the small moments.
+
+  Styles: assets/css/typography.css (.accent class)
+*/}}
+<span class="accent">{{ .Inner | markdownify }}</span>

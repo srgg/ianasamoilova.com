@@ -254,6 +254,13 @@ Key configuration files:
 For a comprehensive website analytics setup with Google Tag Manager and Google Analytics 4:
 - **[GTM Setup Guide](docs/GTM_SETUP_GUIDE.md)** - Complete implementation guide for professional portfolio tracking
 
+### Typography Shortcodes
+
+Make long-form content easier to read and more visually engaging. These shortcodes add professional typography—opening hooks that draw readers in, pull-quotes that break up walls of text, poetic passages with preserved line breaks, and visual pauses that let ideas breathe.
+
+Built with journalism terminology (lede, nutgraf, kicker) so each element has a clear editorial purpose:
+- **[Typography Shortcodes](docs/typography-shortcodes.md)** - Usage guide with examples of great, mediocre, and bad usage for each shortcode
+
 ### Tailwind CSS Breakpoints
 
 The site uses Tailwind CSS v4 with default breakpoints:

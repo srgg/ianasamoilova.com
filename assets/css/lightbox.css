@@ -1,0 +1,109 @@
+/**
+ * Lightbox Modal - Fullscreen image overlay with frosted glass effect
+ *
+ * Used with: layouts/shortcodes/media-aside.html
+ *
+ * Features:
+ * - Frosted glass background (semi-transparent + blur)
+ * - JS-controlled via .active class (not :target)
+ * - Accessible: role="dialog", aria-modal, focus trap, Escape to close
+ * - Bold captions in both page and modal views
+ * - Modal caption larger (1.25em) than page caption (0.9em)
+ * - Figure uses inline-block + max-width to constrain caption to image width
+ */
+
+:root {
+    --lightbox-bg: rgba(250, 250, 250, 0.85);
+    --lightbox-blur: blur(12px);
+    --lightbox-close: #525252;
+    --lightbox-caption: #525252;
+}
+
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--lightbox-bg);
+    backdrop-filter: var(--lightbox-blur);
+    -webkit-backdrop-filter: var(--lightbox-blur);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: pointer;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.lightbox-overlay.active {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.lightbox-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.lightbox-overlay img {
+    max-width: 90vw;
+    max-height: calc(90vh - 3rem);
+    border-radius: 8px;
+    cursor: default;
+}
+
+.lightbox-content figcaption {
+    color: var(--lightbox-caption);
+    font-size: 1.25em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0.75rem;
+    font-style: italic;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    color: var(--lightbox-close);
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    /* Reset button styles */
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+}
+
+.lightbox-close:hover {
+    opacity: 1;
+}
+
+
+/* Page figcaption styling (inside media-aside) */
+figure[data-lightbox] {
+    display: inline-block;
+}
+
+figure[data-lightbox] img {
+    margin-bottom: 0;
+    display: block;
+    width: 100%;
+}
+
+figure[data-lightbox] figcaption {
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #666;
+    margin-top: 0.25rem;
+    max-width: 100%;
+    word-wrap: break-word;
+}
