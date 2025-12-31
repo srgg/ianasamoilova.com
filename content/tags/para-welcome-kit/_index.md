@@ -2,6 +2,7 @@
 title: "PARA Welcome Kit"
 slug: para-welcome-kit
 type: landing
+css_class: para-welcome-kit-collection
 summary: "Explore all PARA Welcome Kit materials — guides, tools, and practical resources to support new paraeducators as they begin their work in Special Education."
 description: "Practical PARA Welcome Kit resources, guides, and tools to help new paraeducators feel confident, prepared, and supported in Special Education."
 draft: false

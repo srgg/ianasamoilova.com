@@ -17,8 +17,8 @@ cascade:
 sections:
   - block: collection
     content:
-      title: Projects
-#      text: I enjoy making things. Here is a selection of projects that I have worked on over the years.
+      title: Things Taking Shape
+      text: A glimpse of what I'm working on
       sort_by: 'Weight'
       sort_ascending: true
       filters:
@@ -27,11 +27,12 @@ sections:
         folders:
             - projects    
     design:
+      css_class: projects-collection
       view: article-grid
-      fill_image: false
+      fill_image: true
       columns: 3
       show_date: false
       show_read_time: false
-      show_read_more: false
+      show_read_more: true
 ---
 
