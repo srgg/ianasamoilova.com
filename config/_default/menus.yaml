@@ -38,7 +38,10 @@ main:
   - name: Projects  
     url: projects/
     weight: 40
-
+  
+  - name: Para Welcome Kit
+    url: para-welcome-kit/
+    weight: 50
 #  - name: "Parents: Start Here"
 #    url: parents-start-here/
 #    weight: 50

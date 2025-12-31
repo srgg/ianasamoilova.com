@@ -1,9 +1,10 @@
 ---
-title: "PARA Welcome Kit Resources"
+title: "PARA Welcome Kit"
+slug: para-welcome-kit
 type: landing
 summary: "Explore all PARA Welcome Kit materials — guides, tools, and practical resources to support new paraeducators as they begin their work in Special Education."
 description: "Practical PARA Welcome Kit resources, guides, and tools to help new paraeducators feel confident, prepared, and supported in Special Education."
-draft: true
+draft: false
 
 spacing:
     padding: ["0", "0", "0", "0"]
@@ -30,8 +31,10 @@ sections:
         tag: "PARA Welcome Kit"
       count: 0
     design:
-      view: article-grid-lite
+      view: article-grid
+      fill_image: false
       columns: 2
+      css_class: hide-tags
       spacing:
         padding: ["0", "0", "5em", "0"]
 

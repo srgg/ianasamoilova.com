@@ -11,6 +11,8 @@
 @import "hero-responsive.css";
 @import "cta-with-divider.css";
 @import "article-grid-lite.css";
+@import "typography.css";
+@import "lightbox.css";
 
 /* Fix footer positioning - ensure it stays close to content */
 footer {
@@ -79,4 +81,8 @@ footer {
 /* Cursor pointer on entire card */
 [role="article"].group {
     cursor: pointer;
+}
+/* Hide tag badges in specific sections */
+.hide-tags [role="article"] a:has(span.rounded-full) {
+    display: none;
 }

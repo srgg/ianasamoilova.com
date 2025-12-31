@@ -17,7 +17,7 @@ html {
 }
 
 /* Target highlighting using HugoBlox theme colors */
-:target {
+:target:not(.lightbox-overlay) {
     animation: highlight-target 4s ease-in-out;
 }
 

@@ -1,7 +1,8 @@
 ---
 title: "PARA Welcome Book"
 subtitle: "A Practical Guide to Support New Paraeducators"
-summary: "Explore the PARA Welcome Book, a warm, practical resource to help new paraeducators feel confident, supported, and valued from day one."
+#summary: "Explore the PARA Welcome Book, a warm, practical resource to help new paraeducators feel confident, supported, and valued from day one."
+summary: "A warm, practical guide that helps new paraeducators feel confident, supported, and prepared to succeed from day one."
 description: "A practical, step-by-step guide for new paraeducators, combining hands-on experience and inclusive practices to support confidence, skills, and student success from day one."
 date: 2025-12-02
 type: post

@@ -1,7 +1,8 @@
 ---
 title: "Canva Education Tutorial"
 subtitle: "Create Inclusive, Organized, and Engaging Classrooms with Confidence"
-summary: "A step-by-step tutorial for educators to use Canva Education to create accessible, creative, and time-saving classroom materials that foster inclusive, organized learning for every student."
+#summary: "A step-by-step tutorial for educators to use Canva Education to create accessible, creative, and time-saving classroom materials that foster inclusive, organized learning for every student."
+summary: "Watch the 10-Minute Canva for Education Starter — Go from Zero to Classroom-Ready"
 description: "Learn how Canva for Education can help teachers build classrooms that are more creative, organized, and inclusive. This practical tutorial shows how to design visual supports, worksheets, schedules, and lesson materials that reduce daily workload and empower every student."
   
 date: 2025-12-04
@@ -9,7 +10,7 @@ type: post
 weight: 20
 categories:
   - EdTech
-draft: true  
+draft: false  
 tags:
   - PARA Welcome Kit
   - Canva

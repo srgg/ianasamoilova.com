@@ -5,6 +5,7 @@ summary: A short reflection on how a simple handprint art project became a meani
 description: "A brief reflection on a SPED classroom art project that celebrates diversity, inclusion, and the power of creating together."
 date: 2025-12-19
 toc: false
+draft: true
 tags:
   - Different Hands—One Shared Miracle
 ---

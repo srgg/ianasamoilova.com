@@ -7,7 +7,7 @@ description: "A reflective look at how thoughtful design and simple tools like C
 date: 2025-11-05
 toc: false
 tags:
-  - Canva Education Tutorial
+  - PARA Welcome Kit  
 ---
 
 In today’s classrooms, the ability to use technology thoughtfully is no longer optional. It is essential. This is especially true in **special education**, where time is limited, student needs are diverse, and ready-made materials rarely fit everyone. SPED educators are constantly adapting, modifying, and personalizing tasks, often for each individual student, while balancing many responsibilities at once.
