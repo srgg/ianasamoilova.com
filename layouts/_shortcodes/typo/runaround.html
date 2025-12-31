@@ -90,7 +90,7 @@
     <figcaption>{{ $caption | markdownify }}</figcaption>
   </figure>
   <div>
-    {{ .Inner }}
+    {{ .Inner | markdownify }}
   </div>
 </div>
 
@@ -168,7 +168,7 @@
 {{- else }}
   <img src="{{ $image }}" alt="{{ $alt }}"{{ with $width }} style="max-width:{{ . }}{{ with $style }};{{ . }}{{ end }}"{{ else }}{{ with $style }} style="{{ . }}"{{ end }}{{ end }}>
   <div>
-    {{ .Inner }}
+    {{ .Inner | markdownify }}
   </div>
 </div>
 {{- end }}
