@@ -7,12 +7,14 @@ type: post
 toc: false
 ---
 
-{{< typo/runaround side="left" image="inclusive-tree.png" alt="Inclusive Tree created by SPED students" caption="*Art project created by SPED students*" style="border-radius:16px;" >}}
-{{< typo/lede >}}Every year, schools host a holiday poster contest—one that the SPED department is usually expected to skip, not because students can't participate, but because it's assumed they shouldn't.{{< /typo/lede >}}
+{{< typo/lede >}}Every year, schools host a holiday poster contest. Expectations for the SPED department, however, are often set low. In my work with students, I take a different approach: I set a high bar—not for performance, but for meaning. The project brings joy to our students and allows them to feel themselves woven into something shared.{{< /typo/lede >}}
+{{< typo/runaround side="left" flow="wrap" image="inclusive-tree.png" alt="Inclusive Tree created by SPED students" caption="*Art project created by SPED students*" style="border-radius:16px;" >}}
 
-This year, I suggested a handprint-based art project from our SPED classroom.
+This year, I suggested a handprint-based art project from our SPED classroom. It was a simple idea, but one grounded in close, daily attention to how my students engage with the world. It didn’t come from a curriculum guide or a planning document, and it wasn’t meant to demonstrate a particular skill or outcome.
 
-The idea didn't come from a curriculum guide or a planning document. It came from everyday work with my students—from knowing how much they learn through movement, touch, and shared activity. Instead of designing something *for* them, we created something *with* them.
+Instead, it grew out of everyday work with my students—from noticing how much they learn through movement, touch, and shared activity, and how often their understanding shows up first in their bodies rather than in words. In our classroom, learning frequently begins with hands: reaching, pressing, hesitating, exploring.
+
+Rather than designing something for them, we chose to create something with them: an experience shaped by participation, presence, and trust. The project wasn’t about producing a polished result. It was about making space for students to contribute in ways that felt natural, accessible, and genuinely theirs.
 
 {{< typo/pull-quote >}}What mattered most wasn't the final poster. It was the **process**—hand by hand, moment by moment.{{< /typo/pull-quote >}}
 {{< /typo/runaround >}}
