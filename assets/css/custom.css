@@ -91,3 +91,8 @@ footer {
 .hide-tags [role="article"] a:has(span.rounded-full) {
     display: none;
 }
+
+/* Reduce top gap in hide-tags collections (e.g., PARA Welcome Kit) */
+.hide-tags .container.py-5 {
+    padding-top: 10px !important;
+}
