@@ -210,7 +210,7 @@
     order: 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: theme('screens.sm')) {
     .runaround-left {
         flex-direction: row;
         align-items: center;
@@ -237,7 +237,7 @@
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: theme('screens.lg')) {
     .runaround-left > img,
     .runaround-right > img,
     .runaround-left > figure,
@@ -246,7 +246,7 @@
     }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: theme('screens.2xl')) {
     .runaround-left > img,
     .runaround-right > img,
     .runaround-left > figure,
@@ -292,7 +292,7 @@
 }
 
 /* Tablet+: float layout with text wrap */
-@media (min-width: 640px) {
+@media (min-width: theme('screens.sm')) {
     .runaround-wrap-left > img,
     .runaround-wrap-left > figure {
         float: left;
@@ -313,7 +313,7 @@
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: theme('screens.lg')) {
     .runaround-wrap-left > img,
     .runaround-wrap-left > figure,
     .runaround-wrap-right > img,
@@ -322,7 +322,7 @@
     }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: theme('screens.2xl')) {
     .runaround-wrap-left > img,
     .runaround-wrap-left > figure,
     .runaround-wrap-right > img,
