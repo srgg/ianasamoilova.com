@@ -1,0 +1,11 @@
+{{/*
+  typo/slug partial - Short identifier or label in small caps
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/slug.html" (dict "content" "Opinion") }}
+    {{ partial "typo/slug.html" (dict "content" .Params.text) }}
+-*/}}
+<span class="slug">{{- .content | markdownify | safeHTML -}}</span>

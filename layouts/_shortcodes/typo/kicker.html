@@ -1,0 +1,18 @@
+{{/*
+  typo/kicker: Short intro line that sets up what follows (journalism term)
+
+  In print journalism, a "kicker" is a brief line placed above or before
+  a headline or paragraph to provide context or tease what's coming.
+  Think of it as the conversational lead-in: "Here's the thing..."
+
+  Common names: lead-in, intro line, setup phrase, teaser
+
+  Visually: slightly larger, bolder text that introduces an important point
+  without being a full heading. Often followed by a list, quote, or key statement.
+
+  Usage:
+    {{< typo/kicker >}}Hands tell stories before words do:{{< /typo/kicker >}}
+
+  Styles: assets/css/typography.css (.kicker class)
+*/}}
+{{- partial "typo/kicker.html" (dict "content" .Inner) -}}

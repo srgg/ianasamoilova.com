@@ -12,6 +12,7 @@
                          If set: forces exact height (overrides responsive behavior)
     overview: (optional) enable O key for overview mode, defaults to "true"
     notes:    (optional) enable S key for speaker notes, defaults to "true"
+    legend:   (optional) show keyboard hints below slides, defaults to "true"
 
   Slide Page Settings (from front matter reveal_hugo.*):
     reveal_cdn, highlight_cdn     - asset locations (default: reveal-js, highlight-js)
@@ -21,6 +22,12 @@
     width, height                 - slide dimensions (default: 960x700)
     margin, min_scale, max_scale  - sizing (default: 0.04, 0.2, 2.0)
     center, controls, progress    - reveal.js options (default: true)
+    view                          - View mode for presentation:
+                                      * unset (default): auto-switches to scroll on mobile
+                                      * "scroll": always vertical scrolling, best for letter-style content
+                                      * "print": PDF export mode, scales pages to container width
+                                      * See: https://revealjs.com/scroll-view/
+    background_color              - viewport background color (default: transparent)
     load_default_plugins          - load highlight.js (default: true)
     images_path                   - path to images in assets/ (for Hugo Pipes)
 
@@ -41,6 +48,7 @@
 {{- $fixedHeight := .Get "height" -}} {{/* Optional: if set, forces fixed height; if not, uses responsive aspect-ratio */}}
 {{- $overview := ne (.Get "overview") "false" -}}
 {{- $notes := ne (.Get "notes") "false" -}}
+{{- $legend := ne (.Get "legend") "false" -}}
 {{- $id := printf "reveal-%s" (md5 $src) -}}
 
 {{/* Get the slides page */}}
@@ -59,9 +67,16 @@
 {{/* Presentation sizing - https://revealjs.com/presentation-size/ */}}
 {{- $width := $slidesPage.Param "reveal_hugo.width" | default 960 -}}
 {{- $slideHeight := $slidesPage.Param "reveal_hugo.height" | default 700 -}}
-{{- $margin := $slidesPage.Param "reveal_hugo.margin" | default 0.04 -}}
+{{/* Handle margin specially: 0 is valid, only use default if truly unset */}}
+{{- $marginParam := $slidesPage.Param "reveal_hugo.margin" -}}
+{{- $margin := cond (ne $marginParam nil) $marginParam 0.04 -}}
 {{- $minScale := $slidesPage.Param "reveal_hugo.min_scale" | default 0.2 -}}
 {{- $maxScale := $slidesPage.Param "reveal_hugo.max_scale" | default 2.0 -}}
+{{/* View mode - https://revealjs.com/scroll-view/
+     Supported values: "scroll" (vertical scrolling), "reader" (reading optimized), or unset for default */}}
+{{- $view := $slidesPage.Param "reveal_hugo.view" -}}
+{{/* Background color for the viewport (empty areas around slides) */}}
+{{- $backgroundColor := $slidesPage.Param "reveal_hugo.background_color" | default "transparent" -}}
 
 {{/* Get plugins - reveal-hugo's internal/plugins partial has a bug where it fails when
      load_default_plugins: false and no custom plugins are defined (tries to sort empty sequence).
@@ -85,7 +100,8 @@
   {{- $plugins = $filteredPlugins -}}
 {{- end -}}
 
-<div class="slides-inline-container{{ if $fixedHeight }} slides-fixed-height{{ end }}" style="--slide-width: {{ $width }}; --slide-height: {{ $slideHeight }};{{ with $fixedHeight }} --fixed-height: {{ . }};{{ end }}">
+<div class="slides-outer-container">
+<div class="slides-inline-container{{ if $fixedHeight }} slides-fixed-height{{ end }}{{ if eq $view "scroll" }} slides-scroll-view{{ end }}" style="--slide-width: {{ $width }}; --slide-height: {{ $slideHeight }};{{ with $fixedHeight }} --fixed-height: {{ . }};{{ end }} --reveal-bg: {{ $backgroundColor }};">
 
   {{/* Bundle reveal.js CSS - eliminates render-blocking @import waterfall */}}
   {{- $cssContent := "" -}}
@@ -175,17 +191,6 @@
     </div>
   </div>
 
-  <p class="slides-legend text-neutral-500">
-    <kbd onclick="document.getElementById('{{ $id }}').revealdeck.prev()" title="Previous slide">←</kbd><kbd onclick="document.getElementById('{{ $id }}').revealdeck.next()" title="Next slide">→</kbd> navigate
-    · <kbd onclick="(function(el){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.msRequestFullscreen)el.msRequestFullscreen();})(document.getElementById('{{ $id }}'))" title="Fullscreen">F</kbd> fullscreen
-    {{- if $overview }}
-    · <kbd onclick="document.getElementById('{{ $id }}').revealdeck.toggleOverview()" title="Toggle overview">O</kbd> overview
-    {{- end }}
-    {{- if $notes }}
-    · <kbd onclick="(function(d){var n=d.revealdeck.getPlugin('notes');if(n&&n.open)n.open();else console.warn('Notes plugin not available');})(document.getElementById('{{ $id }}'))" title="Speaker notes">S</kbd> speaker notes
-    {{- end }}
-  </p>
-
   {{/* Bundle reveal.js core + plugins - reduces network requests from N to 1 */}}
   {{- $jsContent := "" -}}
   {{- with resources.Get (printf "%s/dist/reveal.js" $reveal_location) -}}
@@ -226,12 +231,15 @@
         margin: {{ $margin }},
         minScale: {{ $minScale }},
         maxScale: {{ $maxScale }},
-        // Auto scroll view on mobile (<sm), classic on desktop: https://revealjs.com/scroll-view/
+        // View mode: https://revealjs.com/scroll-view/
+        // "scroll" = always vertical, "reader" = reading optimized, null = auto-switch on mobile
+        view: {{ with $view }}'{{ . }}'{{ else }}null{{ end }},
         scrollActivationWidth: screenSm,
         scrollLayout: 'compact',
         center: {{ $slidesPage.Param "reveal_hugo.center" | default true }},
         controls: {{ $slidesPage.Param "reveal_hugo.controls" | default true }},
         progress: {{ $slidesPage.Param "reveal_hugo.progress" | default true }},
+        backgroundColor: '{{ $backgroundColor }}',
         history: false,
         transition: '{{ $transition }}',
         keyboard: false,
@@ -346,6 +354,101 @@
       });
     })();
   </script>
+  {{- if eq $view "print" }}
+  <script>
+    (function() {
+      var wrapper = document.getElementById('{{ $id }}');
+      var outerContainer = wrapper.parentElement;
+      var revealEl = wrapper.querySelector('.reveal');
+      var deck = wrapper.revealdeck;
+
+      // Configured slide dimensions from Hugo template
+      var configuredWidth = {{ $width }};
+      var configuredHeight = {{ $slideHeight }};
+      var configuredAspectRatio = configuredHeight / configuredWidth;
+
+      function adjustPrintLayout() {
+        // In print mode, Reveal.js uses .pdf-page divs instead of section elements
+        var pages = revealEl.querySelectorAll('.slides > .pdf-page');
+        var pageCount = pages.length;
+        if (pageCount === 0) return false; // Return false to indicate pages not ready
+
+        var firstPage = pages[0];
+        var pageRenderedWidth = firstPage.offsetWidth;
+        var pageRenderedHeight = firstPage.offsetHeight;
+
+        // Container width we want to fill
+        var containerWidth = outerContainer.offsetWidth;
+
+        // Calculate correct page height using CONFIGURED aspect ratio, not PDF page ratio
+        var correctPageHeight = containerWidth * configuredAspectRatio;
+
+        // Scale to make each page fill container width
+        var scale = containerWidth / pageRenderedWidth;
+
+        // Apply scale and clip overflow to hide extra PDF page height
+        revealEl.style.transform = 'scale(' + scale + ')';
+        revealEl.style.transformOrigin = 'top left';
+
+        // Set each page to correct height and hide overflow
+        Array.from(pages).forEach(function(page) {
+          page.style.height = (correctPageHeight / scale) + 'px';
+          page.style.overflow = 'hidden';
+        });
+
+        // Total height based on configured aspect ratio
+        var totalHeight = pageCount * correctPageHeight;
+
+        outerContainer.style.height = totalHeight + 'px';
+        outerContainer.style.maxHeight = 'none';
+        outerContainer.style.overflow = 'visible';
+        return true; // Success
+      }
+
+      function waitForPagesAndAdjust() {
+        // Try immediately
+        if (adjustPrintLayout()) return;
+
+        // If pages not ready, use MutationObserver to wait for them
+        var slidesEl = revealEl.querySelector('.slides');
+        if (!slidesEl) return;
+
+        var observer = new MutationObserver(function(mutations) {
+          if (adjustPrintLayout()) {
+            observer.disconnect();
+          }
+        });
+        observer.observe(slidesEl, { childList: true, subtree: true });
+
+        // Fallback timeout in case observer doesn't trigger
+        setTimeout(function() {
+          observer.disconnect();
+          adjustPrintLayout();
+        }, 1000);
+      }
+
+      // Run after deck is ready
+      if (deck.isReady()) {
+        waitForPagesAndAdjust();
+      } else {
+        deck.on('ready', waitForPagesAndAdjust);
+      }
+    })();
+  </script>
+  {{- end }}
+</div>
+{{- if $legend }}
+<p class="slides-legend text-neutral-500">
+  <kbd onclick="document.getElementById('{{ $id }}').revealdeck.prev()" title="Previous slide">←</kbd><kbd onclick="document.getElementById('{{ $id }}').revealdeck.next()" title="Next slide">→</kbd> navigate
+  · <kbd onclick="(function(el){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();else if(el.msRequestFullscreen)el.msRequestFullscreen();})(document.getElementById('{{ $id }}'))" title="Fullscreen">F</kbd> fullscreen
+  {{- if $overview }}
+  · <kbd onclick="document.getElementById('{{ $id }}').revealdeck.toggleOverview()" title="Toggle overview">O</kbd> overview
+  {{- end }}
+  {{- if $notes }}
+  · <kbd onclick="(function(d){var n=d.revealdeck.getPlugin('notes');if(n&&n.open)n.open();else console.warn('Notes plugin not available');})(document.getElementById('{{ $id }}'))" title="Speaker notes">S</kbd> speaker notes
+  {{- end }}
+</p>
+{{- end }}
 </div>
 
 {{- else -}}

@@ -1,0 +1,82 @@
+{{/*
+  typo/runaround: Image + text layout with optional lightbox (journalism term)
+
+  A "runaround" is text that flows around an image - classic print layout.
+  Supports column mode (side-by-side) or wrap mode (text flows around).
+
+  Parameters:
+    side    - "left" (default) or "right" - image position
+    image   - Image path (required)
+    alt     - Alt text for image
+    caption - Caption below image (enables lightbox mode, supports markdown)
+    width   - Max-width of figure/image (e.g., "60%")
+    style   - Custom styles for the image element
+    id      - Custom lightbox ID (auto-generated if omitted)
+    flow    - "column" (default) or "wrap" - text flow behavior
+
+  Note on CSS limitation:
+    Unlike MS Word where text can flow above, beside, and below a positioned
+    image, CSS float only affects content AFTER the image in HTML. Therefore:
+    - Text BEFORE the shortcode = always full width above image
+    - Text INSIDE the shortcode = wraps beside/below (wrap mode) or stays in column
+    - Text AFTER the shortcode = always full width below
+    The shortcode placement in markdown IS the image position.
+
+  Flow Modes (4 combinations):
+
+    1. side="left" + flow="column" (default)
+       Flexbox. Text stays in column, never flows below image.
+
+       [Text BEFORE - full width.................]
+       ┌────────────────────────────────────────┐
+       │[IMAGE] │ [Text INSIDE - column      ]│
+       │[IMAGE] │ [Stays beside, not below   ]│
+       └────────────────────────────────────────┘
+       [Text AFTER - full width..................]
+
+    2. side="right" + flow="column"
+       Flexbox. Text stays in column, never flows below image.
+
+       [Text BEFORE - full width.................]
+       ┌────────────────────────────────────────┐
+       │[Text INSIDE - column      ] │ [IMAGE]│
+       │[Stays beside, not below   ] │ [IMAGE]│
+       └────────────────────────────────────────┘
+       [Text AFTER - full width..................]
+
+    3. side="left" + flow="wrap"
+       Float left. Text wraps around and continues below.
+
+       [Text BEFORE - full width.................]
+       [IMAGE]  [Text INSIDE wraps beside     ]
+       [IMAGE]  [Continues here               ]
+       [Text INSIDE continues full width below..]
+       [Text AFTER - full width..................]
+
+    4. side="right" + flow="wrap"
+       Float right. Text wraps around and continues below.
+
+       [Text BEFORE - full width.................]
+       [Text INSIDE wraps beside     ]  [IMAGE]
+       [Continues here               ]  [IMAGE]
+       [Text INSIDE continues full width below..]
+       [Text AFTER - full width..................]
+
+  Modes (with caption):
+    - figure + lightbox modal (click to enlarge)
+  Modes (without caption):
+    - simple image, no lightbox
+
+  Styles: assets/css/lightbox.css, assets/css/typography.css
+*/}}
+{{- partial "typo/runaround.html" (dict
+    "content" .Inner
+    "side" (.Get "side")
+    "image" (.Get "image")
+    "alt" (.Get "alt")
+    "caption" (.Get "caption")
+    "width" (.Get "width")
+    "style" (.Get "style")
+    "id" (.Get "id")
+    "flow" (.Get "flow")
+) -}}

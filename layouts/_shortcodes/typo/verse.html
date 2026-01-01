@@ -1,0 +1,17 @@
+{{/*
+  typo/verse: Poetic or lyrical content (typography term)
+
+  For verse-like content with deliberate line breaks.
+  Renders with italic styling and subtle left border.
+  Source line breaks are preserved as it is (no <br> needed).
+
+  Usage:
+    {{< typo/verse >}}
+    They fidget, flap, hesitate...
+    They explore before they explain...
+    They communicate...
+    {{< /typo/verse >}}
+
+  Styles: assets/css/typography.css (.verse class)
+*/}}
+{{- partial "typo/verse.html" (dict "content" .Inner) -}}

@@ -1,0 +1,11 @@
+{{/*
+  typo/callout partial - Highlighted box drawing attention
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/callout.html" (dict "content" "important info") }}
+    {{ partial "typo/callout.html" (dict "content" .Params.text) }}
+-*/}}
+<div class="callout">{{- .content | markdownify | safeHTML -}}</div>

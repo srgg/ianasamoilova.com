@@ -1,0 +1,19 @@
+{{/*
+  typo/slug: Short identifier or label in small caps (journalism/print term)
+
+  In newspaper production, a "slug" is a short identifier—often in small caps—
+  used to label sections, categories, or article types. Think of the small
+  "OPINION" or "BREAKING" labels you see above headlines.
+
+  Common names: label, tag, category marker, section identifier
+
+  Visually: small caps with subtle letter-spacing, used inline to mark
+  or categorize content without breaking the reading flow.
+
+  Usage:
+    {{< typo/slug >}}Opinion{{< /typo/slug >}}
+    {{< typo/slug >}}Special Report{{< /typo/slug >}}
+
+  Styles: assets/css/typography.css (.slug class)
+*/}}
+{{- partial "typo/slug.html" (dict "content" .Inner) -}}

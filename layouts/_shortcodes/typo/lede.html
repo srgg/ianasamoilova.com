@@ -1,0 +1,12 @@
+{{/*
+  typo/lede: Opening paragraph emphasis (journalism term)
+
+  The "lede" is the opening hook that draws readers in.
+  Applies slightly larger text with softer color for emphasis.
+
+  Usage:
+    {{< typo/lede >}}Your opening paragraph here.{{< /typo/lede >}}
+
+  Styles: assets/css/typography.css (.lede class)
+*/}}
+{{- partial "typo/lede.html" (dict "content" .Inner) -}}

@@ -11,6 +11,8 @@
 @import "hero-responsive.css";
 @import "cta-with-divider.css";
 @import "article-grid-lite.css";
+@import "typography.css";
+@import "lightbox.css";
 
 /* Fix footer positioning - ensure it stays close to content */
 footer {
@@ -55,28 +57,42 @@ footer {
     --screen-sm: theme('screens.sm');
 }
 
-/* Project Cards: Make entire card clickable
- * Uses ::after on title link to expand click area to full card.
- * Tag badge stays separately clickable via z-index layering.
+/* Projects collection styles */
+.projects-collection {
+    /* Tighten title-subtitle gap */
+    .mb-6.border-b-2 {
+        margin-bottom: 0;
+    }
+
+    /* Card clickable area - mobile first */
+    [role="article"].group {
+        position: relative;
+        cursor: pointer;
+    }
+
+    /* Expand title link to full card */
+    [role="article"].group h3 a::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    /* Keep tag badge clickable above card overlay */
+    [role="article"].group a:has(span) {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Utility: Hide tag badges in any collection
+ * Add css_class: hide-tags to any block's design section
  */
-[role="article"].group {
-    position: relative;
+.hide-tags [role="article"] a:has(span.rounded-full) {
+    display: none;
 }
 
-[role="article"].group h3 a::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-}
-
-/* Keep tag badge clickable above the card overlay */
-[role="article"].group a:has(span) {
-    position: relative;
-    z-index: 1;
-}
-
-/* Cursor pointer on entire card */
-[role="article"].group {
-    cursor: pointer;
+/* Reduce top gap in hide-tags collections (e.g., PARA Welcome Kit) */
+.hide-tags .container.py-5 {
+    padding-top: 10px !important;
 }

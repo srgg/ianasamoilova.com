@@ -10,22 +10,28 @@ tags:
   - PARA Welcome Kit
 ---
 
+{{< typo/lede >}}
 My first months as a paraeducator were eye-opening. Like so many new PARAs, I
 stepped into the role with heart—and while I had a strong educational
 background, nothing truly prepared me for the day-to-day realities of being a
 PARA. Not because anyone lacked care, but because in busy Special Education
-classrooms, everyone is stretched thin, and there’s rarely time for the deep
+classrooms, everyone is stretched thin, and there's rarely time for the deep
 onboarding this work deserves.
+{{< /typo/lede >}}
 
 Those first days and weeks were overwhelming. I wanted to support students
 well, yet so much of the job felt like guesswork. I kept wishing there was one
 simple, welcoming resource that explained the essentials and helped new PARAs
 feel less alone in the steep learning curve.
 
-That’s why I created *The PARA Welcome Book*—the book I needed on day one.
+{{< typo/pull-quote >}}
+That's why I created *The PARA Welcome Book*—the book I needed on day one.
+{{< /typo/pull-quote >}}
+
 A warm, practical guide to help new paraeducators feel supported, confident,
 and valued as they begin this challenging, meaningful work.
 
+{{< typo/beat >}}
 
 **[Explore the PARA Welcome Book →](/projects/para-welcome-book)**
 

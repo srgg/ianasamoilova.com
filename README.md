@@ -28,6 +28,16 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 - [Hugo Extended](https://gohugo.io/installation/) v0.149.0+
 - [Node.js](https://nodejs.org/) v18+
 - [pnpm](https://pnpm.io/) (recommended) or npm
+- **For slide generation:** [Poppler](https://poppler.freedesktop.org/) and [libwebp](https://developers.google.com/speed/webp/docs/cwebp)
+  ```bash
+  # macOS
+  brew install poppler webp
+  ```
+
+#### Upgrading Hugo
+
+To upgrade Hugo on OS X, follow these steps:
+`brew upgrade hugo`
 
 ### Quick Start
 
@@ -39,12 +49,12 @@ Built for the Special Education Added Endorsement Program (SPDA-CERG) at UCCS, w
 
 2. **Install dependencies:**
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. **Start development server:**
    ```bash
-   npm run dev
+   pnpm run dev
    ```
    Site will be available at `http://localhost:1313`
 
@@ -243,6 +253,13 @@ Key configuration files:
 
 For a comprehensive website analytics setup with Google Tag Manager and Google Analytics 4:
 - **[GTM Setup Guide](docs/GTM_SETUP_GUIDE.md)** - Complete implementation guide for professional portfolio tracking
+
+### Typography Shortcodes
+
+Make long-form content easier to read and more visually engaging. These shortcodes add professional typography—opening hooks that draw readers in, pull-quotes that break up walls of text, poetic passages with preserved line breaks, and visual pauses that let ideas breathe.
+
+Built with journalism terminology (lede, nutgraf, kicker) so each element has a clear editorial purpose:
+- **[Typography Shortcodes](docs/typography-shortcodes.md)** - Usage guide with examples of great, mediocre, and bad usage for each shortcode
 
 ### Tailwind CSS Breakpoints
 

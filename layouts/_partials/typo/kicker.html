@@ -1,0 +1,11 @@
+{{/*
+  typo/kicker partial - Short intro line that sets up what follows
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/kicker.html" (dict "content" "Here's the thing:") }}
+    {{ partial "typo/kicker.html" (dict "content" .Params.text) }}
+-*/}}
+<span class="kicker">{{- .content | markdownify | safeHTML -}}</span>

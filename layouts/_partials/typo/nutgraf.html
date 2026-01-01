@@ -1,0 +1,11 @@
+{{/*
+  typo/nutgraf partial - The "so what" paragraph explaining significance
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/nutgraf.html" (dict "content" "The key insight.") }}
+    {{ partial "typo/nutgraf.html" (dict "content" .Params.text) }}
+-*/}}
+<p class="nutgraf">{{- .content | markdownify | safeHTML -}}</p>
