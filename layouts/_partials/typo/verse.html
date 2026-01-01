@@ -1,0 +1,11 @@
+{{/*
+  typo/verse partial - Poetic or lyrical content
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/verse.html" (dict "content" "They fidget, flap...") }}
+    {{ partial "typo/verse.html" (dict "content" .Params.text) }}
+-*/}}
+<p class="verse">{{- .content | markdownify | safeHTML -}}</p>

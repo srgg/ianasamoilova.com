@@ -14,4 +14,4 @@
 
   Styles: assets/css/typography.css (.sign-off class)
 */}}
-<p class="sign-off">{{ .Inner | markdownify }}</p>
+{{- partial "typo/sign-off.html" (dict "content" .Inner) -}}

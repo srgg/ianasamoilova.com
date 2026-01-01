@@ -1,0 +1,126 @@
+{{/*
+  typo/runaround partial - Image + text layout with optional lightbox
+
+  Context:
+    .content  - (string) The content for the text area (markdown or HTML)
+    .side     - (string) "left" or "right" - image position (default: "left")
+    .image    - (string) Image path (required)
+    .alt      - (string) Alt text for image (default: "")
+    .caption  - (string) Caption text - enables lightbox when present (default: "")
+    .width    - (string) Max-width of figure/image e.g. "60%" (default: "")
+    .style    - (string) Custom inline styles for image (default: "")
+    .id       - (string) Custom lightbox ID - auto-generated if omitted
+    .flow     - (string) "column" or "wrap" (default: "column")
+
+  Usage from template:
+    {{ partial "typo/runaround.html" (dict
+        "content" "Text beside image with **markdown**"
+        "image" "/images/photo.jpg"
+        "side" "right"
+        "caption" "Photo caption"
+    ) }}
+-*/}}
+{{- $side := .side | default "left" -}}
+{{- $image := .image -}}
+{{- $alt := .alt | default "" -}}
+{{- $caption := .caption | default "" -}}
+{{- $width := .width | default "" -}}
+{{- $style := .style | default "" -}}
+{{- $flow := .flow | default "column" -}}
+{{- $content := .content | markdownify | safeHTML -}}
+
+{{- $classPrefix := cond (eq $flow "wrap") "runaround-wrap" "runaround" -}}
+
+<div class="{{ $classPrefix }}-{{ $side }}">
+{{- if $caption }}
+  {{- $id := .id | default (printf "lb-%s" (md5 $image)) -}}
+  {{- $captionId := printf "%s-caption" $id -}}
+  <figure{{ with $width }} style="max-width:{{ . }}"{{ end }} data-lightbox>
+    <a href="#{{ $id }}" aria-haspopup="dialog">
+      <img src="{{ $image }}" alt="{{ $alt }}"{{ with $style }} style="{{ . }}"{{ end }}>
+    </a>
+    <figcaption>{{ $caption | markdownify }}</figcaption>
+  </figure>
+  <div>
+    {{ $content }}
+  </div>
+</div>
+
+<div
+  class="lightbox-overlay"
+  id="{{ $id }}"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="{{ $captionId }}"
+  tabindex="-1"
+>
+  <button class="lightbox-close" aria-label="Close dialog" onclick="closeLightbox('{{ $id }}')">&times;</button>
+  <figure class="lightbox-content" onclick="event.stopPropagation()">
+    <img src="{{ $image }}" alt="{{ $alt }}">
+    <figcaption id="{{ $captionId }}">{{ $caption | markdownify }}</figcaption>
+  </figure>
+</div>
+
+<script>
+(function() {
+  var overlay = document.getElementById('{{ $id }}');
+  var triggerLink = document.querySelector('a[href="#{{ $id }}"]');
+
+  function openLightbox(e) {
+    e.preventDefault();
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    overlay.focus();
+    history.pushState(null, '', '#{{ $id }}');
+  }
+
+  window.closeLightbox = window.closeLightbox || function(id) {
+    var el = document.getElementById(id);
+    el.classList.remove('active');
+    document.body.style.overflow = '';
+    history.pushState(null, '', location.pathname);
+    var trigger = document.querySelector('a[href="#' + id + '"]');
+    if (trigger) trigger.focus({ preventScroll: true });
+  };
+
+  if (triggerLink) triggerLink.addEventListener('click', openLightbox);
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeLightbox('{{ $id }}');
+  });
+
+  overlay.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox('{{ $id }}');
+    if (e.key === 'Tab') {
+      var focusable = overlay.querySelectorAll('button, [tabindex]:not([tabindex="-1"])');
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  if (location.hash === '#{{ $id }}') {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    overlay.focus();
+  }
+
+  window.addEventListener('hashchange', function() {
+    if (location.hash === '#{{ $id }}') {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      overlay.focus();
+    } else if (overlay.classList.contains('active')) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
+{{- else }}
+  <img src="{{ $image }}" alt="{{ $alt }}"{{ with $width }} style="max-width:{{ . }}{{ with $style }};{{ . }}{{ end }}"{{ else }}{{ with $style }} style="{{ . }}"{{ end }}{{ end }}>
+  <div>
+    {{ $content }}
+  </div>
+</div>
+{{- end }}

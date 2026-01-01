@@ -1,0 +1,11 @@
+{{/*
+  typo/sign-off partial - Closing signature statement
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/sign-off.html" (dict "content" "Colorado Springs, 2025") }}
+    {{ partial "typo/sign-off.html" (dict "content" .Params.text) }}
+-*/}}
+<p class="sign-off">{{- .content | markdownify | safeHTML -}}</p>

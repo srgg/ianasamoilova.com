@@ -19,4 +19,4 @@
 
   Styles: assets/css/typography.css (.nutgraf class)
 */}}
-<p class="nutgraf">{{ .Inner | markdownify }}</p>
+{{- partial "typo/nutgraf.html" (dict "content" .Inner) -}}

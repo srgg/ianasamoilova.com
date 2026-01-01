@@ -1,0 +1,11 @@
+{{/*
+  typo/lede partial - Opening paragraph emphasis
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/lede.html" (dict "content" "Opening hook paragraph.") }}
+    {{ partial "typo/lede.html" (dict "content" .Params.text) }}
+-*/}}
+<p class="lede">{{- .content | markdownify | safeHTML -}}</p>

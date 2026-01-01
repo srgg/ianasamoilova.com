@@ -9,4 +9,4 @@
 
   Styles: assets/css/typography.css (.lede class)
 */}}
-<p class="lede">{{ .Inner | markdownify }}</p>
+{{- partial "typo/lede.html" (dict "content" .Inner) -}}

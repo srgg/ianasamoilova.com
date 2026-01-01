@@ -10,4 +10,4 @@
 
   Styles: assets/css/typography.css (.pull-quote class)
 */}}
-<p class="pull-quote">{{ .Inner | markdownify }}</p>
+{{- partial "typo/pull-quote.html" (dict "content" .Inner) -}}

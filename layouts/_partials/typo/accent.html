@@ -1,0 +1,11 @@
+{{/*
+  typo/accent partial - Subtle inline emphasis
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/accent.html" (dict "content" "emphasized text") }}
+    {{ partial "typo/accent.html" (dict "content" .Params.text) }}
+-*/}}
+<span class="accent">{{- .content | markdownify | safeHTML -}}</span>

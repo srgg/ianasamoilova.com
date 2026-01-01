@@ -69,106 +69,14 @@
 
   Styles: assets/css/lightbox.css, assets/css/typography.css
 */}}
-{{- $side := .Get "side" | default "left" -}}
-{{- $image := .Get "image" -}}
-{{- $alt := .Get "alt" | default "" -}}
-{{- $caption := .Get "caption" | default "" -}}
-{{- $width := .Get "width" | default "" -}}
-{{- $style := .Get "style" | default "" -}}
-{{- $flow := .Get "flow" | default "column" -}}
-
-{{- $classPrefix := cond (eq $flow "wrap") "runaround-wrap" "runaround" -}}
-
-<div class="{{ $classPrefix }}-{{ $side }}">
-{{- if $caption }}
-  {{- $id := .Get "id" | default (printf "lb-%s" (md5 $image)) -}}
-  {{- $captionId := printf "%s-caption" $id -}}
-  <figure{{ with $width }} style="max-width:{{ . }}"{{ end }} data-lightbox>
-    <a href="#{{ $id }}" aria-haspopup="dialog">
-      <img src="{{ $image }}" alt="{{ $alt }}"{{ with $style }} style="{{ . }}"{{ end }}>
-    </a>
-    <figcaption>{{ $caption | markdownify }}</figcaption>
-  </figure>
-  <div>
-    {{ .Inner | markdownify }}
-  </div>
-</div>
-
-<div
-  class="lightbox-overlay"
-  id="{{ $id }}"
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="{{ $captionId }}"
-  tabindex="-1"
->
-  <button class="lightbox-close" aria-label="Close dialog" onclick="closeLightbox('{{ $id }}')">&times;</button>
-  <figure class="lightbox-content" onclick="event.stopPropagation()">
-    <img src="{{ $image }}" alt="{{ $alt }}">
-    <figcaption id="{{ $captionId }}">{{ $caption | markdownify }}</figcaption>
-  </figure>
-</div>
-
-<script>
-(function() {
-  var overlay = document.getElementById('{{ $id }}');
-  var triggerLink = document.querySelector('a[href="#{{ $id }}"]');
-
-  function openLightbox(e) {
-    e.preventDefault();
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    overlay.focus();
-    history.pushState(null, '', '#{{ $id }}');
-  }
-
-  window.closeLightbox = window.closeLightbox || function(id) {
-    var el = document.getElementById(id);
-    el.classList.remove('active');
-    document.body.style.overflow = '';
-    history.pushState(null, '', location.pathname);
-    var trigger = document.querySelector('a[href="#' + id + '"]');
-    if (trigger) trigger.focus({ preventScroll: true });
-  };
-
-  if (triggerLink) triggerLink.addEventListener('click', openLightbox);
-
-  overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) closeLightbox('{{ $id }}');
-  });
-
-  overlay.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox('{{ $id }}');
-    if (e.key === 'Tab') {
-      var focusable = overlay.querySelectorAll('button, [tabindex]:not([tabindex="-1"])');
-      var first = focusable[0], last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  });
-
-  if (location.hash === '#{{ $id }}') {
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    overlay.focus();
-  }
-
-  window.addEventListener('hashchange', function() {
-    if (location.hash === '#{{ $id }}') {
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      overlay.focus();
-    } else if (overlay.classList.contains('active')) {
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
-})();
-</script>
-{{- else }}
-  <img src="{{ $image }}" alt="{{ $alt }}"{{ with $width }} style="max-width:{{ . }}{{ with $style }};{{ . }}{{ end }}"{{ else }}{{ with $style }} style="{{ . }}"{{ end }}{{ end }}>
-  <div>
-    {{ .Inner | markdownify }}
-  </div>
-</div>
-{{- end }}
+{{- partial "typo/runaround.html" (dict
+    "content" .Inner
+    "side" (.Get "side")
+    "image" (.Get "image")
+    "alt" (.Get "alt")
+    "caption" (.Get "caption")
+    "width" (.Get "width")
+    "style" (.Get "style")
+    "id" (.Get "id")
+    "flow" (.Get "flow")
+) -}}

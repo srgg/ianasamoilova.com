@@ -1,0 +1,11 @@
+{{/*
+  typo/aside partial - Reflective digression from the main narrative
+
+  Context:
+    .content - (string) The content to display (markdown or HTML)
+
+  Usage from template:
+    {{ partial "typo/aside.html" (dict "content" "reflective text") }}
+    {{ partial "typo/aside.html" (dict "content" .Params.text) }}
+-*/}}
+<p class="aside">{{- .content | markdownify | safeHTML -}}</p>

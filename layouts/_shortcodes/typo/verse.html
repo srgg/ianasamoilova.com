@@ -14,4 +14,4 @@
 
   Styles: assets/css/typography.css (.verse class)
 */}}
-<p class="verse">{{ .Inner | markdownify }}</p>
+{{- partial "typo/verse.html" (dict "content" .Inner) -}}

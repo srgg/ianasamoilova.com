@@ -16,4 +16,4 @@
 
   Styles: assets/css/typography.css (.slug class)
 */}}
-<span class="slug">{{ .Inner | markdownify }}</span>
+{{- partial "typo/slug.html" (dict "content" .Inner) -}}

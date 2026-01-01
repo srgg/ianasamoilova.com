@@ -20,4 +20,4 @@
 
   Styles: assets/css/typography.css (.callout class)
 */}}
-<div class="callout">{{ .Inner | markdownify }}</div>
+{{- partial "typo/callout.html" (dict "content" .Inner) -}}

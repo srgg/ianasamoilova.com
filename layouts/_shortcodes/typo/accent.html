@@ -16,4 +16,4 @@
 
   Styles: assets/css/typography.css (.accent class)
 */}}
-<span class="accent">{{ .Inner | markdownify }}</span>
+{{- partial "typo/accent.html" (dict "content" .Inner) -}}
