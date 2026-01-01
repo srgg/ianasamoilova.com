@@ -69,3 +69,15 @@
         border-radius: 2px;
     }
 }
+
+/* PARA Welcome Kit header - tighter spacing */
+.para-welcome-header.cta-with-divider .py-8,
+.para-welcome-header.cta-with-divider .sm\:py-16 {
+    padding-top: 0 !important;
+    padding-bottom: 21px !important;
+}
+
+/* PARA Welcome Kit collection - reduce top gap */
+.hide-tags .container.py-5 {
+    padding-top: 10px !important;
+}
