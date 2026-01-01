@@ -45,6 +45,8 @@ And in SPED classrooms especially, hands are often where learning begins.
 
 {{< typo/accent >}}Inclusion doesn't always look big.{{< /typo/accent >}} Sometimes it looks like paint on small hands, time taken without urgency, and students trusted to participate.
 
+{{< typo/beat >}}
+
 {{< typo/sign-off >}}
 Different hands. One shared miracle.<br/>
 Merry Christmas and Happy New Year<br/>
