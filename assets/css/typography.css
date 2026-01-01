@@ -2,8 +2,48 @@
  * World-class typography for emphasis and visual hierarchy
  */
 
+/* Typography overrides for post/project content
+ * Mobile-first: em units scale with font size per breakpoint.
+ *
+ * Tailwind prose defaults:
+ *   line-height: 1.75 (prose), 1.8 (prose-xl)
+ *   paragraph margin: 1.25em (mobile), 1.2em (desktop prose-xl)
+ *   hr margin: 3em (mobile), 2.8em (desktop prose-xl)
+ */
 :root {
     --typo-line-height: 1.5;
+    --typo-paragraph-margin: 0.85em;
+    --typo-hr-margin: 2em;
+}
+
+.prose p {
+    margin-top: var(--typo-paragraph-margin) !important;
+    margin-bottom: var(--typo-paragraph-margin) !important;
+}
+
+.prose hr {
+    margin-top: var(--typo-hr-margin) !important;
+    margin-bottom: var(--typo-hr-margin) !important;
+}
+
+.prose {
+    line-height: var(--typo-line-height) !important;
+}
+
+.prose-sm {
+    line-height: calc(var(--typo-line-height) - 0.036) !important;  /* -0.036 matches prose-sm vs prose ratio */
+}
+
+.prose-lg {
+    line-height: calc(var(--typo-line-height) + 0.028) !important;
+}
+
+.prose-xl {
+    line-height: calc(var(--typo-line-height) + 0.05) !important;
+}
+
+.prose-2xl {
+    line-height: calc(var(--typo-line-height) + 0.083) !important;
 }
 
 /* Pull Quote - for impactful standalone statements */
@@ -39,12 +79,23 @@
     color: #2c3e50;
 }
 
+.callout ul,
+.callout ol {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.callout li {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
 /* Lede - opening paragraph emphasis */
 .lede {
     font-size: 1.15em;
     line-height: calc(var(--typo-line-height) + 0.15);
     color: #3a4a5a;
-    margin-bottom: 1.25em;
+    margin-bottom: 0.5em;
 }
 
 /* Sign-off - elegant closing statement */
