@@ -35,6 +35,7 @@ sections:
       fill_image: false
       columns: 2
       css_class: hide-tags
+      show_read_time: false
       spacing:
         padding: ["0", "0", "5em", "0"]
 
