@@ -2,7 +2,8 @@
 title: "Canva Education Tutorial"
 subtitle: "Create Inclusive, Organized, and Engaging Classrooms with Confidence"
 #summary: "A step-by-step tutorial for educators to use Canva Education to create accessible, creative, and time-saving classroom materials that foster inclusive, organized learning for every student."
-summary: "Watch the 10-Minute Canva for Education Starter — Go from Zero to Classroom-Ready"
+#summary: "Watch the 10-Minute Canva for Education Starter — Go from Zero to Classroom-Ready"
+summary: "A short, practical introduction to using Canva for Education in inclusive and special education classrooms."
 description: "Learn how Canva for Education can help teachers build classrooms that are more creative, organized, and inclusive. This practical tutorial shows how to design visual supports, worksheets, schedules, and lesson materials that reduce daily workload and empower every student."
   
 date: 2025-12-04
@@ -19,7 +20,7 @@ video_chapters:
   - title: "Getting Started"
     time: 0
     children:
-      - title: "Survey Results: What Teachers want to learn in Canva"
+      - title: "What Teachers Want to Learn in Canva"
         time: 32
       - title: "Get verified in Canva Education"
         time: 57
@@ -51,30 +52,34 @@ video_chapters:
   - title: "Wrap Up"
     time: 537
 ---
+{{< typo/lede >}}**New to Canva Education—or looking to use it more intentionally in inclusive or special education classrooms?**{{< /typo/lede >}}
 
-New to Canva Education, or looking to use it more intentionally in inclusive or special education classrooms?
-
-Start with the short video tutorial (about 10 minutes) to see practical ways Canva Education can be used to create organized, accessible materials that support **routines, independence, and diverse learning needs**, and can be reused again and again.
-
-{{% callout note %}}The entire tutorial, including the animated introduction, **was created entirely in Canva Education**, using only the tools available for free to educators.
-I am not a professional designer. I am a full-time educator. Everything you see here was created quickly and practically.
-***If I can create this using Canva Education, you can too.***
-{{% /callout %}}
-
-&nbsp;
-
-&nbsp;
+This short tutorial (about 10 minutes) walks through practical, classroom-ready approaches to use Canva Education to create organized, accessible materials that support routines, independence, and diverse learning needs—without adding to your daily workload.
 {{< video-with-toc src="canva-education-tutorial.mp4" >}}
+
+{{< typo/callout >}}
+This tutorial—including the animated introduction—was created entirely in Canva Education using only the tools available to educators.
+
+I’m not a professional designer. I’m a full-time educator. Everything you see here was built quickly and practically for real classroom use.
+
+**If this fits into my classroom reality, it can fit into yours too.**
+{{< /typo/callout >}}
+
+{{< typo/beat >}}
 
 ---
 
 ## About This Project
 
-This tutorial focuses on practical, classroom-ready uses of Canva Education with an emphasis on **accessibility, structure, and visual support**—key elements in inclusive and special education classrooms. Rather than focusing on design features alone, it demonstrates how Canva Education can be used intentionally to support daily routines, clarify expectations, and reduce cognitive and organizational load for both students and teachers.
+{{< typo/nutgraf >}}This tutorial focuses on practical, classroom-ready uses of Canva Education, with an emphasis on **accessibility, structure, and visual support**—key elements in inclusive and special education classrooms.{{< /typo/nutgraf >}}
+
+Rather than highlighting design features for their own sake, it shows how visual tools can be used intentionally to support routines, clarify expectations, and reduce cognitive and organizational load **in daily classroom practice**.
 
 ---
 
 ## What This Tutorial Covers
+
+{{< typo/kicker >}}This tutorial walks through:{{< /typo/kicker >}}
 
 * Setting up and accessing a Canva for Education account.
 * Using templates to save time and streamline daily preparation.
@@ -83,18 +88,17 @@ This tutorial focuses on practical, classroom-ready uses of Canva Education with
 * Building visual schedules and classroom supports.
 * Customizing resources to meet diverse student needs.
 
-This tutorial is not about making materials visually impressive. It is about creating predictable, supportive systems that help classrooms function more smoothly.
+{{< typo/accent >}}This tutorial is not about making materials visually impressive.{{< /typo/accent >}} It's about creating predictable, supportive systems that help classrooms function more smoothly and sustainably.
 
 ---
 
 ## Why This Tutorial Exists
 
-In inclusive and special education settings, small design choices have a big impact.
+{{< typo/pull-quote >}}In inclusive and special education settings, small design choices often have a disproportionate impact.{{< /typo/pull-quote >}}
 
-Teachers often spend significant time recreating visuals, adapting materials, or managing disorganized resources, especially when supporting students who rely on clear structure and visual information.
-This tutorial exists to offer a practical, sustainable approach.
+Teachers spend significant time recreating visuals, adapting materials, and managing disorganized resources—especially when supporting students who rely on clear structure and visual information. This tutorial exists to offer a more practical, sustainable approach.
 
-By using Canva Education strategically, educators can:
+{{< typo/kicker >}}By using Canva Education strategically, educators can:{{< /typo/kicker >}}
 
 * reduce repetitive design and formatting tasks;
 * create consistent visual supports across settings;
@@ -105,7 +109,7 @@ By using Canva Education strategically, educators can:
 
 ## Visual Design as a Support Tool in SPED
 
-In special education classrooms, visual design is not decorative, it is functional.
+In special education classrooms, {{< typo/accent >}}visual design is not decorative; it is functional.{{< /typo/accent >}}
 
 Clear visuals help students understand routines, transitions, and expectations. Consistent design reduces the need for repeated verbal prompts and supports learners who benefit from visual structure, including students with autism, ADHD, language processing differences, and executive functioning challenges.
 
@@ -113,9 +117,13 @@ Canva Education makes it possible to create and adapt these supports efficiently
 
 ---
 
+{{< typo/beat >}}
+
 ## A Personal Note
 
+{{< typo/aside >}}
 This project reflects my professional interest in special education, inclusive practices, and the thoughtful use of technology to support both learners and educators.
+{{< /typo/aside >}}
 
 I believe well-designed visual materials can reduce stress, increase clarity, and help classrooms run more calmly and predictably. When teachers feel confident creating and adapting these supports, they are better able to focus on instruction, connection, and student growth.
 
