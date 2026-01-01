@@ -186,6 +186,12 @@
     margin: 0;
 }
 
+/* Reset prose margin on images inside runaround figures */
+.runaround-left figure img,
+.runaround-right figure img {
+    margin-top: 0;
+}
+
 .runaround-left > div,
 .runaround-right > div {
     width: 100%;
@@ -279,6 +285,12 @@
     max-width: 280px;
     margin: 0 auto 1rem auto;
     border-radius: 8px;
+}
+
+/* Reset prose margin on images inside runaround figures */
+.runaround-wrap-left figure img,
+.runaround-wrap-right figure img {
+    margin-top: 0;
 }
 
 .runaround-wrap-left > div,
