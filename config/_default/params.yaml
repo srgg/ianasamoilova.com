@@ -41,6 +41,10 @@ header:
     blox: "navbar"
     align: "center"
     fixed_to_top: true
+    # Breakpoint where nav collapses to hamburger menu
+    # Options: sm (640px), md (768px), lg (1024px), xl (1280px)
+    # Lower value = hamburger appears at smaller width = nav visible longer
+    breakpoint: sm
     show_search: false
     show_theme_chooser: false
     theme_day: minimal

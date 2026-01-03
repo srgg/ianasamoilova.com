@@ -1,3 +1,21 @@
+{{/* Navigation breakpoint: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px) */}}
+{{/* Lower = hamburger appears at smaller width = nav visible longer */}}
+{{ $bp := site.Params.header.navbar.breakpoint | default "md" }}
+{{/* Breakpoint for comfortable spacing (one step above $bp) */}}
+{{ $bp_wide := site.Params.header.navbar.breakpoint_wide | default "md" }}
+
+{{/* Map breakpoint to Tailwind classes */}}
+{{ $bp_hidden := printf "%s:hidden" $bp }}
+{{ $bp_flex := printf "%s:flex" $bp }}
+{{ $bp_order := printf "%s:order-1" $bp }}
+{{ $bp_wauto := printf "%s:w-auto" $bp }}
+{{ $bp_spacex := printf "%s:space-x-0 %s:space-x-2" $bp $bp_wide }}  {{/* tight at bp, normal at bp_wide */}}
+{{ $bp_pb0 := printf "%s:pb-0" $bp }}
+{{ $bp_hover_visible := printf "%s:group-hover:visible" $bp }}
+{{ $bp_hover_opacity := printf "%s:group-hover:opacity-100" $bp }}
+{{ $bp_ml0 := printf "%s:ml-0" $bp }}
+{{ $bp_inline := printf "%s:inline-block" $bp }}
+
 <header id="site-header" class="header">
   <nav class="navbar px-3 flex justify-start">
     <div class="order-0 h-full">
@@ -32,7 +50,7 @@
     <input id="nav-toggle" type="checkbox" class="hidden" />
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      class="order-3 cursor-pointer flex items-center {{ $bp_hidden }} text-dark dark:text-white {{ $bp_order }}">
       <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
         <title>Open Menu</title>
         <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
@@ -50,7 +68,7 @@
     {{ $align_menu := site.Params.header.navbar.align | default "center" }}
     <ul
       id="nav-menu"
-      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-start
+      class="navbar-nav order-3 hidden {{ $bp_flex }} w-full pb-6 {{ $bp_order }} {{ $bp_wauto }} {{ $bp_spacex }} {{ $bp_pb0 }} justify-start
       {{ if in (slice "l" "left") $align_menu }}mr-auto ml-6{{ else if (in (slice "r" "right") $align_menu) }}ml-auto mr-6{{end}}">
       {{ $currentPage := . }}
       {{ $pageURL := $currentPage.Permalink | absLangURL }}
@@ -77,7 +95,7 @@
               </svg>
             </span>
         <ul
-          class="nav-dropdown-list lg:group-hover:visible lg:group-hover:opacity-100">
+          class="nav-dropdown-list {{ $bp_hover_visible }} {{ $bp_hover_opacity }}">
           {{ range .Children }}
           {{ $childURL := .URL | absLangURL }}
           {{ $active := or (eq $childURL $pageURL) (hasPrefix $pageURL $childURL) }}
@@ -126,7 +144,7 @@
       {{ end }}
       {{ end }}
       {{ if site.Params.header.navbar.button.enable }}
-      <li class="mt-4 inline-block lg:hidden">
+      <li class="mt-4 inline-block {{ $bp_hidden }}">
         <a
           class=""
           href="{{ site.Params.header.navbar.button.url | relLangURL }}">
@@ -136,7 +154,7 @@
       {{ end }}
     </ul>
 
-    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+    <div class="order-1 ml-auto flex items-center md:order-2 {{ $bp_ml0 }}">
 
       {{/* Show site search? */}}
       {{ $show_search := site.Params.header.navbar.show_search | default false }}
@@ -191,7 +209,7 @@
         class="inline-block rounded border px-5 py-2 font-semibold transition
         md:ml-4 px-4 py-1.5 text-sm
         border-black  hover:bg-black dark:hover:bg-white dark:hover:text-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white
-        hidden lg:inline-block">
+        hidden {{ $bp_inline }}">
         {{ site.Params.header.navbar.button.text }}
       </a>
       {{ end }}
