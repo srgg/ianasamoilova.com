@@ -115,6 +115,31 @@ article.prose,
     }
 }
 
+/* Project Cards: Align "Read More" at bottom
+ * Cards have varying content heights. Use flexbox to push metadata to bottom.
+ */
+.blox-collection .grid > div[role="article"] {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.blox-collection .grid > div[role="article"] > .p-8 {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+}
+
+/* Push metadata/Read More section to bottom */
+.blox-collection .grid > div[role="article"] > .p-8 > div:last-child {
+    margin-top: auto !important;
+}
+
+/* Read More link: use em for scalable font size */
+.blox-collection .grid > div[role="article"] a[href] .text-sm,
+.blox-collection .grid > div[role="article"] a.text-sm {
+    font-size: 0.875em !important;  /* Same ratio as text-sm but in em */
+}
+
 /* Project Grid Override
  * Hugo Blox limits single-item grids to 500px (article-grid--start.html)
  * Override with responsive scaling to match multi-item layout
