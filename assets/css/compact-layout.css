@@ -21,11 +21,15 @@
 
     /* Projects spacing */
     --gap-to-projects-content: 1.5em;
+
+    /* CTA spacing */
+    --cta-image-width: 260px;  /* Mobile */
 }
 
 @media (min-width: theme('screens.sm')) {
     :root {
         --gap-between-blog-posts: 1.5em;  /* SM 640px */
+        --cta-image-width: 320px;
     }
 }
 
@@ -231,4 +235,22 @@
         top: -1em !important;
         bottom: -1em !important;
     }
+}
+
+/* CTA Image Paragraph: Compact spacing
+ *
+ * Hugo Blox cta-image-paragraph has default spacing from page-body.
+ * Push CTA to top for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/cta-image-paragraph/block.html
+ */
+
+/* Reset page-body margin, CTA page controls spacing through its own padding */
+.page-body:has(.cta-with-divider) {
+    margin-top: 0 !important;
+}
+
+/* CTA SVG image size */
+.para-welcome-header.cta-with-divider img[src$=".svg"] {
+    width: var(--cta-image-width) !important;
 }
