@@ -18,6 +18,9 @@
     /* Experience spacing */
     --gap-between-experience-items: 1.5em;  /* Mobile */
     --gap-to-experience-content: calc(var(--gap-between-experience-items) * 1);
+
+    /* Projects spacing */
+    --gap-to-projects-content: 1.5em;
 }
 
 @media (min-width: theme('screens.sm')) {
@@ -50,6 +53,24 @@
     }
 }
 
+/* Projects Page: Compact spacing
+ *
+ * Hugo Blox collection block has large default padding.
+ * Reduce top gap for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/collection/block.html
+ */
+
+/* Gap from navbar to projects content */
+.projects-collection {
+    padding-top: var(--gap-to-projects-content) !important;
+}
+
+/* Reset page-body margin, Project page controls it through projects-collection gap */
+.page-body:has(.projects-collection) {
+    margin-top: 0 !important;
+}
+
 /* Experience Section: Compact spacing
  *
  * Hugo Blox resume-experience block has large default padding.
@@ -61,6 +82,11 @@
 /* Gap from navbar to experience content */
 .blox-resume-experience {
     padding-top: var(--gap-to-experience-content) !important;
+}
+
+/* Reset page-body margin, Experience page controls it through blox-resume-experience gap */
+.page-body:has(.blox-resume-experience) {
+    margin-top: 0 !important;
 }
 
 /* Gap between experience items */
