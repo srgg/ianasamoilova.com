@@ -21,8 +21,9 @@ Hugo shortcodes for narrative typography. Terminology from journalism, print des
 | [`accent`](#accent)         | inline | Gentle mid-sentence emphasis—subtler than bold, guides the eye to insight         |
 | [`slug`](#slug)             | inline | Small-caps label for category or section (1-3 words: "Opinion", "From the Field") |
 | [`callout`](#callout)       | block  | Boxed highlight for statistics, key findings, or facts readers shouldn't miss     |
-| [`beat`](#beat)             | empty  | White space signaling shift in tone or topic; lets meaning settle                 |
+| [`beat`](#beat)             | empty  | White space signaling shift in tone/topic; optional rule (horizontal line)        |
 | [`runaround`](#runaround)   | block  | Image with text flowing beside it; supports lightbox and wrap modes               |
+| [`grid`](#grid)             | block  | Responsive columns using pipe syntax; stacks on mobile, side-by-side on desktop   |
 
 ---
 ## lede
@@ -94,6 +95,8 @@ Data belongs in a callout, not a pull-quote. **Fix:** Use `typo/callout` for sta
 **What it is:** A brief phrase that sets up what follows. The "Here's the thing..." before your point.
 
 **Element:** `<span class="kicker">`
+
+**Smart pairing:** When followed by a list (`ul`/`ol`), the gap between kicker and list is automatically removed, and list items render compact—creating a tight visual unit. Works whether the kicker is inline or on its own line.
 
 ```markdown
 {{< typo/kicker >}}Setup phrase:{{< /typo/kicker >}}
@@ -295,6 +298,8 @@ Wrong use case. **Fix:** Use a button or link for CTAs. Accent is for meaning, n
 
 **Element:** `<span class="slug">`
 
+**Smart pairing:** Like kicker, when followed by a list, the gap is removed and items render compact.
+
 ```markdown
 {{< typo/slug >}}Category{{< /typo/slug >}}
 ```
@@ -353,24 +358,31 @@ Software dialog tone. **Fix:** Callouts highlight content, not meta-instructions
 
 ## beat
 
-**Origin:** Screenwriting "(beat)" indicates actor should pause.
+**Origin:** Screenwriting "(beat)" indicates actor should pause. "Rule" is traditional typography term for a horizontal line.
 
-**What it is:** Visual breathing room. Pause between sections signaling shift in tone or topic.
+**What it is:** Visual breathing room. Pause between sections signaling shift in tone or topic. Optionally includes a rule (horizontal separator line).
 
 **Element:** `<div class="beat">` (self-closing, no content)
 
+**Parameters:**
+- `size`: sm (1em), md (1.5em), lg (2em), xl (2.5em, default)
+- `rule`: horizontal line—`rule` alone for full-width; `rule="left"`, `rule="center"`, or `rule="right"` for positioned
+- `width`: line width for positioned rules (e.g., "3em", "50%")
+
 ```markdown
-...end of section.
-
-{{< typo/beat >}}
-
-Start of next section...
+{{< typo/beat >}}                              {{/* spacing only */}}
+{{< typo/beat size="md" >}}                    {{/* smaller spacing */}}
+{{< typo/beat rule >}}                         {{/* full-width rule (replaces ---) */}}
+{{< typo/beat rule="center" width="3em" >}}    {{/* centered short rule */}}
+{{< typo/beat size="md" rule="true" >}}        {{/* with other params, use rule="true" */}}
 ```
+
+**Note:** Use `rule` alone for simple cases. When combining with other parameters like `size`, use `rule="true"` (Hugo doesn't allow mixing positional and named parameters).
 
 ### Examples
 
 **Great:**
-Used after emotional climax, before reflection. Lets meaning settle.
+Used after emotional climax, before reflection. `{{< typo/beat rule >}}` replaces separate beat + `---`.
 
 **Mediocre:**
 Used between every paragraph. **Fix:** Reserve for genuine transitions. Overuse dilutes impact.
@@ -394,7 +406,7 @@ Text beside the image.
 {{< /typo/runaround >}}
 ```
 
-**Parameters:** `side` (left/right), `flow` (column/wrap), `image`, `alt`, `caption`, `width`, `style`
+**Parameters:** `side` (left/right), `flow` (column/wrap), `image`, `alt`, `caption`, `width`, `style`, `id` (custom lightbox ID, auto-generated if omitted)
 
 **Flow modes:**
 
@@ -416,6 +428,66 @@ No alt text. Caption is "Image 1." **Fix:** Alt text is required for accessibili
 
 ---
 
+## grid
+
+**Origin:** Design/typography term for the underlying structure organizing content on a page. Every newspaper and magazine layout is built on a grid system.
+
+**What it is:** Responsive column layout—content displays side-by-side on desktop, stacks vertically on mobile. Uses pipe `|` syntax for familiar column definition.
+
+**Element:** `<div class="typo-grid">`
+
+**Parameters:**
+- `widths`: column ratio like "2:1" or "1:2:1" (default: equal widths)
+- `gap`: sm, md (default), lg—spacing between columns
+- `debug`: true to show parsing debug info (default: false)
+
+```markdown
+{{< typo/grid >}}
+| Column 1 | Column 2 |
+{{< /typo/grid >}}
+
+{{< typo/grid widths="2:1" gap="lg" >}}
+| Wide column | Narrow column |
+{{< /typo/grid >}}
+
+{{< typo/grid >}}
+| A | B | C |
+{{< /typo/grid >}}
+```
+
+**Note:** Currently supports single-row column layouts. Multi-row grid support may be added later if needed. Content inside cells supports markdown and nested shortcodes.
+
+### Examples
+
+**Great:**
+> ```
+> {{< typo/grid >}}
+> | {{< typo/slug >}}**Professional Focus**{{< /typo/slug >}}{{< collection ... >}} | {{< typo/slug >}}**Education**{{< /typo/slug >}}{{< collection ... >}} |
+> {{< /typo/grid >}}
+> ```
+
+Related content grouped logically. Headers label each column. Responsive—reads well on both mobile and desktop.
+
+**Mediocre:**
+> ```
+> {{< typo/grid >}}
+> | Some text | More text | Even more | And more |
+> {{< /typo/grid >}}
+> ```
+
+Too many columns—becomes unreadable on smaller screens. **Fix:** Limit to 2-3 columns. Consider if grid is the right tool.
+
+**Bad:**
+> ```
+> {{< typo/grid >}}
+> | Click here | Buy now | Subscribe |
+> {{< /typo/grid >}}
+> ```
+
+Grid used for navigation buttons. **Fix:** Use proper navigation elements. Grid is for content layout, not UI components.
+
+---
+
 ## For LLMs
 
 When generating content:
@@ -429,3 +501,5 @@ When analyzing content:
 - Nutgrafs: "so what" moments
 - Beats: natural pause points
 - Runarounds: image-text relationships
+- Grids: parallel or comparative content needing side-by-side layout
+- Kicker/slug + list: use kicker or slug to introduce bulleted/numbered lists (compact styling applied automatically)

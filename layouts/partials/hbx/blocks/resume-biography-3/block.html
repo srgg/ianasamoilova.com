@@ -125,7 +125,7 @@
                     {{ with $block.content.button }}
                         <div class="flex justify-center">
                             <a href="{{.url}}" target="_blank"
-                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-bold rounded-xl shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-1 transition-all duration-300">
+                               class="inline-flex items-center text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                                 {{ partial "functions/get_icon" (dict "name" "arrow-down-tray" "attributes" "class='w-5 h-5 mr-2'") }}
                                 {{.text}}
                             </a>
@@ -150,11 +150,9 @@
                             {{ end }}
                             <a href="{{ $link | safeURL }}" {{ $target | safeHTMLAttr }}
                                aria-label="{{ .icon }}"
-                               {{ with .label }} title="{{.}}"{{ end }}
-                               class="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-200
-                        shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-1
-                        transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                                {{ partial "functions/get_icon" (dict "name" .icon "attributes" "class=\"w-8 h-8 font-black text-gray-900 dark:text-white leading-tight\"" )  }}
+                               class="relative group text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                {{ partial "functions/get_icon" (dict "name" .icon "attributes" "class=\"w-8 h-8\"" )  }}
+                                {{ with .label }}<span class="tooltip-text">{{ . }}</span>{{ end }}
                             </a>
                         {{ end }}
                     </div>
@@ -162,22 +160,24 @@
             </div>
 
             {{/* Right Column: Flexible span */}}
-            <div class="md:col-span-8">
+            <div class="md:col-span-8 md:-mt-4">
 
                 {{/* Bio Section */}}
                 {{ with ($block.content.text | emojify | $page.RenderString) | default $person_page.Content }}
+                    {{/* Determine heading visibility - moved outside for conditional wrapper */}}
+                    {{ $i18n_about := i18n "about_me" }}
+                    {{ $about_default := cond (eq $i18n_about "about_me") "Professional Summary" $i18n_about }}
+                    {{/* Use isset to allow empty string to hide heading; otherwise use default */}}
+                    {{ $about_heading := cond (isset $block.content.headings "about") $block.content.headings.about $about_default }}
+
                     <div class="mb-12">
+                        {{/* Only render heading wrapper if heading has value */}}
+                        {{ with $about_heading }}
                         <div class="flex items-center gap-4 mb-8">
-{{/*  Do not render any icons for About Me header                   */}}
-{{/*                            <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">*/}}
-{{/*                                {{ partial "functions/get_icon" (dict "name" "identification" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}*/}}
-{{/*                            </div>*/}}
-                            {{ $i18n_about := i18n "about_me" }}
-                            {{ $about_default := cond (eq $i18n_about "about_me") "Professional Summary" $i18n_about }}
-                            {{ $about_heading := $block.content.headings.about | default $about_default }}
-                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $about_heading }}</h2>
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ . }}</h2>
                         </div>
-                        <div class="prose prose-lg dark:prose-invert prose-p:!my-[0.6rem] text-gray-800 dark:text-white text-base sm:text-lg leading-relaxed">
+                        {{ end }}
+                        <div class="prose prose-lg dark:prose-invert text-gray-800 dark:text-white text-base sm:text-lg leading-relaxed">
                             <div class="bio-text" {{ with $block.design.biography.style }}{{ (printf "style=\"%s\"" .) | safe.HTMLAttr }}{{end}}>
                                 {{ . }}
                             </div>
@@ -186,78 +186,78 @@
                 {{ end }}
 
 {{/*                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">*/}}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">
-                    {{/* Education Section */}}
-                    {{ with $person.education }}
-                        <div class="mb-16">
-                            <div class="flex items-center gap-4 mb-4">
+{{/*                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-between mt-6 dark:text-gray-300">*/}}
+{{/*                    */}}{{/* Education Section */}}
+{{/*                    {{ with $person.education }}*/}}
+{{/*                        <div class="mb-16">*/}}
+{{/*                            <div class="flex items-center gap-4 mb-4">*/}}
 {{/*                                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">*/}}
 {{/*                                    {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}*/}}
 {{/*                                </div>*/}}
-                                {{ $education_heading := $block.content.headings.education | default (i18n "education") }}
-                                <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $education_heading | markdownify }}</h3>
-                            </div>
+{{/*                                {{ $education_heading := $block.content.headings.education | default (i18n "education") }}*/}}
+{{/*                                <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $education_heading | markdownify }}</h3>*/}}
+{{/*                            </div>*/}}
 {{/*                            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">*/}}
-                                <ul class="list-disc list-inside pl-5">
-                                {{ range . }}
+{{/*                                <ul class="list-disc list-inside pl-5">*/}}
+{{/*                                {{ range . }}*/}}
 {{/*                                <d-bigraphy-3 v5iv class="group h-full flex flex-col bg-gradient-to-br from-white/90 to-primary-50/30 dark:from-gray-800/90 dark:to-primary-900/20 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-primary-200 dark:hover:border-primary-800 backdrop-blur-md">*/}}
-                                    <li class="group h-full flex flex-col transition-all duration-300">    
-                                        <div class="flex gap-4">
+{{/*                                    <li class="group h-full flex flex-col transition-all duration-300">    */}}
+{{/*                                        <div class="flex gap-4">*/}}
 {{/*                                            <div class="flex-shrink-0 w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center shadow-md">*/}}
 {{/*                                                {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-white'") }}*/}}
 {{/*                                            </div>*/}}
-                                            <div class="flex-shrink-0 w-12 h-12 flex items-start justify-center pt-1">
-                                                {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors'") }}
-                                            </div>
-                                            <div class="flex-1 flex-grow">
-                                                {{ if and $block.experience_url .id }}
-                                                    <a href="{{ $block.experience_url }}#{{ .id }}" class="block group">
-                                                        <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline transition-colors">
-                                                            {{ .area }}{{ with .year }}, {{ . }}{{ end }}
-                                                        </p>
-                                                        <p class="text-gray-600 dark:text-gray-50 font-medium mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline transition-colors">{{ .institution }}</p>
-                                                    </a>
-                                                {{ else }}
-                                                    <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                                                        {{ .area }}{{ with .year }}, {{ . }}{{ end }}
-                                                    </p>
-                                                    <p class="text-gray-600 dark:text-gray-50 font-medium mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ .institution }}</p>
-                                                {{ end }}
-                                            </div>
-                                        </div>
-                                    </li>
-                                {{ end }}
-                                </ul>    
-                        </div>
-                    {{ end }}
-
-                    {{/* Interests Section */}}
-                    {{ with $person.interests }}
-                        <div class="mb-16">
-                            <div class="flex items-center gap-4 mb-4">
-                                {{ $interests_heading := $block.content.headings.interests | default (i18n "interests") }}
-                                <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $interests_heading | markdownify }}</h3>
-                            </div>
-                            <ul class="list-disc list-inside pl-5">
-                            {{ range . }}
-                                {{ $interestData := partial "functions/extract_markdown_link" . }}
-                                <li class="group h-full flex flex-col transition-all duration-300">
-                                    {{- if $interestData.url -}}<a href="{{ $interestData.url | relURL }}" class="flex gap-4">{{- else -}}<div class="flex gap-4">{{- end -}}
-                                        <div class="flex-shrink-0 w-12 h-12 flex items-start justify-center pt-1">
-                                            {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" (printf "class='w-6 h-6 text-gray-900 dark:text-white %s transition-colors'" (cond $interestData.url "group-hover:text-primary-600 dark:group-hover:text-primary-400" ""))) }}
-                                        </div>
-                                        <div class="flex-1 flex-grow">
-                                            <p class="interest text-xl font-bold text-gray-900 dark:text-white {{ if $interestData.url }}group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline{{ end }} transition-colors">
-                                                {{ $interestData.text | emojify }}
-                                            </p>
-                                        </div>
-                                    {{- if $interestData.url -}}</a>{{- else -}}</div>{{- end -}}
-                                </li>
-                            {{ end }}
-                            </ul>    
-                        </div>
-                    {{ end }}                    
-                </div>    
+{{/*                                            <div class="flex-shrink-0 w-12 h-12 flex items-start justify-center pt-1">*/}}
+{{/*                                                {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors'") }}*/}}
+{{/*                                            </div>*/}}
+{{/*                                            <div class="flex-1 flex-grow">*/}}
+{{/*                                                {{ if and $block.experience_url .id }}*/}}
+{{/*                                                    <a href="{{ $block.experience_url }}#{{ .id }}" class="block group">*/}}
+{{/*                                                        <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline transition-colors">*/}}
+{{/*                                                            {{ .area }}{{ with .year }}, {{ . }}{{ end }}*/}}
+{{/*                                                        </p>*/}}
+{{/*                                                        <p class="text-gray-600 dark:text-gray-50 font-medium mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline transition-colors">{{ .institution }}</p>*/}}
+{{/*                                                    </a>*/}}
+{{/*                                                {{ else }}*/}}
+{{/*                                                    <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">*/}}
+{{/*                                                        {{ .area }}{{ with .year }}, {{ . }}{{ end }}*/}}
+{{/*                                                    </p>*/}}
+{{/*                                                    <p class="text-gray-600 dark:text-gray-50 font-medium mt-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ .institution }}</p>*/}}
+{{/*                                                {{ end }}*/}}
+{{/*                                            </div>*/}}
+{{/*                                        </div>*/}}
+{{/*                                    </li>*/}}
+{{/*                                {{ end }}*/}}
+{{/*                                </ul>    */}}
+{{/*                        </div>*/}}
+{{/*                    {{ end }}*/}}
+{{/**/}}
+{{/*                    */}}{{/**/}}{{/* Interests Section */}}
+{{/*                    {{ with $person.interests }}*/}}
+{{/*                        <div class="mb-16">*/}}
+{{/*                            <div class="flex items-center gap-4 mb-4">*/}}
+{{/*                                {{ $interests_heading := $block.content.headings.interests | default (i18n "interests") }}*/}}
+{{/*                                <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $interests_heading | markdownify }}</h3>*/}}
+{{/*                            </div>*/}}
+{{/*                            <ul class="list-disc list-inside pl-5">*/}}
+{{/*                            {{ range . }}*/}}
+{{/*                                {{ $interestData := partial "functions/extract_markdown_link" . }}*/}}
+{{/*                                <li class="group h-full flex flex-col transition-all duration-300">*/}}
+{{/*                                    {{- if $interestData.url -}}<a href="{{ $interestData.url | relURL }}" class="flex gap-4">{{- else -}}<div class="flex gap-4">{{- end -}}*/}}
+{{/*                                        <div class="flex-shrink-0 w-12 h-12 flex items-start justify-center pt-1">*/}}
+{{/*                                            {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" (printf "class='w-6 h-6 text-gray-900 dark:text-white %s transition-colors'" (cond $interestData.url "group-hover:text-primary-600 dark:group-hover:text-primary-400" ""))) }}*/}}
+{{/*                                        </div>*/}}
+{{/*                                        <div class="flex-1 flex-grow">*/}}
+{{/*                                            <p class="interest text-xl font-bold text-gray-900 dark:text-white {{ if $interestData.url }}group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:underline{{ end }} transition-colors">*/}}
+{{/*                                                {{ $interestData.text | emojify }}*/}}
+{{/*                                            </p>*/}}
+{{/*                                        </div>*/}}
+{{/*                                    {{- if $interestData.url -}}</a>{{- else -}}</div>{{- end -}}*/}}
+{{/*                                </li>*/}}
+{{/*                            {{ end }}*/}}
+{{/*                            </ul>    */}}
+{{/*                        </div>*/}}
+{{/*                    {{ end }}                    */}}
+{{/*                </div>    */}}
             </div>
         </div>
     </div>

@@ -1,0 +1,109 @@
+/* Education & Interests lists - match resume-biography-3 block styling
+ * Styles for collection shortcode education/interests views
+ */
+
+/* Define variables at bio-text scope for slug headers */
+.bio-text {
+    --list-header-gap: 0.25rem;
+}
+
+ul.education-list,
+ul.interests-list {
+    /* Typography */
+    --list-title-size: 1.125rem;
+    --list-title-line-height: 1.6875rem;
+    --list-title-weight: 700;
+    --list-subtitle-size: 0.875rem;
+    --list-subtitle-line-height: 1.25rem;
+    --list-subtitle-weight: 500;
+
+    /* Colors - light mode */
+    --list-title-color: var(--color-gray-900);
+    --list-subtitle-color: var(--color-gray-600);
+
+    /* Colors - dark mode (overridden via .dark selector) */
+    --list-title-color-dark: #fff;
+    --list-subtitle-color-dark: var(--color-gray-50);
+
+    /* Spacing */
+    --list-indent: 1.5rem;
+    --list-item-gap: 0;
+
+    /* Base styles */
+    list-style: disc outside;
+    padding-left: var(--list-indent);
+    margin: 0;
+}
+
+ul.education-list li,
+ul.interests-list li {
+    display: list-item;
+    margin-top: 0 !important;
+    margin-bottom: var(--list-item-gap);
+}
+
+ul.education-list li::marker,
+ul.interests-list li::marker {
+    color: var(--list-title-color);
+}
+
+ul.education-list li a,
+ul.interests-list li a {
+    display: inline;
+}
+
+/* Title */
+.prose .bio-text ul.education-list li a p:first-child,
+.prose .bio-text ul.interests-list li a p:first-child {
+    display: inline;
+    font-size: var(--list-title-size);
+    line-height: var(--list-title-line-height);
+    font-weight: var(--list-title-weight);
+    color: var(--list-title-color);
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Subtitle */
+.prose .bio-text ul.education-list li a p:last-child,
+.prose .bio-text ul.interests-list li a p:last-child {
+    display: block;
+    font-size: var(--list-subtitle-size);
+    line-height: var(--list-subtitle-line-height);
+    font-weight: var(--list-subtitle-weight);
+    color: var(--list-subtitle-color);
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Plain text items (p directly in li, not wrapped in a) */
+.prose .bio-text ul.education-list li > p,
+.prose .bio-text ul.interests-list li > p {
+    font-size: var(--list-title-size);
+    line-height: var(--list-title-line-height);
+    font-weight: var(--list-title-weight);
+    color: var(--list-title-color);
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Reduce gap after list header (slug headings) */
+.prose .bio-text p:has(.slug) {
+    margin-bottom: var(--list-header-gap) !important;
+}
+
+.prose .bio-text p:has(.slug) + ul.education-list,
+.prose .bio-text p:has(.slug) + ul.interests-list {
+    margin-top: 0;
+}
+
+/* Dark mode overrides */
+.dark ul.education-list,
+.dark ul.interests-list {
+    --list-title-color: var(--list-title-color-dark);
+    --list-subtitle-color: var(--list-subtitle-color-dark);
+}

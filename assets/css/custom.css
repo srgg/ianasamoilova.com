@@ -6,6 +6,7 @@
 @import "responsive-width-overrides.css";
 @import "compact-layout.css";
 @import "resume-links.css";
+@import "bio-links.css";
 @import "navbar.css";
 @import "slides.css";
 @import "hero-responsive.css";
@@ -13,6 +14,7 @@
 @import "article-grid-lite.css";
 @import "typography.css";
 @import "lightbox.css";
+@import "views/interest-and-education-list.css";
 
 /* Fix footer positioning - ensure it stays close to content */
 footer {
@@ -27,10 +29,11 @@ footer {
 
 /* Reduce spacing between paragraphs in About Me section
    Note: Using CSS instead of Tailwind prose-p:!my-[0.6rem] because
-   Hugo Blox production build doesn't compile arbitrary Tailwind classes */
+   Hugo Blox production build doesn't compile arbitrary Tailwind classes.
+   No !important so education-list.css can override with more specific selectors */
 .bio-text p {
-    margin-top: 0.6rem !important;
-    margin-bottom: 0.6rem !important;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
 }
 
 /* Reduce spacing between section headers and content */

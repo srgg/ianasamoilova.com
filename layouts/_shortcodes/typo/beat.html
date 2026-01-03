@@ -10,15 +10,27 @@
   Visually: vertical margin that creates deliberate space between
   narrative sections, signaling a shift in tone or topic.
 
+  Parameters:
+    size: sm (1em), md (1.5em), lg (2em), xl (2.5em, default) - vertical spacing
+    rule: true/left/center/right - horizontal separator line (typography term)
+          true = full width (matches <hr> styling)
+          left/center/right = positioned line with custom width
+    width: line width (e.g., "3em", "50%") - only with positioned rules
+
   Usage:
-    ...end of one section.
-
-    {{< typo/beat >}}
-
-    Beginning of next section...
+    {{< typo/beat >}}                              (default xl = 2.5em, no line)
+    {{< typo/beat size="md" >}}                    (medium spacing)
+    {{< typo/beat rule >}}                         (full-width rule like <hr>)
+    {{< typo/beat rule="center" width="3em" >}}    (centered 3em rule)
+    {{< typo/beat size="sm" rule="left" width="2em" >}}  (small beat, left-aligned rule)
 
   Note: This is a self-closing shortcode (no inner content).
 
-  Styles: assets/css/typography.css (.beat class)
+  Styles: assets/css/typography.css (.beat, .beat-rule classes)
 */}}
-{{- partial "typo/beat.html" . -}}
+{{- $size := .Get "size" | default "xl" -}}
+{{- $ruleParam := .Get "rule" -}}
+{{- /* Support both rule="true" and just "rule" as positional param */ -}}
+{{- $rule := or $ruleParam (.Get 0 | eq "rule") -}}
+{{- $width := .Get "width" | default "" -}}
+{{- partial "typo/beat.html" (dict "size" $size "rule" $rule "width" $width) -}}

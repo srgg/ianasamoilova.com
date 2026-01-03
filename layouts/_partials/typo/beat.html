@@ -1,10 +1,34 @@
 {{/*
   typo/beat partial - Pause in narrative rhythm
 
-  Context: (none required - self-contained)
+  Context:
+    size: sm, md, lg, xl (default) - vertical spacing
+    rule: true/left/center/right - horizontal separator line
+          true = full width (matches <hr> styling)
+          left/center/right = positioned line with custom width
+    width: line width (e.g., "3em", "50%", "100px") - only with positioned rules
 
   Usage from template:
-    {{ partial "typo/beat.html" . }}
-    {{ partial "typo/beat.html" dict }}
+    {{ partial "typo/beat.html" (dict "size" "md") }}
+    {{ partial "typo/beat.html" (dict "rule" true) }}
+    {{ partial "typo/beat.html" (dict "rule" "center" "width" "3em") }}
 */}}
-<div class="beat" aria-hidden="true"></div>
+{{- $size := .size | default "xl" -}}
+{{- $rule := .rule | default false -}}
+{{- $width := .width | default "" -}}
+{{- $class := cond (eq $size "xl") "beat" (printf "beat beat-%s" $size) -}}
+{{- if $rule -}}
+  {{- $class = printf "%s beat-rule" $class -}}
+  {{- if eq $rule "left" -}}
+    {{- $class = printf "%s beat-rule-left" $class -}}
+  {{- else if eq $rule "center" -}}
+    {{- $class = printf "%s beat-rule-center" $class -}}
+  {{- else if eq $rule "right" -}}
+    {{- $class = printf "%s beat-rule-right" $class -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $rule $width -}}
+<div class="{{ $class }}" aria-hidden="true"><span style="width: {{ $width }}"></span></div>
+{{- else -}}
+<div class="{{ $class }}" aria-hidden="true"></div>
+{{- end -}}

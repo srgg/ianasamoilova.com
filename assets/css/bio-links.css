@@ -1,0 +1,67 @@
+/**
+ * Biography Section Link & Tooltip Styling
+ *
+ * Consistent hover behavior for all links in resume-biography-3 block.
+ * Covers: role/organization, PARA Welcome Kit, Education, Professional Focus.
+ * Also provides tooltip styling for social icons and other elements.
+ *
+ * Survives Hugo Blox template upgrades - CSS approach vs template modifications.
+ *
+ * Related files:
+ *   - layouts/partials/hbx/blocks/resume-biography-3/block.html
+ *   - assets/css/views/interest-and-education-list.css
+ */
+
+.resume-biography {
+    --bio-link-hover-color: var(--color-primary-600);
+    --bio-link-transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .resume-biography {
+    --bio-link-hover-color: var(--color-primary-400);
+}
+
+.resume-biography a {
+    text-decoration: none;
+    transition: var(--bio-link-transition);
+}
+
+.resume-biography a:hover,
+.resume-biography a:hover p {
+    color: var(--bio-link-hover-color) !important;
+    text-decoration: underline !important;
+}
+
+/* List marker hover - bullet changes color when link inside is hovered */
+.resume-biography li:has(a:hover)::marker {
+    color: var(--bio-link-hover-color);
+}
+
+/* ============================================
+   Tooltip Styling
+   ============================================
+   Used for social icons and other elements with .tooltip-text spans.
+   Parent element needs: position: relative; and class "group"
+   Tooltip span needs: class "tooltip-text"
+*/
+
+.resume-biography .tooltip-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    color: white;
+    background: #1f2937;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.resume-biography .group:hover .tooltip-text {
+    opacity: 1;
+}
