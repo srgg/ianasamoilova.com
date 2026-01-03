@@ -31,6 +31,8 @@ sections:
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: admin
       text: ""
+      headings:
+        about: ""  # Hide "About Me" heading - page itself is the bio
       # Show a call-to-action button under your biography? (optional)
       button:
         text: Download CV

@@ -30,3 +30,9 @@
 .related-posts .mt-16 {
     margin-top: 0.5rem !important;
 }
+
+/* Bio section: Tighter paragraph spacing */
+.resume-biography .bio-text p {
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+}

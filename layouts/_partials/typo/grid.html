@@ -1,0 +1,63 @@
+{{/*
+  typo/grid partial - Responsive column layout
+
+  Context:
+    content: raw table markdown content (uses | as column separator)
+    widths: column ratio like "2:1" (default: equal)
+    gap: sm, md (default), lg
+    debug: show debug info (default: false)
+    page: page context
+
+  Usage from template:
+    {{ partial "typo/grid.html" (dict "content" .Inner "page" .Page) }}
+    {{ partial "typo/grid.html" (dict "content" .Inner "widths" "2:1" "gap" "lg" "page" .Page) }}
+    {{ partial "typo/grid.html" (dict "content" .Inner "debug" true "page" .Page) }}
+*/}}
+{{- $content := .content | default "" -}}
+{{- $widths := .widths | default "" -}}
+{{- $gap := .gap | default "md" -}}
+{{- $debug := .debug | default false -}}
+{{- $page := .page -}}
+
+{{- /* Parse cells by splitting on | directly (handles multiline shortcode output) */ -}}
+{{- $cells := slice -}}
+{{- range split $content "|" -}}
+  {{- $cell := trim . " \t\n\r" -}}
+  {{- /* Skip empty cells and separator rows */ -}}
+  {{- if and $cell (not (hasPrefix $cell "-")) (not (eq $cell "--")) -}}
+    {{- $cells = $cells | append $cell -}}
+  {{- end -}}
+{{- end -}}
+{{- $cols := len $cells -}}
+
+{{- /* Build grid-template-columns from widths or equal */ -}}
+{{- $colStyle := "" -}}
+{{- if $widths -}}
+  {{- $parts := split $widths ":" -}}
+  {{- $fracs := slice -}}
+  {{- range $parts -}}
+    {{- $fracs = $fracs | append (printf "%sfr" .) -}}
+  {{- end -}}
+  {{- $colStyle = delimit $fracs " " -}}
+{{- else -}}
+  {{- $fracs := slice -}}
+  {{- range seq $cols -}}
+    {{- $fracs = $fracs | append "1fr" -}}
+  {{- end -}}
+  {{- $colStyle = delimit $fracs " " -}}
+{{- end -}}
+
+{{- $gapClass := printf "typo-grid-gap-%s" $gap -}}
+
+{{- if $debug }}
+<pre style="background:#fcc;padding:1em;font-size:10px;white-space:pre-wrap;word-break:break-all">DEBUG: cols={{ $cols }}
+{{- range $i, $cell := $cells }}
+CELL[{{ $i }}]: "{{ $cell | htmlEscape | truncate 100 }}"
+{{- end }}
+</pre>
+{{- end }}
+<div class="typo-grid {{ $gapClass }}" style="--typo-grid-cols: {{ $colStyle }}">
+  {{- range $cells -}}
+    <div class="typo-grid-cell">{{ . | safeHTML }}</div>
+  {{- end -}}
+</div>

@@ -1,0 +1,145 @@
+{{/*
+  Dual-source collection shortcode
+
+  Supports two data sources based on `source` parameter:
+  1. pages (default) - queries Hugo pages via HugoBlox collection block
+  2. frontmatter (source="frontmatter") - iterates over front matter arrays
+
+  PAGES SOURCE (default):
+    Parameters:
+      path         - Folder path for page query
+      page_type    - Filter by page type (e.g., "blog", "project")
+      subdirs      - Subdirectory filter (default "*")
+      folders      - Comma-separated folder list
+      columns      - Number of columns (default 3)
+      fill_image   - Fill image container (default false)
+      style        - Style variant (default "default")
+      view         - Rendering style (default "check-list")
+      title        - Optional heading
+      text         - Optional description
+
+    Usage:
+      {{< collection page_type="blog" view="card" >}}
+      {{< collection path="projects" subdirs="featured" columns="2" >}}
+      {{< collection folders="blog,news" title="Latest Posts" >}}
+
+  FRONTMATTER SOURCE (source="frontmatter"):
+    Parameters:
+      source       - Must be "frontmatter"
+      path         - Key in .Page.Params to iterate (e.g., "education", "work")
+      view         - View partial name (REQUIRED - must exist at layouts/partials/views/{view}.html)
+                     Examples: "education", "interests", "work"
+                     Build FAILS with error if view template not found!
+      title        - Optional heading
+      text         - Optional description
+      title_style  - Title styling: "kicker", "slug", or "plain" (default)
+      title_class  - Custom CSS class for title
+      item_class   - Custom CSS class for each item
+
+    Usage:
+      {{< collection source="frontmatter" path="education" view="education2" >}}
+      {{< collection source="frontmatter" path="interests" view="interests" >}}
+      {{< collection source="frontmatter" path="work" view="work" title="Experience" >}}
+*/}}
+
+{{ $source := .Get "source" | default "" }}
+{{ $path := .Get "path" | default "" }}
+{{ $title := .Get "title" | default "" }}
+{{ $text := .Get "text" | default "" }}
+{{ $view := .Get "view" | default "list" }}
+{{ $title_style := .Get "title_style" | default "plain" }}
+{{ $title_class := .Get "title_class" | default "" }}
+{{ $item_class := .Get "item_class" | default "" }}
+
+{{ if eq $source "frontmatter" }}
+  {{/* ===== FRONTMATTER SOURCE ===== */}}
+  {{ $data := index .Page.Params $path }}
+
+  {{ if $data }}
+    {{/* Check if view partial exists */}}
+    {{ $view_path := printf "views/%s.html" $view }}
+    {{ $view_exists := templates.Exists (printf "partials/%s" $view_path) }}
+
+    {{/* Render title with optional styling */}}
+    {{ with $title }}
+      {{ if eq $title_style "kicker" }}
+        <span class="kicker">{{ . }}</span>
+      {{ else if eq $title_style "slug" }}
+        <span class="slug">{{ . }}</span>
+      {{ else }}
+        <h3 class="{{ $title_class }}">{{ . }}</h3>
+      {{ end }}
+    {{ end }}
+
+    {{ with $text }}
+      <p class="collection-text">{{ . | markdownify }}</p>
+    {{ end }}
+
+    {{ if not $view_exists }}
+      {{/* LOUD FAILURE - view template not found */}}
+      {{ errorf "Collection shortcode: View template not found!\n  View: '%s'\n  Expected: layouts/partials/%s\n  Source: %s\n  Path: '%s'" $view $view_path .Position $path }}
+    {{ end }}
+
+    {{/* Use view partial with optional --start/--end wrappers */}}
+    {{ $view_start := printf "views/%s--start.html" $view }}
+    {{ $view_end := printf "views/%s--end.html" $view }}
+
+    {{ if templates.Exists (printf "partials/%s" $view_start) }}
+      {{ partial $view_start . }}
+    {{ end }}
+
+    {{ range $data }}
+      {{ partial $view_path . }}
+    {{ end }}
+
+    {{ if templates.Exists (printf "partials/%s" $view_end) }}
+      {{ partial $view_end . }}
+    {{ end }}
+
+  {{ else }}
+    {{/* No data found */}}
+    {{ warnf "Collection shortcode: No data found at .Page.Params.%s" $path }}
+  {{ end }}
+
+{{ else }}
+  {{/* ===== PAGES SOURCE (default - HugoBlox behavior) ===== */}}
+  {{ $columns := .Get "columns" | default 3 }}
+  {{ $fill_image := .Get "fill_image" | default false }}
+  {{ $subdirs := .Get "subdirs" | default "*" }}
+  {{ $page_type := .Get "page_type" | default "" }}
+  {{ $folders := .Get "folders" | default "" }}
+  {{ $style := .Get "style" | default "default" }}
+
+  {{/* Use check-list as default for pages mode to match original */}}
+  {{ if not (.Get "view") }}
+    {{ $view = "check-list" }}
+  {{ end }}
+
+  {{/* Create block configuration similar to HugoBlox */}}
+  {{ $filters := dict "subdirs" $subdirs }}
+  {{ if $page_type }}
+    {{ $filters = $filters | merge (dict "page_type" $page_type) }}
+  {{ end }}
+  {{ if $folders }}
+    {{ $filters = $filters | merge (dict "folders" (split $folders ",")) }}
+  {{ end }}
+
+  {{ $block := dict
+    "content" (dict
+      "title" $title
+      "text" $text
+      "filters" $filters
+      "style" $style
+    )
+    "design" (dict
+      "view" $view
+      "columns" $columns
+      "fill_image" $fill_image
+    )
+  }}
+
+  {{/* Call the collection partial with the block configuration using Hugo Blox resolution */}}
+  {{ $block_type := partial "hbx/resolve-block-param" (dict "config" $block "context" "shortcode") | default "collection" }}
+  {{ $block_path := printf "hbx/blocks/%s/block.html" $block_type }}
+  {{ partial $block_path (dict "wcPage" .Page "wcBlock" $block) }}
+{{ end }}

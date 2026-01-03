@@ -1,0 +1,36 @@
+{{/*
+  typo/grid: Responsive column layout using table syntax (design/typography term)
+
+  A "grid" is the underlying structure that organizes content on a page.
+  Every newspaper and magazine layout is built on a grid system.
+
+  Uses markdown table syntax for familiar column definition.
+  Renders as CSS grid (not <table>) - stacks on mobile, columns on desktop.
+
+  Parameters:
+    widths: column ratio like "2:1" or "1:2:1" (default: equal widths)
+    gap: sm, md (default), lg - spacing between columns
+    debug: true to show debug info (default: false)
+
+  Usage:
+    {{< typo/grid >}}
+    | Column 1 content | Column 2 content |
+    {{< /typo/grid >}}
+
+    {{< typo/grid widths="2:1" gap="lg" >}}
+    | Wide column | Narrow column |
+    {{< /typo/grid >}}
+
+    {{< typo/grid >}}
+    | A | B | C |
+    {{< /typo/grid >}}
+
+  Note: Column count is auto-detected from table syntax.
+        Content inside cells supports markdown.
+
+  Styles: assets/css/typography.css (.typo-grid classes)
+*/}}
+{{- $widths := .Get "widths" | default "" -}}
+{{- $gap := .Get "gap" | default "md" -}}
+{{- $debug := .Get "debug" | default false -}}
+{{- partial "typo/grid.html" (dict "content" .Inner "widths" $widths "gap" $gap "debug" $debug "page" .Page) -}}

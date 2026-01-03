@@ -67,10 +67,10 @@
 
   {{/* Chapter TOC */}}
   {{- with $chapters -}}
-  <nav class="video-toc w-full lg:w-78 shrink-0 flex flex-col" aria-label="video chapters">
+  <nav class="video-toc not-prose w-full lg:w-78 shrink-0 flex flex-col" aria-label="video chapters">
     <div class="bg-gray-50 dark:bg-neutral-800 rounded-lg px-4 pb-4 pt-2 flex-1">
       <p class="font-semibold tracking-tight text-gray-900 dark:text-gray-100" style="margin-top: 0 !important; margin-bottom: 0.2em !important;">Chapters</p>
-      <ul class="space-y-1 text-sm" style="margin-top: 0; margin-bottom: 0;">
+      <ul class="space-y-1 text-sm" style="list-style: none; margin-top: 0; margin-bottom: 0; padding-left: 0;">
         {{- range . -}}
           {{- template "video-chapter" (dict "chapter" . "level" 0 "videoId" $id) -}}
         {{- end -}}
@@ -85,27 +85,25 @@
   {{- $chapter := .chapter -}}
   {{- $level := .level -}}
   {{- $videoId := .videoId -}}
-  {{- $padding := mul $level 16 -}}
-
-  <li class="scroll-my-6" style="line-height: 1; margin-top: 0; margin-bottom: 0;{{ if gt $level 0 }} padding-left: {{ $padding }}px;{{ end }}">
+  {{- $indent := mul $level 12 -}}
+  <li style="line-height: 1; margin: 0;">
     <a href="#"
        onclick="document.getElementById('{{ $videoId }}').currentTime={{ $chapter.time }}; document.getElementById('{{ $videoId }}').play(); return false;"
        class="video-chapter-link flex items-center gap-2 px-2 -mx-2 rounded transition-colors
               text-gray-600 hover:text-gray-900 hover:bg-gray-100
-              dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-neutral-700
-              {{ if eq $level 0 }}font-medium{{ end }}"
-       style="padding-bottom: 6px;"
+              dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-neutral-700"
+       style="padding-bottom: 6px;{{ if eq $level 0 }} font-weight: 500;{{ end }}"
        data-time="{{ $chapter.time }}">
-      <span class="chapter-time text-xs text-gray-400 dark:text-gray-500 tabular-nums w-10">
+      <span class="chapter-time text-xs text-gray-400 dark:text-gray-500 tabular-nums" style="width: 2.5rem; flex-shrink: 0;">
         {{- $minutes := div $chapter.time 60 -}}
         {{- $seconds := mod $chapter.time 60 -}}
         {{- printf "%d:%02d" $minutes $seconds -}}
       </span>
-      <span class="chapter-title">{{ $chapter.title }}</span>
+      <span class="chapter-title"{{ if gt $level 0 }} style="padding-left: {{ $indent }}px;"{{ end }}>{{ $chapter.title }}</span>
     </a>
 
     {{- with $chapter.children -}}
-      <ul class="mt-1 space-y-1" style="margin-top: 0; margin-bottom: 0;">
+      <ul class="mt-1 space-y-1" style="list-style: none; margin-top: 0; margin-bottom: 0; padding-left: 0;">
         {{- range . -}}
           {{- template "video-chapter" (dict "chapter" . "level" (add $level 1) "videoId" $videoId) -}}
         {{- end -}}

@@ -1,0 +1,31 @@
+{{/*
+  Interests view for collection shortcode (frontmatter source)
+  Renders interest items matching education-list style
+
+  Supports two formats:
+  1. Simple string: "Psychology of Disability"
+  2. Object with fields: { title: "...", subtitle: "...", url: "..." }
+
+  Usage:
+    {{< collection source="frontmatter" path="interests" view="interests" >}}
+*/}}
+
+{{ $item := . }}
+
+<li>
+    {{- if reflect.IsMap $item -}}
+        {{/* Object format with title/subtitle */}}
+        {{ $url := $item.url | default "" }}
+        {{ if $url }}
+        <a href="{{ $url }}" class="block">
+        {{ end }}
+            <p>{{ $item.title | markdownify }}</p>
+            {{ with $item.subtitle }}<p>{{ . | markdownify }}</p>{{ end }}
+        {{ if $url }}
+        </a>
+        {{ end }}
+    {{- else -}}
+        {{/* Simple string format - wrap in p for consistent styling */}}
+        <p>{{ $item | markdownify }}</p>
+    {{- end -}}
+</li>

@@ -1,19 +1,98 @@
 /* Typography Enhancement Classes
  * World-class typography for emphasis and visual hierarchy
+ *
+ * Mobile-first: em units scale with font size per breakpoint.
+ * Tailwind prose defaults overridden for tighter rhythm.
  */
 
-/* Typography overrides for post/project content
- * Mobile-first: em units scale with font size per breakpoint.
- *
- * Tailwind prose defaults:
- *   line-height: 1.75 (prose), 1.8 (prose-xl)
- *   paragraph margin: 1.25em (mobile), 1.2em (desktop prose-xl)
- *   hr margin: 3em (mobile), 2.8em (desktop prose-xl)
- */
 :root {
+    /* ===========================================
+     * BASE TYPOGRAPHY
+     * =========================================== */
     --typo-line-height: 1.5;
     --typo-paragraph-margin: 0.85em;
     --typo-hr-margin: 2em;
+
+    /* ===========================================
+     * COLOR PALETTE - Text
+     * Slate-based scale for professional feel
+     * =========================================== */
+    --typo-color-heading: #2c3e50;      /* Darkest - pull-quote, callout strong (2x) */
+    --typo-color-primary: #2d3748;      /* Primary - kicker (1x) */
+    --typo-color-body: #3d4852;         /* Body - nutgraf, aside (2x) */
+    --typo-color-secondary: #3a4a5a;    /* Secondary - lede (1x) */
+    --typo-color-muted: #4a5568;        /* Muted - verse, accent (2x) */
+    --typo-color-soft: #4a5a6a;         /* Soft - sign-off (1x) */
+
+    /* ===========================================
+     * COLOR PALETTE - Borders & Backgrounds
+     * =========================================== */
+    --typo-border-light: #e0e4e8;       /* Light - sign-off (1x) */
+    --typo-border-medium: #e9ecef;      /* Medium - callout (1x) */
+    --typo-border-accent: #cbd5e0;      /* Accent - verse (1x) */
+    --typo-bg-subtle: #f8f9fa;          /* Subtle bg - callout (1x) */
+
+    /* ===========================================
+     * FONT SIZES - Relative scale (em)
+     * =========================================== */
+    --typo-size-xl: 1.25em;             /* Pull quote (1x) */
+    --typo-size-lg: 1.15em;             /* Lede, kicker (2x) */
+    --typo-size-md: 1.1em;              /* Nutgraf (1x) */
+    --typo-size-base: 1.05em;           /* Callout (1x) */
+    --typo-size-sm: 0.85em;             /* Sign-off aside (1x) */
+
+    /* ===========================================
+     * FONT WEIGHTS
+     * =========================================== */
+    --typo-weight-light: 300;           /* Pull quote (1x) */
+    --typo-weight-medium: 500;          /* Kicker, accent, slug (3x) */
+    --typo-weight-semibold: 600;        /* Aside strong (1x) */
+
+    /* ===========================================
+     * SPACING
+     * =========================================== */
+    --typo-space-xs: 0.25em;            /* Callout li (2x) */
+    --typo-space-sm: 0.5em;             /* Callout ul/ol, nutgraf, lede (4x) */
+    --typo-space-md: 1em;               /* Runaround, aside, sign-off aside (4x) */
+    --typo-space-lg: 1.5em;             /* Sign-off padding, callout (3x) */
+    --typo-space-xl: 2em;               /* Sign-off margin (1x) */
+    --typo-space-2xl: 2.5em;            /* Beat (1x) */
+
+    /* ===========================================
+     * COMPONENT: Sign-off
+     * =========================================== */
+    --typo-sign-off-font-size: 1.2em;
+    --typo-sign-off-aside-font-size: var(--typo-size-sm);
+
+    /* ===========================================
+     * COMPONENT: Runaround images
+     * Responsive widths at breakpoints
+     * =========================================== */
+    --typo-runaround-width-mobile: 280px;   /* Mobile max-width (2x) */
+    --typo-runaround-width-sm: 180px;       /* sm breakpoint (2x) */
+    --typo-runaround-width-lg: 240px;       /* lg breakpoint (2x) */
+    --typo-runaround-width-2xl: 300px;      /* 2xl breakpoint (2x) */
+    --typo-runaround-radius: 8px;           /* Border radius (3x) */
+    --typo-runaround-gap: 1.2rem;           /* Gap between image/text (4x) */
+}
+
+/* ===========================================
+ * DARK MODE - Color overrides for WCAG 4.5:1 contrast
+ * Visual hierarchy: heading > lede > body > muted > soft
+ * =========================================== */
+.dark {
+    --typo-color-heading: #f8fafc;      /* Brightest - pull-quote, callout strong */
+    --typo-color-primary: #f1f5f9;      /* Primary - kicker */
+    --typo-color-body: #f1f5f9;         /* Body - nutgraf, aside - BRIGHT, no gray */
+    --typo-color-secondary: #f8fafc;    /* Lede - PROMINENT, near-white */
+    --typo-color-muted: #e2e8f0;        /* Muted - verse, accent */
+    --typo-color-soft: #cbd5e1;         /* Soft - sign-off */
+
+    --typo-border-light: #374151;       /* Darker border for dark bg */
+    --typo-border-medium: #4b5563;      /* Medium border */
+    --typo-border-accent: #6b7280;      /* Accent border */
+    --typo-bg-subtle: #1f2937;          /* Dark subtle bg */
+    --typo-bg-callout-end: #111827;     /* Callout gradient end */
 }
 
 .prose p {
@@ -48,10 +127,10 @@
 
 /* Pull Quote - for impactful standalone statements */
 .pull-quote {
-    font-size: 1.25em;
-    font-weight: 300;
+    font-size: var(--typo-size-xl);
+    font-weight: var(--typo-weight-light);
     line-height: calc(var(--typo-line-height) - 0.05);
-    color: #2c3e50;
+    color: var(--typo-color-heading);
     margin: 1.75em auto;
     font-style: italic;
     max-width: 32em;
@@ -60,71 +139,76 @@
 }
 
 .pull-quote strong {
-    font-weight: 500;
+    font-weight: var(--typo-weight-medium);
     font-style: normal;
 }
 
 /* Callout - highlighted box drawing attention */
 .callout {
-    background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
-    border-radius: 8px;
-    padding: 1.25em 1.5em;
-    margin: 1.5em 0;
-    border: 1px solid #e9ecef;
-    font-size: 1.05em;
+    background: linear-gradient(135deg, var(--typo-bg-subtle) 0%, var(--typo-bg-callout-end, #fff) 100%);
+    border-radius: var(--typo-runaround-radius);
+    padding: 1.25em var(--typo-space-lg);
+    margin: var(--typo-space-lg) 0;
+    border: 1px solid var(--typo-border-medium);
+    font-size: var(--typo-size-base);
     line-height: calc(var(--typo-line-height) + 0.1);
 }
 
 .callout strong {
-    color: #2c3e50;
+    color: var(--typo-color-heading);
 }
 
 .callout ul,
 .callout ol {
-    margin-top: 0.5em;
+    margin-top: var(--typo-space-sm);
     margin-bottom: 0;
 }
 
 .callout li {
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
+    margin-top: var(--typo-space-xs);
+    margin-bottom: var(--typo-space-xs);
 }
 
 /* Lede - opening paragraph emphasis */
 .lede {
-    font-size: 1.15em;
-    line-height: calc(var(--typo-line-height) + 0.15);
-    color: #3a4a5a;
-    margin-bottom: 0.5em;
+    font-size: var(--typo-size-lg);
+    line-height: 1.4;
+    color: var(--typo-color-secondary);
+    margin-bottom: var(--typo-space-sm);
 }
 
 /* Sign-off - elegant closing statement */
 .sign-off {
-    font-size: 1.2em;
+    font-size: var(--typo-sign-off-font-size);
     font-style: italic;
-    color: #4a5a6a;
+    color: var(--typo-color-soft);
     text-align: center;
-    margin-top: 2em;
-    padding-top: 1.5em;
-    border-top: 1px solid #e0e4e8;
+    margin-top: var(--typo-space-xl);
+    padding-top: var(--typo-space-lg);
+    border-top: 1px solid var(--typo-border-light);
     letter-spacing: 0.02em;
+}
+
+.sign-off .aside {
+    font-size: var(--typo-sign-off-aside-font-size);
+    margin-top: var(--typo-space-md);
 }
 
 /* Slug - short identifier or label in small caps */
 .slug {
     font-variant: small-caps;
     letter-spacing: 0.05em;
-    font-weight: 500;
+    font-weight: var(--typo-weight-medium);
 }
 
 /* Verse - for poetic/lyrical content */
 .verse {
     font-style: italic;
-    color: #4a5568;
+    color: var(--typo-color-muted);
     line-height: var(--typo-line-height);
     margin: 0.2em 0 0.75em 1.5em;
-    padding-left: 1em;
-    border-left: 2px solid #cbd5e0;
+    padding-left: var(--typo-space-md);
+    border-left: 2px solid var(--typo-border-accent);
     white-space: pre-line;
 }
 
@@ -134,35 +218,103 @@
 
 /* Kicker - short intro line that sets up what follows */
 .kicker {
-    font-size: 1.15em;
-    font-weight: 500;
-    color: #2d3748;
+    font-size: var(--typo-size-lg);
+    font-weight: var(--typo-weight-medium);
+    color: var(--typo-color-primary);
     display: block;
     margin-bottom: 0;
 }
 
+/* Kicker/Slug followed by list - tight coupling as one unit */
+/* Direct sibling (when shortcode is inline) */
+.kicker + ul,
+.kicker + ol,
+.slug + ul,
+.slug + ol,
+/* Wrapped in <p> by markdownify (when shortcode is on its own line) */
+/* :only-child ensures no other content in the paragraph */
+p:has(> .kicker:only-child) + ul,
+p:has(> .kicker:only-child) + ol,
+p:has(> .slug:only-child) + ul,
+p:has(> .slug:only-child) + ol,
+/* Within prose/article contexts */
+.prose .kicker + ul,
+.prose .kicker + ol,
+.prose .slug + ul,
+.prose .slug + ol,
+.prose p:has(> .kicker:only-child) + ul,
+.prose p:has(> .kicker:only-child) + ol,
+.prose p:has(> .slug:only-child) + ul,
+.prose p:has(> .slug:only-child) + ol,
+article .kicker + ul,
+article .kicker + ol,
+article .slug + ul,
+article .slug + ol,
+article p:has(> .kicker:only-child) + ul,
+article p:has(> .kicker:only-child) + ol,
+article p:has(> .slug:only-child) + ul,
+article p:has(> .slug:only-child) + ol {
+    margin-top: 0 !important;
+}
+
+.kicker + ul li,
+.kicker + ol li,
+.slug + ul li,
+.slug + ol li,
+p:has(> .kicker:only-child) + ul li,
+p:has(> .kicker:only-child) + ol li,
+p:has(> .slug:only-child) + ul li,
+p:has(> .slug:only-child) + ol li,
+.prose .kicker + ul li,
+.prose .kicker + ol li,
+.prose .slug + ul li,
+.prose .slug + ol li,
+.prose p:has(> .kicker:only-child) + ul li,
+.prose p:has(> .kicker:only-child) + ol li,
+.prose p:has(> .slug:only-child) + ul li,
+.prose p:has(> .slug:only-child) + ol li,
+article .kicker + ul li,
+article .kicker + ol li,
+article .slug + ul li,
+article .slug + ol li,
+article p:has(> .kicker:only-child) + ul li,
+article p:has(> .kicker:only-child) + ol li,
+article p:has(> .slug:only-child) + ul li,
+article p:has(> .slug:only-child) + ol li {
+    margin-top: 0 !important;
+    margin-bottom: 0.15em !important;
+}
+
+/* Remove <p> wrapper margin when kicker/slug is followed by list */
+p:has(> .kicker:only-child):has(+ ul),
+p:has(> .kicker:only-child):has(+ ol),
+p:has(> .slug:only-child):has(+ ul),
+p:has(> .slug:only-child):has(+ ol) {
+    margin-bottom: 0 !important;
+}
+
 /* Nutgraf - the "so what" paragraph explaining significance */
 .nutgraf {
-    font-size: 1.1em;
-    color: #3d4852;
-    padding: 0.5em 0;
+    font-size: var(--typo-size-md);
+    color: var(--typo-color-body);
+    padding: var(--typo-space-sm) 0;
     line-height: calc(var(--typo-line-height) + 0.1);
 }
 
 /* Accent - subtle inline emphasis */
 .accent {
-    color: #4a5568;
-    font-weight: 500;
+    color: var(--typo-color-muted);
+    font-weight: var(--typo-weight-medium);
 }
 
 /* Aside - reflective digression from main narrative */
 .aside {
     margin: 1.25em 0;
-    color: #3d4852;
+    color: var(--typo-color-body);
 }
 
 .aside strong {
-    font-weight: 600;
+    font-weight: var(--typo-weight-semibold);
 }
 
 /* Runaround - image + text block with responsive stacking (journalism term) */
@@ -170,8 +322,8 @@
 .runaround-right {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin: 1em 0;
+    gap: var(--typo-space-sm);
+    margin: var(--typo-space-md) 0;
 }
 
 .runaround-left > img,
@@ -179,8 +331,8 @@
 .runaround-left > figure,
 .runaround-right > figure {
     width: 100%;
-    max-width: 280px;
-    border-radius: 8px;
+    max-width: var(--typo-runaround-width-mobile);
+    border-radius: var(--typo-runaround-radius);
     align-self: center;
     float: none;
     margin: 0;
@@ -220,20 +372,20 @@
     .runaround-left {
         flex-direction: row;
         align-items: center;
-        gap: 1.2rem;
+        gap: var(--typo-runaround-gap);
     }
 
     .runaround-right {
         flex-direction: row-reverse;
         align-items: center;
-        gap: 1.2rem;
+        gap: var(--typo-runaround-gap);
     }
 
     .runaround-left > img,
     .runaround-right > img,
     .runaround-left > figure,
     .runaround-right > figure {
-        width: 180px;
+        width: var(--typo-runaround-width-sm);
         flex-shrink: 0;
         order: unset;
     }
@@ -248,7 +400,7 @@
     .runaround-right > img,
     .runaround-left > figure,
     .runaround-right > figure {
-        width: 240px;
+        width: var(--typo-runaround-width-lg);
     }
 }
 
@@ -257,7 +409,7 @@
     .runaround-right > img,
     .runaround-left > figure,
     .runaround-right > figure {
-        width: 300px;
+        width: var(--typo-runaround-width-2xl);
     }
 }
 
@@ -266,7 +418,7 @@
  */
 .runaround-wrap-left,
 .runaround-wrap-right {
-    margin: 1em 0;
+    margin: var(--typo-space-md) 0;
 }
 
 .runaround-wrap-left::after,
@@ -282,9 +434,9 @@
 .runaround-wrap-right > img,
 .runaround-wrap-right > figure {
     display: block;
-    max-width: 280px;
-    margin: 0 auto 1rem auto;
-    border-radius: 8px;
+    max-width: var(--typo-runaround-width-mobile);
+    margin: 0 auto var(--typo-space-md) auto;
+    border-radius: var(--typo-runaround-radius);
 }
 
 /* Reset prose margin on images inside runaround figures */
@@ -308,15 +460,15 @@
     .runaround-wrap-left > img,
     .runaround-wrap-left > figure {
         float: left;
-        max-width: 180px;
-        margin: 0 1.2rem 0.75rem 0;
+        max-width: var(--typo-runaround-width-sm);
+        margin: 0 var(--typo-runaround-gap) 0.75rem 0;
     }
 
     .runaround-wrap-right > img,
     .runaround-wrap-right > figure {
         float: right;
-        max-width: 180px;
-        margin: 0 0 0.75rem 1.2rem;
+        max-width: var(--typo-runaround-width-sm);
+        margin: 0 0 0.75rem var(--typo-runaround-gap);
     }
 
     .runaround-wrap-left > div,
@@ -330,7 +482,7 @@
     .runaround-wrap-left > figure,
     .runaround-wrap-right > img,
     .runaround-wrap-right > figure {
-        max-width: 240px;
+        max-width: var(--typo-runaround-width-lg);
     }
 }
 
@@ -339,11 +491,111 @@
     .runaround-wrap-left > figure,
     .runaround-wrap-right > img,
     .runaround-wrap-right > figure {
-        max-width: 300px;
+        max-width: var(--typo-runaround-width-2xl);
     }
 }
 
-/* Beat - pause in narrative rhythm */
+/* Beat - pause in narrative rhythm
+   Sizes: sm (1em), md (1.5em), lg (2em), xl (2.5em default)
+   Values are per-side (top and bottom)
+*/
 .beat {
-    margin: 2.5em 0;
+    margin: var(--typo-space-2xl) 0;  /* 2.5em top + bottom */
+}
+
+.beat.beat-sm {
+    margin: var(--typo-space-md) 0;   /* 1em top + bottom */
+}
+
+.beat.beat-md {
+    margin: var(--typo-space-lg) 0;   /* 1.5em top + bottom */
+}
+
+.beat.beat-lg {
+    margin: 2em 0;                     /* 2em top + bottom */
+}
+
+/* Beat with rule - horizontal separator line
+   Matches <hr> styling for consistency
+*/
+.beat.beat-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.beat.beat-rule::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0;
+    border-top: 1px solid var(--typo-border-accent);
+}
+
+/* Positioned rules with custom width */
+.beat.beat-rule-left {
+    justify-content: flex-start;
+}
+
+.beat.beat-rule-center {
+    justify-content: center;
+}
+
+.beat.beat-rule-right {
+    justify-content: flex-end;
+}
+
+/* When width is specified via span */
+.beat.beat-rule-left::before,
+.beat.beat-rule-center::before,
+.beat.beat-rule-right::before {
+    width: 100%; /* fallback */
+}
+
+.beat.beat-rule span {
+    display: block;
+    height: 0;
+    border-top: 1px solid var(--typo-border-accent);
+}
+
+/* Hide pseudo-element when span is present */
+.beat.beat-rule:has(span)::before {
+    display: none;
+}
+
+/* Grid - responsive column layout
+   Mobile-first: stacked by default, columns on md+ screens
+   Column widths set via --typo-grid-cols CSS variable
+*/
+.typo-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: theme('screens.md')) {
+    .typo-grid {
+        display: grid;
+        grid-template-columns: var(--typo-grid-cols, 1fr 1fr);
+    }
+}
+
+.typo-grid-cell > *:first-child {
+    margin-top: 0;
+}
+
+.typo-grid-cell > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Grid gap sizes */
+.typo-grid-gap-sm {
+    gap: var(--typo-space-sm);  /* 0.5em */
+}
+
+.typo-grid-gap-md {
+    gap: var(--typo-space-md);  /* 1em */
+}
+
+.typo-grid-gap-lg {
+    gap: var(--typo-space-lg);  /* 1.5em */
 }

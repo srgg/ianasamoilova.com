@@ -56,14 +56,13 @@
         text-align: left;
     }
 
-    /* Gradient vertical divider */
+    /* Gradient vertical divider - stretches with content */
     .cta-with-divider .md\:grid-cols-2 > div::before {
         content: "";
         position: absolute;
         left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 45%;
+        top: 15%;
+        bottom: 15%;
         width: 3px;
         background: linear-gradient(180deg, #3b82f6, #06b6d4);
         border-radius: 2px;

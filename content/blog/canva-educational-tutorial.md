@@ -10,23 +10,20 @@ tags:
   - PARA Welcome Kit  
 ---
 
-{{< typo/lede >}}In today's classrooms, the ability to use technology thoughtfully is no longer optional. It is essential. This is especially true in **special education**, where time is limited, student needs are diverse, and ready-made materials rarely fit everyone. SPED educators are constantly adapting, modifying, and personalizing tasks, often for each individual student, while balancing many responsibilities at once.{{< /typo/lede >}}
+{{< typo/lede >}} In today’s classrooms, using technology thoughtfully is no longer optional—it’s essential. Technology saves time and effort, which is especially critical in special education, wherestudents have different needs, so ready-made materials usually do not work. And continually personalize learning experiences for each student.{{< /typo/lede >}}
 
-Learning how to use educational technology can feel overwhelming, particularly when the classroom never slows down. This tutorial grew out of a simple question I kept asking myself and my colleagues:
+Learning how to use educational technology can feel overwhelming, especially when the classroom never slows down. This tutorial grew out of a simple question I kept asking myself and my colleagues:
 
 {{< typo/pull-quote >}}What tools actually help teachers, rather than add more work?{{< /typo/pull-quote >}}
 
-The **Canva Education Tutorial** began as part of my EdTech coursework, but it quickly became something more personal. It reflects my experience as a SPED paraeducator and my belief that **visual clarity, structure, and creativity are essential for inclusive classrooms**, not optional extras.
+The **Canva Education Tutorial** started as part of my technology in education coursework, but it quickly became something more personal. It reflects my experience as a special education classroom assistant and my belief that **clear visuals, good organization, and creativity are essential for classrooms that include everyone**, not just nice extras.
 
-{{< typo/aside >}}While working in real classrooms, I saw how much time teachers spend recreating the same materials, managing visual clutter, and compensating for systems that do not support diverse learners. I also saw how powerful well-designed visuals can be, how they reduce confusion, support independence, and bring calm into busy learning environments.{{< /typo/aside >}}
+{{< typo/aside >}}While working in real classrooms, I saw how much time teachers spend recreating the same materials, managing visual clutter, and compensating for systems that fail to support diverse learners. I also saw how powerful well-designed visuals can be—how they reduce confusion, support independence, and bring calm to busy learning environments.{{< /typo/aside >}}
 
-This project was shaped not only by my own experience, but also by conversations and a survey conducted with educators in my school. Hearing their challenges, ideas, and questions reinforced something I deeply believe: **supporting teachers in learning tools is one of the most effective ways to support students**.
+This project was shaped not only by my own experience but also by conversations and a survey conducted with educators at my school. Hearing their challenges, ideas, and questions reinforced something I deeply believe: **supporting teachers in learning tools is one of the most effective ways to help students**.
 
-{{< typo/nutgraf >}}At its core, this tutorial is an invitation to see educational technology differently. Not as another demand on your time, but as a quiet partner that helps create classrooms where both students and teachers can breathe a little easier.{{< /typo/nutgraf >}}
+{{< typo/nutgraf >}}At its core, this tutorial invites educators to see educational technology differently—not as another demand on their time, but as a quiet partner that helps create classrooms where both students and teachers can breathe a little easier.{{< /typo/nutgraf >}}
 
-If this tutorial offers {{< typo/accent >}}even one idea that saves time, supports a student, or brings more clarity into your day{{< /typo/accent >}}, then it has already done its work.
+If this tutorial sparks {{< typo/accent >}}even one idea that saves time, supports a student, or brings more clarity into your day{{< /typo/accent >}}, then it has already done its work.
 
-**[Explore the Canva Education Tutorial →](/projects/canva-education-tutorial)**
-
-
-[//]: # ({{< slides src="slides/para-welcome-kit" height="660px" overview="false" notes="false">}})
+**[Watch the ten-minute Canva Education Video Tutorial →](/projects/canva-education-tutorial)**

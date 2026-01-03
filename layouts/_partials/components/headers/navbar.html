@@ -1,8 +1,41 @@
+{{/* Navigation breakpoint: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px) */}}
+{{/* Lower = hamburger appears at smaller width = nav visible longer */}}
+{{ $bp := site.Params.header.navbar.breakpoint | default "md" }}
+{{/* Breakpoint for comfortable spacing (one step above $bp) */}}
+{{ $bp_wide := site.Params.header.navbar.breakpoint_wide | default "md" }}
+
+{{/* Map breakpoint to Tailwind classes */}}
+{{ $bp_hidden := printf "%s:!hidden" $bp }}  {{/* !important to override nav-link display */}}
+{{ $bp_flex := printf "%s:flex" $bp }}
+{{ $bp_order := printf "%s:order-1" $bp }}
+{{ $bp_wauto := printf "%s:w-auto" $bp }}
+{{ $bp_spacex := printf "%s:space-x-0 %s:space-x-2" $bp $bp_wide }}  {{/* tight at bp, normal at bp_wide */}}
+{{ $bp_pb0 := printf "%s:pb-0" $bp }}
+{{ $bp_hover_visible := printf "%s:group-hover:visible" $bp }}
+{{ $bp_hover_opacity := printf "%s:group-hover:opacity-100" $bp }}
+{{ $bp_ml0 := printf "%s:ml-0" $bp }}
+{{ $bp_inline := printf "%s:inline-block" $bp }}
+
+{{/* Find active menu item name for mobile indicator */}}
+{{ $activeName := "" }}
+{{ $pageURL := .Permalink | absLangURL }}
+{{ range site.Menus.main }}
+  {{ $menuURL := .URL | absLangURL }}
+  {{ $active := or (eq $menuURL $pageURL) (and (ne .URL "/") (hasPrefix $pageURL $menuURL)) }}
+  {{ if $active }}{{ $activeName = .Name }}{{ end }}
+  {{/* Check children too */}}
+  {{ range .Children }}
+    {{ $childURL := .URL | absLangURL }}
+    {{ $childActive := or (eq $childURL $pageURL) (and (ne .URL "/") (hasPrefix $pageURL $childURL)) }}
+    {{ if $childActive }}{{ $activeName = .Name }}{{ end }}
+  {{ end }}
+{{ end }}
+
 <header id="site-header" class="header">
   <nav class="navbar px-3 flex justify-start">
     <div class="order-0 h-full">
-      <!-- Brand -->
-      <a class="navbar-brand" href="{{ site.Home.RelPermalink }}" title="{{ site.Title }}">
+      <!-- Brand (non-clickable) -->
+      <span class="navbar-brand" style="cursor: default;">
         {{- $logo_filename := site.Params.header.navbar.logo.filename -}}
         {{ with $logo_filename }}
           {{- $logo:= resources.Get (path.Join "media" $logo_filename) -}}
@@ -26,13 +59,26 @@
           {{end}}
         {{ end }}
         {{ with site.Params.header.navbar.logo.text }}{{.}}{{end}}
-      </a>
+      </span>
     </div>
+
     <!-- Mobile menu -->
     <input id="nav-toggle" type="checkbox" class="hidden" />
+
+    {{/* Mobile: show current page name centered in header, hidden at breakpoint or when menu open */}}
+    {{ $bp_sizes := dict "sm" "640px" "md" "768px" "lg" "1024px" "xl" "1280px" "2xl" "1536px" }}
+    {{ $hide_at := index $bp_sizes $bp }}
+    <style>
+      .nav-active-text { display: block; position: absolute; left: 50%; transform: translateX(-50%); cursor: pointer !important; }
+      @media (min-width: {{ $hide_at }}) { .nav-active-text { display: none !important } .nav-hamburger { display: none !important } }
+      #nav-toggle:checked ~ .nav-active-text { display: none !important; }
+    </style>
+    {{ with $activeName }}
+    <label for="nav-toggle" class="nav-link active nav-active-text">{{ . }}</label>
+    {{ end }}
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      class="nav-hamburger order-3 cursor-pointer flex items-center text-dark dark:text-white">
       <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
         <title>Open Menu</title>
         <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
@@ -50,7 +96,7 @@
     {{ $align_menu := site.Params.header.navbar.align | default "center" }}
     <ul
       id="nav-menu"
-      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-start
+      class="navbar-nav order-3 hidden {{ $bp_flex }} w-full pb-6 {{ $bp_order }} {{ $bp_wauto }} {{ $bp_spacex }} {{ $bp_pb0 }} justify-start
       {{ if in (slice "l" "left") $align_menu }}mr-auto ml-6{{ else if (in (slice "r" "right") $align_menu) }}ml-auto mr-6{{end}}">
       {{ $currentPage := . }}
       {{ $pageURL := $currentPage.Permalink | absLangURL }}
@@ -77,7 +123,7 @@
               </svg>
             </span>
         <ul
-          class="nav-dropdown-list lg:group-hover:visible lg:group-hover:opacity-100">
+          class="nav-dropdown-list {{ $bp_hover_visible }} {{ $bp_hover_opacity }}">
           {{ range .Children }}
           {{ $childURL := .URL | absLangURL }}
           {{ $active := or (eq $childURL $pageURL) (hasPrefix $pageURL $childURL) }}
@@ -126,7 +172,7 @@
       {{ end }}
       {{ end }}
       {{ if site.Params.header.navbar.button.enable }}
-      <li class="mt-4 inline-block lg:hidden">
+      <li class="mt-4 inline-block {{ $bp_hidden }}">
         <a
           class=""
           href="{{ site.Params.header.navbar.button.url | relLangURL }}">
@@ -136,7 +182,7 @@
       {{ end }}
     </ul>
 
-    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+    <div class="order-1 ml-auto flex items-center md:order-2 {{ $bp_ml0 }}">
 
       {{/* Show site search? */}}
       {{ $show_search := site.Params.header.navbar.show_search | default false }}
@@ -191,7 +237,7 @@
         class="inline-block rounded border px-5 py-2 font-semibold transition
         md:ml-4 px-4 py-1.5 text-sm
         border-black  hover:bg-black dark:hover:bg-white dark:hover:text-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white
-        hidden lg:inline-block">
+        hidden {{ $bp_inline }}">
         {{ site.Params.header.navbar.button.text }}
       </a>
       {{ end }}

@@ -2,8 +2,8 @@
 title: "PARA Welcome Kit"
 slug: para-welcome-kit
 type: landing
-summary: "Explore all PARA Welcome Kit materials — guides, tools, and practical resources to support new paraeducators as they begin their work in Special Education."
-description: "Practical PARA Welcome Kit resources, guides, and tools to help new paraeducators feel confident, prepared, and supported in Special Education."
+summary: "Explore all PARA Welcome Kit materials — guides, tools, and practical resources to support new paraeducators as they begin their work in Special Education"
+description: "Practical PARA Welcome Kit resources, guides, and tools to help new paraeducators feel confident, prepared, and supported in Special Education"
 draft: false
 
 spacing:
@@ -14,7 +14,7 @@ sections:
     content:
       items:
         - title:
-          text: "Practical PARA Welcome Kit resources, guides, and tools to help new paraeducators feel confident, prepared, and supported in Special Education."
+          text: "The PARA Welcome Kit is a set of practical resources, guides, and tools designed to help new paraeducators feel confident, prepared, and supported in Special Education—from day one"
           image: logo-para-welcome-kit.svg
     design:
       css_class: cta-with-divider para-welcome-header
@@ -54,12 +54,3 @@ sections:
       view: date-title-summary
       columns: 1
 ---
-[//]: # (See also:)
-
-[//]: # (- [PARA Welcome Kit Overview]&#40;/blog/para-welcome-kit/&#41;)
-
-[//]: # (- [Practical Tips for New Paraeducators]&#40;/blog/para-tips/&#41;)
-
-[//]: # (- [Classroom Communication Guide]&#40;/blog/communication-guide/&#41;)
-
-[//]: # (- [Recognizing Early Signs of Dysregulation]&#40;/blog/dysregulation-intro/&#41;)

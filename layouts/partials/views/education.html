@@ -1,0 +1,22 @@
+{{/*
+  Education view for collection shortcode (frontmatter source)
+  Renders education items matching resume-biography-3 block style
+
+  Context: Single education item from front matter array
+  Fields: .area, .institution, .id, .date_start, .date_end, .year, .summary, .button
+
+  Usage in collection shortcode:
+    {{< collection source="frontmatter" path="education" view="education" >}}
+*/}}
+
+{{ $item := . }}
+{{ $experience_url := "/experience/" }}
+
+<li>
+    <a href="{{ $experience_url }}#{{ $item.id }}" class="block">
+        <p>
+            {{ $item.area }}{{ with $item.year }}, {{ . }}{{ end }}
+        </p>
+        <p>{{ $item.institution }}</p>
+    </a>
+</li>

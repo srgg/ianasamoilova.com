@@ -1,7 +1,8 @@
 ---
 title: "Different Hands — One Shared Miracle"
-subtitle: "Exclusion often starts with assumptions; inclusion is seeded by trust and flourishes with opportunity."
-summary: "A SPED classroom art project that reveals hidden capability and builds inclusion."
+subtitle: "Exclusion starts with assumptions; inclusion grows with trust and opportunity"
+summary: "A SPED classroom art project that uncovers hidden abilities and fosters inclusion"
+description: "A SPED classroom art project that uncovers students’ hidden abilities and fosters inclusion, trust, and opportunity"
 date: 2025-12-19
 type: post
 toc: false
@@ -50,7 +51,10 @@ And in SPED classrooms especially, hands are often where learning begins.
 {{< typo/beat >}}
 
 {{< typo/sign-off >}}
-Different hands. One shared miracle.<br/>
+Different hands. One shared miracle
+
+<p class="aside" style="font-style: normal">
 Merry Christmas and Happy New Year<br/>
 Colorado Springs, 2025
+</p>
 {{< /typo/sign-off >}}

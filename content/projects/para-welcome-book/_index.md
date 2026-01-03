@@ -1,8 +1,8 @@
 ---
 title: "PARA Welcome Book"
-subtitle: "A Practical Guide to Support New Paraeducators"
-summary: "A warm, practical guide that helps new paraeducators feel confident, supported, and prepared to succeed from day one."
-description: "A practical, step-by-step guide for new paraeducators, combining hands-on experience and inclusive practices to support confidence, skills, and student success from day one."
+subtitle: "A Practical Guide to Supporting New Paraeducators"
+summary: "A warm, practical guide to support new paraeducators from day one"
+description: "A practical guide for new paraeducators, offering hands-on strategies and inclusive practices to build confidence, skills, and student success from day one"
 date: 2025-12-02
 type: post
 weight: 10
@@ -22,7 +22,7 @@ tags:
 
 ### What the PARA Welcome Book Covers
 
-{{< typo/nutgraf >}}Starting as a paraeducator opened my eyes to a world of small victories, quiet challenges, and lessons no one formally prepares you for. Much of what matters most is learned on the job—often through trial, error, and observation. You can read more about those first months in the classroom in this[blog post about my early PARA experiences](/blog/para-welcome-book).{{< /typo/nutgraf >}}
+{{< typo/nutgraf >}}Starting as a paraeducator opened my eyes to a world of small victories, quiet challenges, and lessons no one formally prepares you for. Much of what matters most is learned on the job—often through trial, error, and observation. You can read more about those first months in the classroom in this [blog post about my early PARA experiences](/blog/para-welcome-book).{{< /typo/nutgraf >}}
 
 This book brings together what I wish I had on day one. It draws from my hands-on experience as a District 11 SPED paraeducator, alongside inclusive practices shaped by my work and study. It’s meant to be supportive and practical—a guide that walks beside you, not a rulebook that talks at you.
 

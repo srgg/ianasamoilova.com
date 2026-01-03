@@ -8,4 +8,4 @@
     {{ partial "typo/sign-off.html" (dict "content" "Colorado Springs, 2025") }}
     {{ partial "typo/sign-off.html" (dict "content" .Params.text) }}
 -*/}}
-<p class="sign-off">{{- .content | markdownify | safeHTML -}}</p>
+<div class="sign-off">{{- .content | markdownify | safeHTML -}}</div>

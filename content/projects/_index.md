@@ -22,8 +22,6 @@ sections:
       sort_by: 'Weight'
       sort_ascending: true
       filters:
-#        subdirs: '*'
-#        page_type: landing
         folders:
             - projects    
     design:

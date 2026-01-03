@@ -1,7 +1,8 @@
 ---
 # Display name
 title: Iana Samoilova
-subtitle: '*I am passionate about reimagining education so that dis/ability becomes possibility. I guide students to grow with confidence, creativity, and resilience.*'
+subtitle: I guide students so every dis/ability becomes possibility, helping them grow with confidence, creativity, and resilience.
+description: Iana Samoilova helps students turn dis/ability into possibility, guiding growth in confidence, creativity, and resilience.
 
 # Name pronunciation (optional)
 name_pronunciation: Yana Samoilova
@@ -36,16 +37,16 @@ organizations:
 profiles:
   - icon: at-symbol
     url: 'mailto:contact@ianasamoilova.com'
-    label: E-mail Me
+    label: Get in touch
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/yanasamoylova/
-    label: Connect on LinkedIn
+    label: Let's connect
 
 interests:
   - Psychology of Disability
+  - Inclusive Classroom Practices
   - "[Technology for Inclusive Learning](blog/balanced-approach-using-technology-in-education/)"
-  - Collaboration & Equity
-
+  
 education:
   - area: Special Education Generalist
     id: special-education-generalist
@@ -209,11 +210,22 @@ awards:
       
 ---
 
-Iana Samoilova is an educator, paraeducator in Special Education, and language specialist with a Master’s Degree, based in Colorado Springs.
+{{< typo/lede >}}
+Iana Samoilova is an educator and paraeducator in Colorado D11. As the mother of a daughter on the autism spectrum, she draws daily inspiration from her personal experience.
+{{< /typo/lede >}}
 
-A native Ukrainian speaker fluent in Russian and English, she also teaches Ukrainian and is studying Spanish.
+A native Ukrainian speaker fluent in Russian and English.
 Her strength lies in sensing the needs of children with disabilities and carefully tracing cause-and-effect in their behavior, helping them feel safe, understood, and successful. She is recognized for thinking outside the box and creating flexible solutions that empower students to succeed.
 
-In addition to her work in education, Iana is a cynologist and breeder, a professional pastry chef, a passionate quilter, an avid driver, and a brown belt in Aikido, licensed PADI Advanced Open Water diver. 
+She is developing the [**PARA Welcome Kit**](/para-welcome-kit)—a growing collection of practical tools, guides, and strategies designed to help new paraeducators feel confident, prepared, and supported from day one.
 
-She brings creativity, discipline, and cultural depth into everything she does — from the classroom to her personal projects.
+{{< typo/aside >}}
+Outside of education, Iana is a cynologist and breeder, a professional pastry chef, a passionate quilter, an avid driver, and a brown belt in Aikido, licensed PADI Advanced Open Water diver.
+{{< /typo/aside >}}
+
+[//]: # ({{< typo/beat size="md" rule="center" width="90%" >}})
+{{< typo/beat size="md" >}}
+
+{{< typo/grid >}}
+| {{< typo/slug >}}**Professional Focus**{{< /typo/slug >}}{{< collection source="frontmatter" path="interests" view="interests" >}} | {{< typo/slug >}}**Education**{{< /typo/slug >}}{{< collection source="frontmatter" path="education" view="education" >}} |
+{{< /typo/grid >}}
