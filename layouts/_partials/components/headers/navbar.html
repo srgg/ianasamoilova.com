@@ -5,7 +5,7 @@
 {{ $bp_wide := site.Params.header.navbar.breakpoint_wide | default "md" }}
 
 {{/* Map breakpoint to Tailwind classes */}}
-{{ $bp_hidden := printf "%s:hidden" $bp }}
+{{ $bp_hidden := printf "%s:!hidden" $bp }}  {{/* !important to override nav-link display */}}
 {{ $bp_flex := printf "%s:flex" $bp }}
 {{ $bp_order := printf "%s:order-1" $bp }}
 {{ $bp_wauto := printf "%s:w-auto" $bp }}
@@ -16,11 +16,26 @@
 {{ $bp_ml0 := printf "%s:ml-0" $bp }}
 {{ $bp_inline := printf "%s:inline-block" $bp }}
 
+{{/* Find active menu item name for mobile indicator */}}
+{{ $activeName := "" }}
+{{ $pageURL := .Permalink | absLangURL }}
+{{ range site.Menus.main }}
+  {{ $menuURL := .URL | absLangURL }}
+  {{ $active := or (eq $menuURL $pageURL) (and (ne .URL "/") (hasPrefix $pageURL $menuURL)) }}
+  {{ if $active }}{{ $activeName = .Name }}{{ end }}
+  {{/* Check children too */}}
+  {{ range .Children }}
+    {{ $childURL := .URL | absLangURL }}
+    {{ $childActive := or (eq $childURL $pageURL) (and (ne .URL "/") (hasPrefix $pageURL $childURL)) }}
+    {{ if $childActive }}{{ $activeName = .Name }}{{ end }}
+  {{ end }}
+{{ end }}
+
 <header id="site-header" class="header">
   <nav class="navbar px-3 flex justify-start">
     <div class="order-0 h-full">
-      <!-- Brand -->
-      <a class="navbar-brand" href="{{ site.Home.RelPermalink }}" title="{{ site.Title }}">
+      <!-- Brand (non-clickable) -->
+      <span class="navbar-brand" style="cursor: default;">
         {{- $logo_filename := site.Params.header.navbar.logo.filename -}}
         {{ with $logo_filename }}
           {{- $logo:= resources.Get (path.Join "media" $logo_filename) -}}
@@ -44,13 +59,26 @@
           {{end}}
         {{ end }}
         {{ with site.Params.header.navbar.logo.text }}{{.}}{{end}}
-      </a>
+      </span>
     </div>
+
     <!-- Mobile menu -->
     <input id="nav-toggle" type="checkbox" class="hidden" />
+
+    {{/* Mobile: show current page name centered in header, hidden at breakpoint or when menu open */}}
+    {{ $bp_sizes := dict "sm" "640px" "md" "768px" "lg" "1024px" "xl" "1280px" "2xl" "1536px" }}
+    {{ $hide_at := index $bp_sizes $bp }}
+    <style>
+      .nav-active-text { display: block; position: absolute; left: 50%; transform: translateX(-50%); cursor: pointer !important; }
+      @media (min-width: {{ $hide_at }}) { .nav-active-text { display: none !important } .nav-hamburger { display: none !important } }
+      #nav-toggle:checked ~ .nav-active-text { display: none !important; }
+    </style>
+    {{ with $activeName }}
+    <label for="nav-toggle" class="nav-link active nav-active-text">{{ . }}</label>
+    {{ end }}
     <label
       for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center {{ $bp_hidden }} text-dark dark:text-white {{ $bp_order }}">
+      class="nav-hamburger order-3 cursor-pointer flex items-center text-dark dark:text-white">
       <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
         <title>Open Menu</title>
         <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
