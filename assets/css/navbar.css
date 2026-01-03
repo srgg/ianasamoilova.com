@@ -3,32 +3,11 @@
  *
  * Features:
  * - Brand aligns with avatar center on md+ screens
+ * - Compact header height consistent across all breakpoints
  * - Active page highlighting with bold text and underlines
  * - Smooth hover transitions
  * - Dropdown menu styling
  */
-
-/* ==========================================================================
-   Brand Alignment (md+)
-   Positions brand to align with bio avatar center using CSS calc.
-   Below md: brand stays in normal flow at top-left.
-   ========================================================================== */
-@media (min-width: theme('screens.md')) {
-    .navbar {
-        position: relative;
-        max-width: theme('maxWidth.7xl');
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: calc(var(--brand-position) + var(--brand-clearance));
-    }
-
-    .navbar-brand {
-        position: absolute;
-        left: var(--brand-position);
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
 
 /* ==========================================================================
    Variables
@@ -48,14 +27,23 @@
     /* Nav link styling */
     --nav-inactive-weight: 500;
     --nav-active-weight: 700;
-    --nav-inactive-color: #4B5563; /* gray-600 */
+    --nav-inactive-color: #4B5563;          /* gray-600 */
     --nav-active-color: var(--color-primary-800);
     --nav-hover-color: var(--color-primary-600);
-    --nav-hover-bg: rgb(249, 250, 251); /* gray-50 */
-    --nav-active-bg: rgb(243, 244, 246); /* gray-100 */
+    --nav-hover-bg: rgb(249, 250, 251);     /* gray-50 */
+    --nav-active-bg: rgb(243, 244, 246);    /* gray-100 */
     --nav-underline-color: var(--color-primary-700);
     --nav-underline-inactive: rgb(209, 213, 219); /* gray-300 */
     --nav-transition: all 0.25s ease;
+}
+
+/* ==========================================================================
+   Compact Header
+   Reduces nav-link padding for consistent header height across breakpoints.
+   ========================================================================== */
+#nav-menu .nav-link {
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 /* ==========================================================================
@@ -78,6 +66,7 @@
     color: var(--nav-hover-color);
 }
 
+/* Hover underline animation (inactive links only) */
 .nav-link:not(.active)::after {
     content: '';
     position: absolute;
@@ -91,7 +80,28 @@
     transition: var(--nav-transition);
 }
 
-@media (min-width: theme('screens.lg')) {
+/* ==========================================================================
+   Desktop Layout (md+)
+   - Brand aligns with bio avatar center using absolute positioning
+   - Active underline visible when nav menu is shown
+   ========================================================================== */
+@media (min-width: theme('screens.md')) {
+    .navbar {
+        position: relative;
+        max-width: theme('maxWidth.7xl');
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: calc(var(--brand-position) + var(--brand-clearance));
+    }
+
+    .navbar-brand {
+        position: absolute;
+        left: var(--brand-position);
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Active underline */
     .nav-link.active::after,
     .nav-dropdown > span.nav-link.active::after {
         content: '';
@@ -109,10 +119,10 @@
    Dropdown Menu
    ========================================================================== */
 .nav-dropdown > span {
+    position: relative;
     color: var(--nav-inactive-color);
     font-weight: var(--nav-inactive-weight);
     transition: var(--nav-transition);
-    position: relative;
 }
 
 .nav-dropdown > span.nav-link.active {
