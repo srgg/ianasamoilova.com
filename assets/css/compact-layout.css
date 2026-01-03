@@ -5,10 +5,7 @@
  * compact, streamlined appearance.
  */
 
-/* Spacing Variables - Override per breakpoint (em = scales with font size)
- * --gap-to-first-blog-post = 1.5 × --gap-between-blog-posts (auto-calculated)
- * --gap-to-bio-content = 3 × --gap-between-bio-paragraphs (auto-calculated)
- */
+/* Spacing Variables - Override per breakpoint (em = scales with font size) */
 :root {
     /* Blog spacing */
     --gap-between-blog-posts: 1em;  /* Mobile */
@@ -17,6 +14,10 @@
     /* Bio spacing */
     --gap-between-bio-paragraphs: 0.5em;  /* Mobile */
     --gap-to-bio-content: calc(var(--gap-between-bio-paragraphs) * 3);
+
+    /* Experience spacing */
+    --gap-between-experience-items: 1.5em;  /* Mobile */
+    --gap-to-experience-content: calc(var(--gap-between-experience-items) * 1);
 }
 
 @media (min-width: theme('screens.sm')) {
@@ -49,8 +50,25 @@
     }
 }
 
-/* Compact experience, education, and skills sections */
-.experience-list .mb-10,
+/* Experience Section: Compact spacing
+ *
+ * Hugo Blox resume-experience block has large default padding.
+ * Reduce top gap and item spacing for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/resume-experience/block.html
+ */
+
+/* Gap from navbar to experience content */
+.blox-resume-experience {
+    padding-top: var(--gap-to-experience-content) !important;
+}
+
+/* Gap between experience items */
+.experience-list .mb-10 {
+    margin-bottom: var(--gap-between-experience-items) !important;
+}
+
+/* Compact education and skills sections */
 .education-list .mb-10 {
     margin-bottom: 1.5em !important; /* Reduce from 2.5em to 1.5em */
 }
