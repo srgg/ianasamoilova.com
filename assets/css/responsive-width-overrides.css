@@ -105,6 +105,16 @@ article.prose,
     }
 }
 
+/* Project Grid: Column Breakpoint Fix
+ * Hugo Blox uses md:grid-cols-3, but 3 columns at 768px is too cramped (~144px each).
+ * Override: 2 columns at md (768px), 3 columns at lg (1024px).
+ */
+@media (min-width: theme('screens.md')) and (max-width: calc(theme('screens.lg') - 1px)) {
+    .blox-collection .grid.md\:grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
 /* Project Grid Override
  * Hugo Blox limits single-item grids to 500px (article-grid--start.html)
  * Override with responsive scaling to match multi-item layout
