@@ -69,7 +69,16 @@
     {{ $bp_sizes := dict "sm" "640px" "md" "768px" "lg" "1024px" "xl" "1280px" "2xl" "1536px" }}
     {{ $hide_at := index $bp_sizes $bp }}
     <style>
-      .nav-active-text { display: block; position: absolute; left: 50%; transform: translateX(-50%); cursor: pointer !important; }
+      .nav-active-text {
+        display: block;
+        position: absolute;
+        right: 50px;
+        cursor: pointer !important;
+        max-width: calc(100vw - 220px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       @media (min-width: {{ $hide_at }}) { .nav-active-text { display: none !important } .nav-hamburger { display: none !important } }
       #nav-toggle:checked ~ .nav-active-text { display: none !important; }
     </style>
