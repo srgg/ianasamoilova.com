@@ -1,17 +1,51 @@
 /**
  * Navigation Bar Styles
  *
- * Provides visual styling for navigation links, active states, and dropdowns.
- *
  * Features:
- * - Highlights active pages with bold text, primary colors, and underlines
- * - Smooth hover transitions with background and color changes
- * - Consistent dropdown menu styling that inherits active states
- * - Responsive underline animations for larger screens
+ * - Brand aligns with avatar center on md+ screens
+ * - Active page highlighting with bold text and underlines
+ * - Smooth hover transitions
+ * - Dropdown menu styling
  */
 
-/* Variables */
+/* ==========================================================================
+   Brand Alignment (md+)
+   Positions brand to align with bio avatar center using CSS calc.
+   Below md: brand stays in normal flow at top-left.
+   ========================================================================== */
+@media (min-width: theme('screens.md')) {
+    .navbar {
+        position: relative;
+        max-width: theme('maxWidth.7xl');
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: calc(var(--brand-position) + var(--brand-clearance));
+    }
+
+    .navbar-brand {
+        position: absolute;
+        left: var(--brand-position);
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
 :root {
+    /* Brand alignment - matches bio grid layout (4/12 col avatar position) */
+    --content-padding: 72px;                /* page-body 48px + section 24px */
+    --grid-gap: 32px;                       /* md:gap-8 */
+    --navbar-max: 1280px;                   /* max-w-7xl */
+    --navbar-offset: max(0px, calc((100vw - var(--navbar-max)) / 2));
+    --content-width: min(calc(100vw - var(--content-padding) * 2), var(--navbar-max));
+    --left-col-width: calc((var(--content-width) - 11 * var(--grid-gap)) * 4 / 12 + 3 * var(--grid-gap));
+    --content-relative-to-navbar: max(0px, calc(var(--content-padding) - var(--navbar-offset)));
+    --brand-position: calc(var(--content-relative-to-navbar) + var(--left-col-width) / 2);
+    --brand-clearance: 100px;               /* space for brand width + margin */
+
+    /* Nav link styling */
     --nav-inactive-weight: 500;
     --nav-active-weight: 700;
     --nav-inactive-color: #4B5563; /* gray-600 */
@@ -24,7 +58,9 @@
     --nav-transition: all 0.25s ease;
 }
 
-/* Navigation Links */
+/* ==========================================================================
+   Navigation Links
+   ========================================================================== */
 .nav-link {
     position: relative;
     color: var(--nav-inactive-color);
@@ -69,7 +105,9 @@
     }
 }
 
-/* Dropdown Menu */
+/* ==========================================================================
+   Dropdown Menu
+   ========================================================================== */
 .nav-dropdown > span {
     color: var(--nav-inactive-color);
     font-weight: var(--nav-inactive-weight);
