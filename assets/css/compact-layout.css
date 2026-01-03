@@ -7,10 +7,16 @@
 
 /* Spacing Variables - Override per breakpoint (em = scales with font size)
  * --gap-to-first-blog-post = 1.5 × --gap-between-blog-posts (auto-calculated)
+ * --gap-to-bio-content = 3 × --gap-between-bio-paragraphs (auto-calculated)
  */
 :root {
+    /* Blog spacing */
     --gap-between-blog-posts: 1em;  /* Mobile */
     --gap-to-first-blog-post: calc(var(--gap-between-blog-posts) * 1.5);
+
+    /* Bio spacing */
+    --gap-between-bio-paragraphs: 0.5em;  /* Mobile */
+    --gap-to-bio-content: calc(var(--gap-between-bio-paragraphs) * 3);
 }
 
 @media (min-width: theme('screens.sm')) {
@@ -69,10 +75,23 @@
     margin-top: 0.5em !important;
 }
 
-/* Bio section: Tighter paragraph spacing */
+/* Bio Section: Compact spacing
+ *
+ * Hugo Blox resume-biography-3 block has large default padding.
+ * Reduce top gap and paragraph spacing for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/resume-biography-3/block.html
+ */
+
+/* Gap from navbar to bio content */
+.blox-resume-biography-3 {
+    padding-top: var(--gap-to-bio-content) !important;
+}
+
+/* Gap between bio paragraphs */
 .resume-biography .bio-text p {
-    margin-top: 0.5em !important;
-    margin-bottom: 0.5em !important;
+    margin-top: var(--gap-between-bio-paragraphs) !important;
+    margin-bottom: var(--gap-between-bio-paragraphs) !important;
 }
 
 /* Blog List: Compact post spacing
