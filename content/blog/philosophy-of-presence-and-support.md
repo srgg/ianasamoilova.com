@@ -1,4 +1,4 @@
-`---
+---
 title: "Philosophy of Presence and Support: My Journey Into Special Education"
 subtitle: 'True humanity is revealed in how we see and support those who are most vulnerable'
 summary: |
@@ -49,4 +49,4 @@ For me, entering special education is not just a professional decision; it is a 
 
 Special education asks us to measure success not only in academic outcomes but in belonging, resilience, and hope. That is the kind of classroom I want to help build.
 
-And yet, presence alone is not enough. The hand that comforts must sometimes join with the tool that empowers. Thoughtful use of technology can open doors that human touch alone cannot. I reflect on this balance in my companion piece, [Technology for Inclusive Learning: My Balanced Philosophy](/blog/balanced-approach-using-technology-in-education).`
+And yet, presence alone is not enough. The hand that comforts must sometimes join with the tool that empowers. Thoughtful use of technology can open doors that human touch alone cannot. I reflect on this balance in my companion piece, [Technology for Inclusive Learning: My Balanced Philosophy](/blog/balanced-approach-using-technology-in-education).
