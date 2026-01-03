@@ -5,16 +5,108 @@
  * compact, streamlined appearance.
  */
 
-/* Compact experience, education, and skills sections */
-.experience-list .mb-10,
+/* Spacing Variables - Override per breakpoint (em = scales with font size) */
+:root {
+    /* Blog spacing */
+    --gap-between-blog-posts: 1em;  /* Mobile */
+    --gap-to-first-blog-post: calc(var(--gap-between-blog-posts) * 1.5);
+
+    /* Bio spacing */
+    --gap-between-bio-paragraphs: 0.5em;  /* Mobile */
+    --gap-to-bio-content: calc(var(--gap-between-bio-paragraphs) * 3);
+
+    /* Experience spacing */
+    --gap-between-experience-items: 1.5em;  /* Mobile */
+    --gap-to-experience-content: calc(var(--gap-between-experience-items) * 1);
+
+    /* Projects spacing */
+    --gap-to-projects-content: 1.5em;
+
+    /* CTA spacing */
+    --cta-image-width: 260px;  /* Mobile */
+}
+
+@media (min-width: theme('screens.sm')) {
+    :root {
+        --gap-between-blog-posts: 1.5em;  /* SM 640px */
+        --cta-image-width: 320px;
+    }
+}
+
+@media (min-width: theme('screens.md')) {
+    :root {
+        --gap-between-blog-posts: 2em;  /* MD 768px */
+    }
+}
+
+@media (min-width: theme('screens.lg')) {
+    :root {
+        --gap-between-blog-posts: 2em;  /* LG 1024px */
+    }
+}
+
+@media (min-width: theme('screens.xl')) {
+    :root {
+        --gap-between-blog-posts: 2em;  /* XL 1280px */
+    }
+}
+
+@media (min-width: theme('screens.2xl')) {
+    :root {
+        --gap-between-blog-posts: 2em;  /* 2XL 1536px */
+    }
+}
+
+/* Projects Page: Compact spacing
+ *
+ * Hugo Blox collection block has large default padding.
+ * Reduce top gap for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/collection/block.html
+ */
+
+/* Gap from navbar to projects content */
+.projects-collection {
+    padding-top: var(--gap-to-projects-content) !important;
+}
+
+/* Reset page-body margin, Project page controls it through projects-collection gap */
+.page-body:has(.projects-collection) {
+    margin-top: 0 !important;
+}
+
+/* Experience Section: Compact spacing
+ *
+ * Hugo Blox resume-experience block has large default padding.
+ * Reduce top gap and item spacing for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/resume-experience/block.html
+ */
+
+/* Gap from navbar to experience content */
+.blox-resume-experience {
+    padding-top: var(--gap-to-experience-content) !important;
+}
+
+/* Reset page-body margin, Experience page controls it through blox-resume-experience gap */
+.page-body:has(.blox-resume-experience) {
+    margin-top: 0 !important;
+}
+
+/* Gap between experience items */
+.experience-list .mb-10 {
+    margin-bottom: var(--gap-between-experience-items) !important;
+}
+
+/* Compact education and skills sections */
 .education-list .mb-10 {
-    margin-bottom: 1.5rem !important; /* Reduce from 2.5rem to 1.5rem */
+    margin-bottom: 1.5em !important; /* Reduce from 2.5em to 1.5em */
 }
 
 .experience-list + * h3.mb-6,
 .education-list + * h3.mb-6,
 .blox-resume-skills .mb-6 {
-    margin-bottom: 1rem !important; /* Reduce section title margin */
+    margin-bottom: 1em !important; /* Reduce section title margin */
 }
 
 /* Related Posts: Reduce title-to-content spacing */
@@ -24,15 +116,141 @@
 }
 
 .related-posts .mb-6 {
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.25em !important;
 }
 
 .related-posts .mt-16 {
-    margin-top: 0.5rem !important;
+    margin-top: 0.5em !important;
 }
 
-/* Bio section: Tighter paragraph spacing */
+/* Bio Section: Compact spacing
+ *
+ * Hugo Blox resume-biography-3 block has large default padding.
+ * Reduce top gap and paragraph spacing for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/resume-biography-3/block.html
+ */
+
+/* Gap from navbar to bio content */
+.blox-resume-biography-3 {
+    padding-top: var(--gap-to-bio-content) !important;
+}
+
+/* Gap between bio paragraphs */
 .resume-biography .bio-text p {
-    margin-top: 0.5em !important;
-    margin-bottom: 0.5em !important;
+    margin-top: var(--gap-between-bio-paragraphs) !important;
+    margin-bottom: var(--gap-between-bio-paragraphs) !important;
+}
+
+/* Blog List: Compact post spacing
+ *
+ * Hugo Blox date-title-summary view uses excessive vertical spacing:
+ * - space-y-16: 64px gap between each post article
+ * - mt-16/sm:mt-20: 64px/80px top margin on the post list container
+ *
+ * Target: layouts/_partials/views/date-title-summary--start.html
+ */
+
+/* Gap from navbar to first blog post */
+.page-body {
+    margin-top: var(--gap-to-first-blog-post) !important;
+}
+
+/* ==========================================================================
+   MOBILE (< 640px): Compact spacing
+   Between posts: var(--gap-between-blog-posts) = 1em (16px)
+   ========================================================================== */
+@media (max-width: calc(theme('screens.sm') - 1px)) {
+    /* Gap between individual blog post articles */
+    .page-body .space-y-16 > * + * {
+        margin-top: 0 !important;
+    }
+
+    /* Top margin above the entire post list */
+    .page-body .mt-16 {
+        margin-top: 0.5em !important;  /* 8px */
+    }
+
+    /* Reduce hover effect vertical inset (24px → 8px) */
+    .page-body article .-inset-y-6 {
+        top: -0.5em !important;
+        bottom: -0.5em !important;
+    }
+
+    /* Reduce "Read more" top margin (16px → 8px) */
+    .page-body article .mt-4 {
+        margin-top: 0.5em !important;
+    }
+
+    /* Reduce date bottom margin (12px → 4px) */
+    .page-body article time.mb-3 {
+        margin-bottom: 0.25em !important;
+    }
+
+    /* Gap between blog posts */
+    .page-body .space-y-16 > article {
+        margin-bottom: var(--gap-between-blog-posts) !important;
+    }
+}
+
+/* ==========================================================================
+   SM+ (≥ 640px): Uses var(--gap-between-blog-posts)
+   ========================================================================== */
+@media (min-width: theme('screens.sm')) {
+    .page-body .space-y-16 > * + * {
+        margin-top: 0 !important;
+    }
+
+    .page-body .sm\:mt-20 {
+        margin-top: 0.5em !important;
+    }
+
+    .page-body article .-inset-y-6 {
+        top: -0.75em !important;
+        bottom: -0.75em !important;
+    }
+
+    .page-body article .mt-4 {
+        margin-top: 0.5em !important;
+    }
+
+    .page-body article time.mb-3 {
+        margin-bottom: 0.5em !important;
+    }
+
+    .page-body .space-y-16 > article {
+        margin-bottom: var(--gap-between-blog-posts) !important;
+    }
+}
+
+/* ==========================================================================
+   MD (≥ 768px): Comfortable spacing
+   ========================================================================== */
+@media (min-width: theme('screens.md')) {
+    .page-body .space-y-16 > article {
+        margin-bottom: var(--gap-between-blog-posts) !important;
+    }
+
+    .page-body article .-inset-y-6 {
+        top: -1em !important;
+        bottom: -1em !important;
+    }
+}
+
+/* CTA Image Paragraph: Compact spacing
+ *
+ * Hugo Blox cta-image-paragraph has default spacing from page-body.
+ * Push CTA to top for tighter layout.
+ *
+ * Target: layouts/partials/hbx/blocks/cta-image-paragraph/block.html
+ */
+
+/* Reset page-body margin, CTA page controls spacing through its own padding */
+.page-body:has(.cta-with-divider) {
+    margin-top: 0 !important;
+}
+
+/* CTA SVG image size */
+.para-welcome-header.cta-with-divider img[src$=".svg"] {
+    width: var(--cta-image-width) !important;
 }

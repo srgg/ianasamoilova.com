@@ -75,3 +75,14 @@
     padding-top: 0 !important;
     padding-bottom: 21px !important;
 }
+
+/* Mobile: center only the CTA image, not text */
+@media (max-width: calc(theme('screens.md') - 1px)) {
+    .cta-with-divider img {
+        display: block !important;
+        width: auto !important;
+        max-width: 90% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}

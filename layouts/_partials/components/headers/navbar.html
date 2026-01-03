@@ -65,30 +65,107 @@
     <!-- Mobile menu -->
     <input id="nav-toggle" type="checkbox" class="hidden" />
 
-    {{/* Mobile: show current page name centered in header, hidden at breakpoint or when menu open */}}
+    {{/* Mobile: unified toggle zone (active item + hamburger) */}}
     {{ $bp_sizes := dict "sm" "640px" "md" "768px" "lg" "1024px" "xl" "1280px" "2xl" "1536px" }}
     {{ $hide_at := index $bp_sizes $bp }}
     <style>
-      .nav-active-text { display: block; position: absolute; left: 50%; transform: translateX(-50%); cursor: pointer !important; }
-      @media (min-width: {{ $hide_at }}) { .nav-active-text { display: none !important } .nav-hamburger { display: none !important } }
-      #nav-toggle:checked ~ .nav-active-text { display: none !important; }
+      /* Mobile toggle zone - single clickable area */
+      .nav-toggle-zone {
+        display: flex;
+        align-items: center;
+        gap: 1em;  /* Fixed gap between active indicator and hamburger */
+        margin-left: auto;
+        cursor: pointer;
+        order: 3;
+      }
+      .nav-toggle-zone .nav-active-text {
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 0 !important;
+        line-height: 24px;
+        cursor: pointer;  /* Override nav-link.active default cursor */
+      }
+      /* Hide active text when menu is open */
+      #nav-toggle:checked ~ .nav-toggle-zone .nav-active-text {
+        display: none;
+      }
+      /* Hide entire toggle zone on desktop */
+      @media (min-width: {{ $hide_at }}) {
+        .nav-toggle-zone { display: none !important; }
+      }
+
+      /* Hamburger icon - 3 bars that transform to X */
+      .nav-hamburger {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .nav-hamburger span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: currentColor;
+        transition: all 0.3s ease;
+        left: 0;
+      }
+      .nav-hamburger span:nth-child(1) { top: 4px; }
+      .nav-hamburger span:nth-child(2) { top: 11px; }
+      .nav-hamburger span:nth-child(3) { top: 18px; }
+
+      /* Transform to X when menu is open */
+      #nav-toggle:checked ~ .nav-toggle-zone .nav-hamburger span:nth-child(1) {
+        top: 11px;
+        transform: rotate(45deg);
+      }
+      #nav-toggle:checked ~ .nav-toggle-zone .nav-hamburger span:nth-child(2) {
+        opacity: 0;
+      }
+      #nav-toggle:checked ~ .nav-toggle-zone .nav-hamburger span:nth-child(3) {
+        top: 11px;
+        transform: rotate(-45deg);
+      }
+
+      /* Menu slide animation - mobile only */
+      @media (max-width: calc({{ $hide_at }} - 1px)) {
+        .navbar {
+          position: relative;
+        }
+        #nav-menu {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease, padding 0.3s ease;
+          display: block !important;
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+          z-index: 50;
+        }
+        #nav-toggle:checked ~ #nav-menu {
+          max-height: 500px;
+          padding-top: 1rem !important;
+          padding-bottom: 1.5rem !important;
+        }
+      }
     </style>
-    {{ with $activeName }}
-    <label for="nav-toggle" class="nav-link active nav-active-text">{{ . }}</label>
-    {{ end }}
-    <label
-      for="nav-toggle"
-      class="nav-hamburger order-3 cursor-pointer flex items-center text-dark dark:text-white">
-      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
-        <title>Open Menu</title>
-        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
-      </svg>
-      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
-        <title>Close Menu</title>
-        <polygon
-          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-          transform="rotate(45 10 10)"></polygon>
-      </svg>
+    <label for="nav-toggle" class="nav-toggle-zone text-dark dark:text-white">
+      {{ with $activeName }}
+      <span class="nav-link active nav-active-text">{{ . }}</span>
+      {{ end }}
+      <span class="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </label>
     <!-- /Mobile menu -->
 

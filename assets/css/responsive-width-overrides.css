@@ -105,6 +105,41 @@ article.prose,
     }
 }
 
+/* Project Grid: Column Breakpoint Fix
+ * Hugo Blox uses md:grid-cols-3, but 3 columns at 768px is too cramped (~144px each).
+ * Override: 2 columns at md (768px), 3 columns at lg (1024px).
+ */
+@media (min-width: theme('screens.md')) and (max-width: calc(theme('screens.lg') - 1px)) {
+    .blox-collection .grid.md\:grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Project Cards: Align "Read More" at bottom
+ * Cards have varying content heights. Use flexbox to push metadata to bottom.
+ */
+.blox-collection .grid > div[role="article"] {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.blox-collection .grid > div[role="article"] > .p-8 {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+}
+
+/* Push metadata/Read More section to bottom */
+.blox-collection .grid > div[role="article"] > .p-8 > div:last-child {
+    margin-top: auto !important;
+}
+
+/* Read More link: use em for scalable font size */
+.blox-collection .grid > div[role="article"] a[href] .text-sm,
+.blox-collection .grid > div[role="article"] a.text-sm {
+    font-size: 0.875em !important;  /* Same ratio as text-sm but in em */
+}
+
 /* Project Grid Override
  * Hugo Blox limits single-item grids to 500px (article-grid--start.html)
  * Override with responsive scaling to match multi-item layout
