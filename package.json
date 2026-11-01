@@ -18,10 +18,10 @@
     "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/typography": "^0.5.10",
     "tailwindcss": "^4.1.12",
-    "tinacms": "^2.8.2"
+    "tinacms": "^3.14.0"
   },
   "devDependencies": {
-    "@tinacms/cli": "^1.10.2",
+    "@tinacms/cli": "^3.0.0",
     "@types/node": "^24.3.0",
     "serve": "^14.2.5"
   }
